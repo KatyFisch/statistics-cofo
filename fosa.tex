@@ -10,6 +10,8 @@
 \usepackage{wrapfig}
 \usepackage{amsmath}
 \usepackage{multicol}
+\setlength{\columnseprule}{0.3pt}
+\usepackage{amsfonts}
 
 \onehalfspacing
 \usepackage[hidelinks]{hyperref}
@@ -44,25 +46,50 @@
 
 \section{Deskriptive Statistik}
 
+\raggedright
+
 \subsection{Kenngrößen (Parameter)}
 \subsubsection{Lagemaße}
 \begin{multicols}{2}
+
+\paragraph{Modus}
+
+Häufigster Wert von $x_i$. Auch mehrere Modi sind möglich (bimodal).
+
+\paragraph{Median}
+
+$$\tilde{x}_{0.5}=\begin{cases} x_{((n+1)/2)} & \text{falls n ungerade} \\ \frac{1}{2}(x_{(n/2)}+x_{(n/2+1)} & \text{falls n gerade} \end{cases}$$
+
+\paragraph{Quantile}
+
+$$\tilde{x}_\alpha=\begin{cases} x_{(k)} & \text{falls n}\alpha \notin \mathbb{N}\\ \frac{1}{2}(x_{(n\alpha)}+ x_{(n\alpha+1)} & \text{falls n}\alpha \text{ ganzzahlig} \end{cases}$$
+
+k=min x $\in \mathbb{N}$,  x $>$ n$\alpha$ 
+
+\paragraph{Minimum/Maximum}
+
+
+$$x_{min}=\min_{i \in \{ 1,...,N\}} (x_i) \hspace{0.8cm}   x_{max}=\max_{i \in \{ 1,...,N\}} (x_i)$$ 
+
+
 
 \paragraph{Arithmetisches Mittel}
 
  $$\bar{x}=\frac{1}{n}\sum\limits_{i=1}^n x_i$$
 
 \noindent Schätzer für den Erwartungswert 
-$\mu = E[X]$
+$\mu = E[X]$ (erstes~Verteilungsmoment)
 
+\paragraph{Geometrisches Mittel}
 
-\paragraph{Stichprobe}
+$$\bar{x}_G=\sqrt[n]{\sum\limits_{i=1}^n x_i} $$
 
-    Arithmetisches Mittel
-    Geometrisches Mittel
-    Harmonisches Mittel
-    Quantile: Median, Quartile, Dezile, Perzentile
-    Modus
+\noindent Für Wachstumsfaktoren: $\bar{x}_G=\sqrt[n]{\frac{B_n}{B_0}}$
+
+\paragraph{Harmonisches Mittel}
+
+$$\bar{x}_H=\frac{\sum\limits_{i=1}^n w_i}{\sum\limits_{i=1}^n \frac{w_i}{x_i}}$$
+
 \end{multicols}
 \subsubsection{Streuungsmaße}
 
