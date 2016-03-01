@@ -145,6 +145,7 @@ pythontex-files-*/
 
 # todonotes
 *.tdo
+fosa.tex
 
 # xindy
 *.xdy

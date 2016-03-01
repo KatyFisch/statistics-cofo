@@ -1,0 +1,160 @@
+\documentclass[10pt]{article}
+\usepackage[english, ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{xcolor}
+\usepackage[a4paper,margin=2.5cm]{geometry} \usepackage{blindtext}
+\usepackage{setspace}
+\usepackage{float}
+\usepackage{titletoc}
+\usepackage{titlesec}
+\usepackage{wrapfig}
+\usepackage{amsmath}
+\usepackage{multicol}
+
+\onehalfspacing
+\usepackage[hidelinks]{hyperref}
+
+\titleformat{\section}
+  {\normalfont\fontsize{16}{15}\bfseries}{\thesection}{1em}{}
+
+\titleformat{\subsection}
+  {\normalfont\fontsize{14}{15}\bfseries}{\thesubsection}{1em}{}
+
+\titleformat{\subsubsection}
+  {\normalfont\fontsize{12}{15}\bfseries}{\thesubsubsection}{1em}{}
+
+
+\begin{document}
+\title{Statistik Formelsammlung}
+\author{Katharina Ring}
+\date{\today}
+\maketitle
+
+\clearpage
+
+\tableofcontents
+
+\clearpage
+
+%-------------------------------------------------------------------------------
+
+% SECTION: DESKRIPTIVE STATISTIK
+
+%-------------------------------------------------------------------------------
+
+\section{Deskriptive Statistik}
+
+\subsection{Kenngrößen (Parameter)}
+\subsubsection{Lagemaße}
+\begin{multicols}{2}
+
+\paragraph{Arithmetisches Mittel}
+
+ $$\bar{x}=\frac{1}{n}\sum\limits_{i=1}^n x_i$$
+
+\noindent Schätzer für den Erwartungswert 
+$\mu = E[X]$
+
+
+\paragraph{Stichprobe}
+
+    Arithmetisches Mittel
+    Geometrisches Mittel
+    Harmonisches Mittel
+    Quantile: Median, Quartile, Dezile, Perzentile
+    Modus
+\end{multicols}
+\subsubsection{Streuungsmaße}
+
+
+
+    Stichprobenvarianz $s$
+    Standardabweichung $\sigma$
+    Spannweite R (engl. range)
+    Mittlere absolute Abweichung X
+    (Inter-)Quartilsabstand Q (engl. interquartile range; Abk. IQR)
+
+\subsubsection{Konzentrationsmaße}
+
+
+    Absolute Konzentration
+    Relative Konzentration
+    Atkinson-Maß
+    Gini-Koeffizient aus der Lorenz-Kurve
+    Herfindahl-Index (Herfindahl)
+    Hoover-Ungleichverteilung
+    Rosenbluth-Index
+    Theil-Index
+
+
+\subsubsection{Gestaltmaße}
+
+
+    Schiefe (Statistik)
+    Wölbung (Statistik)
+
+
+\subsubsection{Zusammenhangsmaße}
+
+
+    2.1 Für zwei nominale Variablen
+    2.2 Für zwei ordinale Variablen
+    2.3 Für zwei metrische Variablen
+    2.4 Für zwei Variablen unterschiedlichen Skalenniveaus
+
+(Wiki)
+
+\subsection{Tabellen}
+
+\subsection{Diagramme}
+
+
+%-------------------------------------------------------------------------------
+
+% SECTION: WAHRSCHEINLICHKEITSRECHNUNG
+
+%-------------------------------------------------------------------------------
+
+\section{Wahrscheinlichkeitsrechnung}
+
+
+%-------------------------------------------------------------------------------
+
+% SECTION: HYPOTHESENTESTS
+
+%-------------------------------------------------------------------------------
+
+\section{Hypothesentests}
+
+%-------------------------------------------------------------------------------
+
+% SECTION: REGRESSION
+
+%-------------------------------------------------------------------------------
+
+\section{Regression}
+
+\subsection{Annahmen}
+
+\subsection{Verfahren}
+\subsubsection{Kleinste Quadrate (OLS)}
+\subsubsection{Maximum Likelihood}
+
+\subsection{c}
+
+\subsection{d}
+
+%-------------------------------------------------------------------------------
+
+% SECTION: KLASSIFIKATION
+
+%-------------------------------------------------------------------------------
+
+\section{Klassifikation}
+
+\subsection{Diskriminanzanalyse (Bayes)}
+
+\subsection{Clusteranalyse}
+
+
+\end{document}
