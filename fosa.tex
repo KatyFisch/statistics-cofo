@@ -62,7 +62,7 @@ $$\tilde{x}_{0.5}=\begin{cases} x_{((n+1)/2)} & \text{falls n ungerade} \\ \frac
 
 \paragraph{Quantile}
 
-$$\tilde{x}_\alpha=\begin{cases} x_{(k)} & \text{falls n}\alpha \notin \mathbb{N}\\ \frac{1}{2}(x_{(n\alpha)}+ x_{(n\alpha+1)} & \text{falls n}\alpha \text{ ganzzahlig} \end{cases}$$
+$$\tilde{x}_\alpha=\begin{cases} x_{(k)} & \text{falls n}\alpha \notin \mathbb{N}\\ \frac{1}{2}(x_{(n\alpha)}+ x_{(n\alpha+1)}) & \text{falls n}\alpha \text{ ganzzahlig} \end{cases}$$
 
 k=min x $\in \mathbb{N}$,  x $>$ n$\alpha$ 
 
@@ -93,34 +93,69 @@ $$\bar{x}_H=\frac{\sum\limits_{i=1}^n w_i}{\sum\limits_{i=1}^n \frac{w_i}{x_i}}$
 \end{multicols}
 \subsubsection{Streuungsmaße}
 
+\begin{multicols}{2}
+
+\paragraph{Spannweite}
+
+$$R=x_{(n)}-x_{(1)}$$
+
+\paragraph{Quartilsabstand}
+
+$$d_Q=\tilde{x}_{0.75}-\tilde{x}_{0.25}$$
+
+\paragraph{(Empirische) Varianz}
+
+$$s^2=\frac{1}{n}\sum\limits_{i=1}^n(x_i-\bar{x})^2=\frac{1}{n}\sum\limits_{i=1}^nx_i^2-\bar{x}^2$$
+
+\noindent Schätzer für das zweite zentrierte Moment, inkl. Varianzverschiebungssatz
+
+\paragraph{(Empirische) Standardabweichung}
+
+$$s=\sqrt{s^2}$$
+
+\paragraph{Variationskoeffizient}
+
+$$ \nu=\frac{s}{\bar{x}}$$
+
+\paragraph{Mittlere absolute Abweichung}
 
 
-    Stichprobenvarianz $s$
-    Standardabweichung $\sigma$
-    Spannweite R (engl. range)
-    Mittlere absolute Abweichung X
-    (Inter-)Quartilsabstand Q (engl. interquartile range; Abk. IQR)
+$$ \mathit{e} = \frac{1}{n}\sum_{i=1}^n \left|x_i - \bar{x}\right|$$
+
+Schätzer für das erste absolute zentrierte Moment 
+
+
+
+\end{multicols}
 
 \subsubsection{Konzentrationsmaße}
 
+\begin{multicols}{2}
 
-    Absolute Konzentration
-    Relative Konzentration
-    Atkinson-Maß
-    Gini-Koeffizient aus der Lorenz-Kurve
-    Herfindahl-Index (Herfindahl)
-    Hoover-Ungleichverteilung
-    Rosenbluth-Index
-    Theil-Index
+\paragraph{Lorenzkurve}
+
+$$u_0=0, v_0=0$$
+
+$$u_i=\frac{i}{n}, v_i= \frac{\sum\limits_{j=1}^i x_{(j)}}{\sum\limits_{j=1}^i x_{(j)}}$$
+
+
+\end{multicols}
 
 
 \subsubsection{Gestaltmaße}
 
+\begin{multicols}{2}
+\paragraph{(Empirische) Schiefe}
 
-    Schiefe (Statistik)
-    Wölbung (Statistik)
+$$\nu = \frac{n}{(n-1)(n-2)} \sum_{i=1}^n \left(\frac{x_i-\bar{x}}{s}\right)^3$$
+
+\noindent Schätzer für das dritte zentrierte Moment, normiert durch $(\sigma^2)^{2/3}$
+
+\paragraph{(Empirische) Wölbung/Kurtosis}
 
 
+
+\end{multicols}
 \subsubsection{Zusammenhangsmaße}
 
 
