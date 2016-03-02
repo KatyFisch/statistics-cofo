@@ -9,8 +9,10 @@
 \usepackage{titlesec}
 \usepackage{wrapfig}
 \usepackage{amsmath}
+\usepackage{ragged2e}
 \usepackage{multicol}
 \setlength{\columnseprule}{0.3pt}
+
 \usepackage{amsfonts}
 
 \onehalfspacing
@@ -47,6 +49,7 @@
 \section{Deskriptive Statistik}
 
 \raggedright
+\setlength{\parindent}{15pt}
 
 \subsection{Kenngrößen (Parameter)}
 \subsubsection{Lagemaße}
@@ -54,7 +57,7 @@
 
 \paragraph{Modus}
 
-Häufigster Wert von $x_i$. Auch mehrere Modi sind möglich (bimodal).
+\noindent Häufigster Wert von $x_i$. Auch mehrere Modi sind möglich (bimodal).
 
 \paragraph{Median}
 
@@ -64,7 +67,7 @@ $$\tilde{x}_{0.5}=\begin{cases} x_{((n+1)/2)} & \text{falls n ungerade} \\ \frac
 
 $$\tilde{x}_\alpha=\begin{cases} x_{(k)} & \text{falls n}\alpha \notin \mathbb{N}\\ \frac{1}{2}(x_{(n\alpha)}+ x_{(n\alpha+1)}) & \text{falls n}\alpha \text{ ganzzahlig} \end{cases}$$
 
-k=min x $\in \mathbb{N}$,  x $>$ n$\alpha$ 
+\noindent k=min x $\in \mathbb{N}$,  x $>$ n$\alpha$ 
 
 \paragraph{Minimum/Maximum}
 
@@ -122,21 +125,47 @@ $$ \nu=\frac{s}{\bar{x}}$$
 
 $$ \mathit{e} = \frac{1}{n}\sum_{i=1}^n \left|x_i - \bar{x}\right|$$
 
-Schätzer für das erste absolute zentrierte Moment 
+\noindent Schätzer für das erste absolute zentrierte Moment 
+
+
 
 
 
 \end{multicols}
 
-\subsubsection{Konzentrationsmaße}
 
+\subsubsection{Konzentrationsmaße}
 \begin{multicols}{2}
 
-\paragraph{Lorenzkurve}
+\paragraph{Gini-Koeffizient}
 
 $$u_0=0, v_0=0$$
 
+
 $$u_i=\frac{i}{n}, v_i= \frac{\sum\limits_{j=1}^i x_{(j)}}{\sum\limits_{j=1}^i x_{(j)}}$$
+
+
+\noindent Dies sind auch die Werte für die Lorenzkurve.
+
+\begin{equation*} 
+\begin{split}
+G & = \frac{2\sum\limits_{i=1}^n ix_{(i)}-(n+1)\sum\limits_{i=1}^n x_{(i)}}{n\sum\limits_{i=1}^n x_{(i)}} \\ & = 1-\frac{1}{n}\sum\limits_{i=1}^n(v_{i-1}+v_i)
+\end{split}
+\end{equation*}
+
+\indent Wertebereich: $ 0 \le G \le \frac{n-1}{n}$
+
+
+
+\paragraph{Lorenz-Münzner-Koeffizient ($G$ normiert)}
+
+$$G^+=\frac{n}{n-1}G$$
+
+\indent Wertebereich: $ 0 \le G^+ \le 1$
+
+
+
+
 
 
 \end{multicols}
@@ -152,19 +181,101 @@ $$\nu = \frac{n}{(n-1)(n-2)} \sum_{i=1}^n \left(\frac{x_i-\bar{x}}{s}\right)^3$$
 \noindent Schätzer für das dritte zentrierte Moment, normiert durch $(\sigma^2)^{2/3}$
 
 \paragraph{(Empirische) Wölbung/Kurtosis}
-
-
+dinfe
+f
 
 \end{multicols}
+
 \subsubsection{Zusammenhangsmaße}
 
+\begin{multicols}{2}
 
-    2.1 Für zwei nominale Variablen
-    2.2 Für zwei ordinale Variablen
-    2.3 Für zwei metrische Variablen
-    2.4 Für zwei Variablen unterschiedlichen Skalenniveaus
+\subsubsection*{\textit{Für zwei nominale Variablen}}
+
+\paragraph{$\chi^2$-Statistik}
+
+\begin{equation*}
+\begin{split}
+\chi^2 & =\sum\limits_{i=1}^k \sum\limits_{j=1}^l \frac{(n_{ij}-\frac{n_{i+}n_{+j}}{n})^2}{\frac{n_{i+}n_{+j}}{n}} \\ & =n\left(\sum\limits_{i=1}^k \sum\limits_{j=1}^l \frac{n_{ij}^2}{n_{i+}n_{+j}}-1\right)
+\end{split}
+\end{equation*}
+
+Wertebereich: $ 0 \le \chi^2 \le n(\min(k,l)-1)$
+
+\paragraph{Phi-Koeffizient}
+
+$$\Phi=\sqrt{\frac{\chi^2}{n}}$$
+
+Wertebereich: $ 0 \le \Phi \le \sqrt{\min(k,l)-1}$
+
+\paragraph{Cram\'ers $V$}
+
+$$ V= \sqrt{\frac{\chi^2}{\min(k,l)-1}}$$
+
+Wertebereich: $ 0 \le V \le 1$
+
+\paragraph{Kontingenzkoeffizient $C$}
+
+$$C=\sqrt{\frac{\chi^2}{\chi^2 + n}}$$
+
+Wertebereich: $ 0 \le C \le \sqrt{\frac{\min(k,l)-1}{\min(k,l)}} $
+
+\paragraph{Korrigierter Kontingenzkoeffizient $C_{korr}$}
+
+$$C_{korr}= \sqrt{\frac{\min(k,l)}{\min(k,l)-1}} \cdot \sqrt{\frac{\chi^2}{\chi^2 + n}} $$
+
+Wertebereich: $ 0 \le C_{korr} \le 1 $
+
+\paragraph{Odds-Ratio}
+
+$$OR=\frac{ad}{bc} = \frac{n_{ii}n_{jj}}{n_{ij}n_{ji}}$$
+
+Wertebereich: $0 \le OR < \infty$
+
+\subsubsection*{\textit{Für zwei ordinale Variablen}}
+
+\paragraph{Gamma nach Goodman und Kruskal}
+
+$$\gamma=\frac{K-D}{K+D}$$
+
+
+\begin{flushleft}
+$ K=\sum_{i<m}\sum_{j<n}n_{ij}n_{mn}$
+
+ $ D=\sum_{i<m}\sum_{j>n}n_{ij}n_{mn}$
+\end{flushleft}
+
+\vspace{0.2cm}
+
+Wertebereich: $-1 \le \gamma \le 1$
+
+\paragraph{Kendalls $\tau_b$}
+
+$$ \tau_b=\frac{K-D}{\sqrt{(K+D+T_X)(K+D+T_Y)}}$$
+
+
+\begin{flushleft}
+  $ T_X=\sum_{i=m}\sum_{j<n}n_{ij}n_{mn}$ 
+
+ $ T_Y=\sum_{i<m}\sum_{j=n}n_{ij}n_{mn}$
+\end{flushleft}
+
+\vspace{0.2cm}
+
+Wertebereich: $-1 \le \tau_b \le 1$
+
+\paragraph{Kendalls/Stuarts $\tau_c$}
+
+$$\tau_c=\frac{2\min(k,l)(K-D)}{n^2(\min(k,l)-1)}$$
+
+Wertebereich: $-1 \le \tau_c \le 1$
+
+
+\subsubsection*{\textit{Für zwei metrische Variablen}}
+%\subsubsection*{\textit{Für zwei unterschiedliche Variablen}}
 
 (Wiki)
+\end{multicols}
 
 \subsection{Tabellen}
 
