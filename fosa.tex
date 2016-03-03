@@ -1,44 +1,60 @@
-\documentclass[10pt]{article}
+% To Do: no pagebreak (in multicol) for paragraphs
+%        Find out Formula for Kurtosis
+%        raggedbottom funktioniert nicht
+%        commentare - two versions
+\documentclass[8pt]{extarticle}
 \usepackage[english, ngerman]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{xcolor}
-\usepackage[a4paper,margin=2.5cm]{geometry} \usepackage{blindtext}
+\usepackage[a4paper,left=2.3cm,right=1.2cm,top=2cm,bottom=2cm]{geometry} 
+\usepackage{blindtext}
 \usepackage{setspace}
 \usepackage{float}
 \usepackage{titletoc}
 \usepackage{titlesec}
 \usepackage{wrapfig}
 \usepackage{amsmath}
-\usepackage{ragged2e}
 \usepackage{multicol}
-\setlength{\columnseprule}{0.3pt}
-
 \usepackage{amsfonts}
-
 \onehalfspacing
 \usepackage[hidelinks]{hyperref}
+\usepackage[all]{nowidow} %funktioniert nicht....
 
+% Inhaltsverzeichnis mit zwei Spalten
+\usepackage[toc]{multitoc}
+\renewcommand*{\multicolumntoc}{2}
+
+
+%Überschriftengrößen anpassen, so dass Paragraph kleiner ist als Subsubsection
 \titleformat{\section}
   {\normalfont\fontsize{16}{15}\bfseries}{\thesection}{1em}{}
-
 \titleformat{\subsection}
   {\normalfont\fontsize{14}{15}\bfseries}{\thesubsection}{1em}{}
-
 \titleformat{\subsubsection}
   {\normalfont\fontsize{12}{15}\bfseries}{\thesubsubsection}{1em}{}
 
 
 \begin{document}
-\title{Statistik Formelsammlung}
-\author{Katharina Ring}
-\date{\today}
-\maketitle
+\title{\Huge Statistik Formelsammlung}
+\author{\LARGE Katharina Ring}
+\date{\LARGE \today}
+\Huge \maketitle \normalsize
 
 \clearpage
 
 \tableofcontents
 
 \clearpage
+
+
+% weitere Anpassungen im Hauptteil des Dokuments
+\raggedright %linksbündig
+\setlength{\parindent}{15pt} %Einzuglänge festsetzen
+\setlength{\columnseprule}{0.3pt} %Liniendicke zwischen zwei Multicols
+\raggedbottom %funktioniert nicht
+
+
+
 
 %-------------------------------------------------------------------------------
 
@@ -48,16 +64,15 @@
 
 \section{Deskriptive Statistik}
 
-\raggedright
-\setlength{\parindent}{15pt}
+
 
 \subsection{Kenngrößen (Parameter)}
-\subsubsection{Lagemaße}
-\begin{multicols}{2}
+
+\begin{multicols}{2}[\subsubsection{Lagemaße}][4cm] 
 
 \paragraph{Modus}
 
-\noindent Häufigster Wert von $x_i$. Auch mehrere Modi sind möglich (bimodal).
+ Häufigster Wert von $x_i$. Auch zwei oder mehr Modi sind möglich (bimodal).
 
 \paragraph{Median}
 
@@ -67,13 +82,17 @@ $$\tilde{x}_{0.5}=\begin{cases} x_{((n+1)/2)} & \text{falls n ungerade} \\ \frac
 
 $$\tilde{x}_\alpha=\begin{cases} x_{(k)} & \text{falls n}\alpha \notin \mathbb{N}\\ \frac{1}{2}(x_{(n\alpha)}+ x_{(n\alpha+1)}) & \text{falls n}\alpha \text{ ganzzahlig} \end{cases}$$
 
-\noindent k=min x $\in \mathbb{N}$,  x $>$ n$\alpha$ 
+mit
+
+\begin{tabular}{l l}
+ k=min x $\in \mathbb{N}$, &  x $>$ n$\alpha$ \\
+\end{tabular}
 
 \paragraph{Minimum/Maximum}
 
 
-$$x_{min}=\min_{i \in \{ 1,...,N\}} (x_i) \hspace{0.8cm}   x_{max}=\max_{i \in \{ 1,...,N\}} (x_i)$$ 
-
+$$x_{\min}=\min_{i \in \{ 1,...,N\}} (x_i) \hspace{0.8cm}   x_{\max}=\max_{i \in \{ 1,...,N\}} (x_i)$$
+ 
 
 
 \paragraph{Arithmetisches Mittel}
@@ -93,10 +112,11 @@ $$\bar{x}_G=\sqrt[n]{\sum\limits_{i=1}^n x_i} $$
 
 $$\bar{x}_H=\frac{\sum\limits_{i=1}^n w_i}{\sum\limits_{i=1}^n \frac{w_i}{x_i}}$$
 
-\end{multicols}
-\subsubsection{Streuungsmaße}
 
-\begin{multicols}{2}
+\end{multicols}
+
+
+\begin{multicols}{2}[\subsubsection{Streuungsmaße}][4cm] 
 
 \paragraph{Spannweite}
 
@@ -127,33 +147,31 @@ $$ \mathit{e} = \frac{1}{n}\sum_{i=1}^n \left|x_i - \bar{x}\right|$$
 
 \noindent Schätzer für das erste absolute zentrierte Moment 
 
-
-
-
-
 \end{multicols}
 
 
-\subsubsection{Konzentrationsmaße}
-\begin{multicols}{2}
+
+\begin{multicols}{2}[\subsubsection{Konzentrationsmaße}][4cm] 
 
 \paragraph{Gini-Koeffizient}
 
-$$u_0=0, v_0=0$$
+\begin{equation*} 
+\begin{split}
+G & = \frac{2\sum\limits_{i=1}^n ix_{(i)}-(n+1)\sum\limits_{i=1}^n x_{(i)}}{n\sum\limits_{i=1}^n x_{(i)}}  = 1-\frac{1}{n}\sum\limits_{i=1}^n(v_{i-1}+v_i)
+\end{split}
+\end{equation*}
 
+mit
 
-$$u_i=\frac{i}{n}, v_i= \frac{\sum\limits_{j=1}^i x_{(j)}}{\sum\limits_{j=1}^i x_{(j)}}$$
+$$  u_i=\frac{i}{n}, \hspace{0.3cm} v_i= \frac{\sum\limits_{j=1}^i x_{(j)}}{\sum\limits_{j=1}^i x_{(j)}} \hspace{0.7cm} (u_0=0, \hspace{0.2cm} v_0=0 )$$
 
 
 \noindent Dies sind auch die Werte für die Lorenzkurve.
 
-\begin{equation*} 
-\begin{split}
-G & = \frac{2\sum\limits_{i=1}^n ix_{(i)}-(n+1)\sum\limits_{i=1}^n x_{(i)}}{n\sum\limits_{i=1}^n x_{(i)}} \\ & = 1-\frac{1}{n}\sum\limits_{i=1}^n(v_{i-1}+v_i)
-\end{split}
-\end{equation*}
+\ \\
 
 \indent Wertebereich: $ 0 \le G \le \frac{n-1}{n}$
+
 
 
 
@@ -171,24 +189,30 @@ $$G^+=\frac{n}{n-1}G$$
 \end{multicols}
 
 
-\subsubsection{Gestaltmaße}
 
-\begin{multicols}{2}
+
+\begin{multicols}{2}[\subsubsection{Gestaltmaße}][4cm] 
 \paragraph{(Empirische) Schiefe}
 
 $$\nu = \frac{n}{(n-1)(n-2)} \sum_{i=1}^n \left(\frac{x_i-\bar{x}}{s}\right)^3$$
 
-\noindent Schätzer für das dritte zentrierte Moment, normiert durch $(\sigma^2)^{2/3}$
+\noindent Schätzer für das dritte zentrierte Moment, normiert durch $(\sigma^2)^{\frac{2}{3}}$
 
 \paragraph{(Empirische) Wölbung/Kurtosis}
-dinfe
-f
+
+$$k=\left[n(n+1) \cdot \sum_{i=1}^n \left(\frac{x_i-\bar{x}}{s}\right)^4 - 3(n-1)\right] \cdot \frac{n-1}{(n-2)(n-3)}+3$$
+
+\noindent Schätzer für das vierte zentrierte Moment, normiert durch $(\sigma^2)^2$
+
+\paragraph{Exzess}
+
+$$\gamma=k-3$$
 
 \end{multicols}
 
-\subsubsection{Zusammenhangsmaße}
 
-\begin{multicols}{2}
+
+\begin{multicols}{2}[\subsubsection{Zusammenhangsmaße}][4cm]
 
 \subsubsection*{\textit{Für zwei nominale Variablen}}
 
@@ -196,7 +220,7 @@ f
 
 \begin{equation*}
 \begin{split}
-\chi^2 & =\sum\limits_{i=1}^k \sum\limits_{j=1}^l \frac{(n_{ij}-\frac{n_{i+}n_{+j}}{n})^2}{\frac{n_{i+}n_{+j}}{n}} \\ & =n\left(\sum\limits_{i=1}^k \sum\limits_{j=1}^l \frac{n_{ij}^2}{n_{i+}n_{+j}}-1\right)
+\chi^2 & =\sum\limits_{i=1}^k \sum\limits_{j=1}^l \frac{(n_{ij}-\frac{n_{i+}n_{+j}}{n})^2}{\frac{n_{i+}n_{+j}}{n}}  =n\left(\sum\limits_{i=1}^k \sum\limits_{j=1}^l \frac{n_{ij}^2}{n_{i+}n_{+j}}-1\right)
 \end{split}
 \end{equation*}
 
@@ -239,13 +263,12 @@ Wertebereich: $0 \le OR < \infty$
 $$\gamma=\frac{K-D}{K+D}$$
 
 
-\begin{flushleft}
-$ K=\sum_{i<m}\sum_{j<n}n_{ij}n_{mn}$
+\begin{tabular}{l l }
+$ K=\sum_{i<m}\sum_{j<n}n_{ij}n_{mn}$ & Anzahl konkordanter Paare \\
+$ D=\sum_{i<m}\sum_{j>n}n_{ij}n_{mn}$ & Anzahl diskordanter Paare \\
+\end{tabular}
 
- $ D=\sum_{i<m}\sum_{j>n}n_{ij}n_{mn}$
-\end{flushleft}
-
-\vspace{0.2cm}
+\ \\
 
 Wertebereich: $-1 \le \gamma \le 1$
 
@@ -253,14 +276,14 @@ Wertebereich: $-1 \le \gamma \le 1$
 
 $$ \tau_b=\frac{K-D}{\sqrt{(K+D+T_X)(K+D+T_Y)}}$$
 
+mit
 
-\begin{flushleft}
-  $ T_X=\sum_{i=m}\sum_{j<n}n_{ij}n_{mn}$ 
+\begin{tabular}{l l } 
+$ T_X=\sum_{i=m}\sum_{j<n}n_{ij}n_{mn}$ & Anzahl Bindungen bzgl. $X$ \\
+$ T_Y=\sum_{i<m}\sum_{j=n}n_{ij}n_{mn}$ & Anzahl Bindungen bzgl. $Y$ \\
+\end{tabular}
 
- $ T_Y=\sum_{i<m}\sum_{j=n}n_{ij}n_{mn}$
-\end{flushleft}
-
-\vspace{0.2cm}
+\ \\
 
 Wertebereich: $-1 \le \tau_b \le 1$
 
@@ -270,11 +293,46 @@ $$\tau_c=\frac{2\min(k,l)(K-D)}{n^2(\min(k,l)-1)}$$
 
 Wertebereich: $-1 \le \tau_c \le 1$
 
+\paragraph{Spearmans Rangkorrelationskoeffizient}
+
+$$R=\frac{n(n^2-1)-\frac{1}{2}\sum\limits_{j=1}^J b_j(b_j^2-1)-\frac{1}{2}\sum\limits_{k=1}^K c_k(c_k^2-1)-6\sum\limits_{i=1}^n d_i^2}{\sqrt{n(n^2-1)-\sum\limits_{j=1}^J b_j(b_j^2-1)}\sqrt{n(n^2-1)-\sum\limits_{k=1}^Kc_k(c_k^2-1)}}$$
+
+ Entspricht ohne Bindungen:
+
+$$R=1-\frac{6\sum\limits_{i=1}^nd_i^2}{n(n^2-1)}$$
+
+mit
+
+\begin{tabular}{l l } 
+ $d_i=R(x_i)-R(y_i)$ & Rangdifferenz \\ 
+\end{tabular}
+
+\ \\
+
+Wertebereich: $-1 \le R \le 1$
 
 \subsubsection*{\textit{Für zwei metrische Variablen}}
+
+\paragraph{Korrelationskoeffizient nach Bravais-Pearson}
+
+$$r=\frac{S_{xy}}{\sqrt{S_{xx}S_{yy}}}=\frac{s_{xy}}{\sqrt{s_{xx}s_{yy}}}$$
+
+mit
+
+\begin{tabular}{l l } 
+$S_{xy}=\sum\limits_{i=1}^n(x_i-\bar{x})^2(y_i-\bar{y})^2$ & bzw. $s_{xy}=\frac{S_{xy}}{n}$ \\
+$S_{xx}=\sum\limits_{i=1}^n(x_i-\bar{x})^2$ & bzw. $s_{xx}=\frac{S_{xx}}{n}$ \\ 
+$S_{yy}=\sum\limits_{i=1}^n(y_i-\bar{y})^2$ & bzw. $s_{yy}=\frac{S_{yy}}{n}$ \\
+\end{tabular}
+
+\ \\
+
+Wertebereich: $-1 \le r \le 1$
+
+
 %\subsubsection*{\textit{Für zwei unterschiedliche Variablen}}
 
-(Wiki)
+
 \end{multicols}
 
 \subsection{Tabellen}
