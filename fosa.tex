@@ -1,4 +1,4 @@
-% To Do: 
+% To Do: paragrah widow penalty
 %        
 %        
 \documentclass[8pt]{extarticle}
@@ -17,6 +17,9 @@
 \usepackage{multicol}
 \usepackage{amsfonts}
 \usepackage{comment}
+\usepackage{booktabs}
+\usepackage{wrapfig}
+\usepackage{verbatimbox}
 \usepackage[framemethod=TikZ]{mdframed}
 \onehalfspacing
 \usepackage[hidelinks]{hyperref}
@@ -26,6 +29,8 @@
 \includecomment{Extensiv} 
 \includecomment{Beweis} 
 \includecomment{Annahmen}
+\includecomment{Mathspez}
+\includecomment{Mathfolg}
 \mdfdefinestyle{MyFrame}{%
     linecolor=black!20!,
     outerlinewidth=0.2pt,
@@ -41,6 +46,8 @@
 %\excludecomment{Extensiv} 
 %\excludecomment{Beweis} 
 \excludecomment{Annahmen}
+%\excludecomment{Mathspez}
+%\excludecomment{Mathfolg}
 
 % Inhaltsverzeichnis mit zwei Spalten
 \usepackage[toc]{multitoc}
@@ -410,7 +417,91 @@ $$h^* \approx 3.5\sigma n^{-\frac{1}{3}}$$
 
 %-------------------------------------------------------------------------------
 
-\section{Wahrscheinlichkeitsrechnung}
+\section{Wahrscheinlichkeit}
+
+\subsection{Kombinatorik}
+
+
+
+% first column
+\begin{minipage}[t]{0.7\textwidth}
+\begin{tabular}{l l || c | c}
+& & ohne Wiederholung & mit Wiederholung \\
+\midrule
+Permutationen & & $n!$ & $\frac{n!}{n_1!\cdot\cdot\cdot n_s!}$ \\
+\midrule
+Kombinationen: & ohne Reihenfolge & $\binom{n}{m}$ & $\binom{n+m-1}{m}$ \\
+& mit Reihenfolge & $\binom{n}{m}m!$ & $n^m$ \\
+\end{tabular}
+\end{minipage}
+%second column
+\begin{Mathspez}
+\begin{minipage}[b]{0.2\textwidth}
+Dabei gilt: 
+
+
+ $n!=n\cdot (n-1)\cdot ... \cdot 1$
+
+ $\binom{n}{m} = \frac{n!}{m!(n-m)!}$
+
+\end{minipage}
+\end{Mathspez}
+
+
+\begin{multicols}{2}[\subsection{Wahrscheinlichkeitsrechnung}][4cm]
+
+\paragraph{Laplace-Wahrscheinlichkeit}
+
+$$P(A)=\frac{|A|}{|\Omega|}$$
+
+\paragraph{Axiome von Kolmogorov}
+
+
+\addvbuffer[12pt 8pt]{\begin{tabular}{c l}
+
+(1) & $0 \le P(A) \le 1$ \\
+
+(2) & $P(\Omega) = 1$ \\
+
+(3) & $P(A\cup B) = P(A)+P(B) \hspace{0.5cm} \text{(für A und B disjunkt)}$ \\
+\end{tabular}}
+
+
+\begin{Mathfolg}
+
+Folgerungen:
+\begin{itemize}
+\item $P(\bar{A})=1-P(A)$
+\item $P(\emptyset)=0$
+\item $P(A\cup B)=P(A)+P(B)-P(A\cap B)$
+\item $A \subseteq B \Rightarrow P(A) \le P(B)$
+\item $P(B)=\sum\limits_{i=1}^n P(B\cap A_i), \textnormal{ f"ur } A_i,...,A_n$  vollst\"andige Zerlegung von  $\Omega$  in paarweise disjunkte Ereignisse
+\end{itemize}
+
+\end{Mathfolg}
+
+\paragraph{Bedingte Wahrscheinlichkeit}
+
+$$P(A|B)=\frac{P(A \cap B)}{P(B)} \hspace{0.5cm} \text{für } P(B) > 0$$
+
+\paragraph{Multiplikationssatz}
+
+$$P(A \cap B)=P(B|A)P(A)=P(A|B)P(B)$$
+
+\paragraph{Satz von der totalen Wahrscheinlichkeit}
+
+$$P(B)=\sum\limits_{i=1}^nP(B|A_i)P(A_i)$$
+
+\paragraph{Satz von Bayes}
+
+$$P(A|B)=\frac{P(B|A)P(A)}{P(B)} \hspace{0.5cm} \text{für } P(A), P(B) > 0$$
+
+\paragraph{Statistische Unabhängigkeit}
+
+$$ \text{A, B unabhängig} \Leftrightarrow P(A\cap B)=P(A)+P(B)$$
+
+\end{multicols}
+
 
 
 %-------------------------------------------------------------------------------
@@ -467,9 +558,6 @@ $$y_i=\beta_0+\beta_1x_i+u_i$$
 $$\hat{y}_i=\hat{\beta}_0+\hat{\beta}_1x_i+e_i$$
 
 \paragraph{Eigenschaften der Regressionsgeraden}
-
-
-
 \begin{equation*}
 \begin{split}
 \hat{y}_i & = \hat{\beta}_0+\hat{\beta}_1x_i  =\bar{y}+ \hat{\beta}_1(x_i-\bar{x}) \\
@@ -494,12 +582,11 @@ $$\hat{y}_i=\hat{\beta}_0+\hat{\beta}_1x_i+e_i$$
 $$SS_{Total}=SS_{Explained}+SS_{Residual}$$
 
 mit
-
-\begin{tabular}{r l l}
-$SS_{Total}$ & $=$ & $ \sum\limits_{i=1}^n(y_i-\bar{y})^2$ \\
-$SS_{Explained}$ & $=$ & $ \sum\limits_{i=1}^n(\hat{y}_i-\bar{y})^2$ \\
-$SS_{Residual}$ & $=$ & $ \sum\limits_{i=1}^n(y_i-\hat{y}_i)^2=\sum\limits_{i=1}^n e_i^2=S_{yy}-\hat{\beta}^2S_{xx}$ \\
-\end{tabular}
+\begin{align*}
+SS_{Total}  &=  \sum\limits_{i=1}^n(y_i-\bar{y})^2 \\
+SS_{Explained} &= \sum\limits_{i=1}^n(\hat{y}_i-\bar{y})^2 \\
+SS_{Residual} &= \sum\limits_{i=1}^n(y_i-\hat{y}_i)^2=\sum\limits_{i=1}^n e_i^2=S_{yy}-\hat{\beta}^2S_{xx} 
+\end{align*}
 
 \end{multicols}
 
