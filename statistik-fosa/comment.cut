@@ -1,1 +1,0 @@
-$E\left[y\right] = E\left[\hat{\beta}_0+\hat{\beta}_1 x+\hat{e}\right] \iff \hat{\beta}_0 = E\left[y\right] - \hat{\beta}_1E\left[x\right]$
