@@ -20,6 +20,7 @@
 \usepackage{booktabs}
 \usepackage{wrapfig}
 \usepackage{verbatimbox}
+\usepackage{enumitem}
 \usepackage[framemethod=TikZ]{mdframed}
 \onehalfspacing
 \usepackage[hidelinks]{hyperref}
@@ -31,6 +32,7 @@
 \includecomment{Annahmen}
 \includecomment{Mathspez}
 \includecomment{Mathfolg}
+\includecomment{Rechreg}
 \mdfdefinestyle{MyFrame}{%
     linecolor=black!20!,
     outerlinewidth=0.2pt,
@@ -41,6 +43,7 @@
     innerleftmargin=10pt,
     backgroundcolor=white}
 \specialcomment{Beweis}{\begin{mdframed}[style=MyFrame] Beweis: \ \\}{\end{mdframed}}
+\specialcomment{Rechreg}{\noindent \textit{Rechenregeln:} \begin{itemize}[nosep,label=$\star$] }{\end{itemize}}
 
 % Hier die Ausführlichkeit bestimmen:
 %\excludecomment{Extensiv} 
@@ -52,6 +55,8 @@
 % Inhaltsverzeichnis mit zwei Spalten
 \usepackage[toc]{multitoc}
 \renewcommand*{\multicolumntoc}{2}
+
+
 
 
 %Überschriftengrößen anpassen, so dass Paragraph kleiner ist als Subsubsection
@@ -93,9 +98,9 @@
 
 \section{Deskriptive Statistik}
 
+\subsection{Kenngrößen (Parameter): Zufallsvariablen}
 
-
-\subsection{Kenngrößen (Parameter)}
+\subsection{Kenngrößen (Parameter): Stichprobe}
 
 \begin{multicols}{2}[\subsubsection{Lagemaße}][4cm] 
 
@@ -131,6 +136,11 @@ $$x_{\min}=\min_{i \in \{ 1,...,N\}} (x_i) \hspace{0.8cm}   x_{\max}=\max_{i \in
 \noindent Schätzer für den Erwartungswert 
 $\mu = E[X]$ (erstes~Verteilungsmoment)
 
+\begin{Rechreg}
+\item $E(a+b\cdot X)=a+b\cdot E(X)$
+\item $E(X\pm Y)=E(X)\pm E(Y)$
+\end{Rechreg}
+
 \paragraph{Geometrisches Mittel}
 
 $$\bar{x}_G=\sqrt[n]{\sum\limits_{i=1}^n x_i} $$
@@ -160,6 +170,11 @@ $$d_Q=\tilde{x}_{0.75}-\tilde{x}_{0.25}$$
 $$s^2=\frac{1}{n}\sum\limits_{i=1}^n(x_i-\bar{x})^2=\frac{1}{n}\sum\limits_{i=1}^nx_i^2-\bar{x}^2$$
 
 \noindent Schätzer für das zweite zentrierte Moment, inkl. Varianzverschiebungssatz
+
+\begin{Rechreg}
+\item $Var(aX+b)=a^2\cdot Var(X)$
+\item $Var(X\pm Y)= Var(X)+Var(Y) + 2Cov(X,Y)$
+\end{Rechreg}
 
 \paragraph{(Empirische) Standardabweichung}
 
@@ -425,14 +440,14 @@ $$h^* \approx 3.5\sigma n^{-\frac{1}{3}}$$
 
 % first column
 \begin{minipage}[t]{0.7\textwidth}
-\begin{tabular}{l l || c | c}
+\addvbuffer[12pt 8pt]{\begin{tabular}{l l || c | c}
 & & ohne Wiederholung & mit Wiederholung \\
 \midrule
 Permutationen & & $n!$ & $\frac{n!}{n_1!\cdot\cdot\cdot n_s!}$ \\
 \midrule
 Kombinationen: & ohne Reihenfolge & $\binom{n}{m}$ & $\binom{n+m-1}{m}$ \\
 & mit Reihenfolge & $\binom{n}{m}m!$ & $n^m$ \\
-\end{tabular}
+\end{tabular}}
 \end{minipage}
 %second column
 \begin{Mathspez}
@@ -498,7 +513,10 @@ $$P(A|B)=\frac{P(B|A)P(A)}{P(B)} \hspace{0.5cm} \text{für } P(A), P(B) > 0$$
 
 \paragraph{Statistische Unabhängigkeit}
 
-$$ \text{A, B unabhängig} \Leftrightarrow P(A\cap B)=P(A)+P(B)$$
+\begin{alignat*}{2}
+ \text{A, B unabhängig}  \Leftrightarrow  && P(A\cap B) &= P(A)+P(B) \\
+ \text{X, Y unabhängig}  \Leftrightarrow && f_{XY}(x,y) &= f_X(x)\cdot f_Y(y) \hspace{0.5cm} \forall x,y
+\end{alignat*}
 
 \end{multicols}
 
