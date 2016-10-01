@@ -48,7 +48,7 @@
 % Hier die Ausführlichkeit bestimmen:
 %\excludecomment{Extensiv} 
 %\excludecomment{Beweis} 
-\excludecomment{Annahmen}
+%\excludecomment{Annahmen}
 %\excludecomment{Mathspez}
 %\excludecomment{Mathfolg}
 
@@ -98,7 +98,6 @@
 
 \section{Deskriptive Statistik}
 
-\subsection{Kenngrößen (Parameter): Zufallsvariablen}
 
 \subsection{Kenngrößen (Parameter): Stichprobe}
 
@@ -339,11 +338,15 @@ Wertebereich: $-1 \le \tau_c \le 1$
 
 \paragraph{Spearmans Rangkorrelationskoeffizient}
 
-$$R=\frac{n(n^2-1)-\frac{1}{2}\sum\limits_{j=1}^J b_j(b_j^2-1)-\frac{1}{2}\sum\limits_{k=1}^K c_k(c_k^2-1)-6\sum\limits_{i=1}^n d_i^2}{\sqrt{n(n^2-1)-\sum\limits_{j=1}^J b_j(b_j^2-1)}\sqrt{n(n^2-1)-\sum\limits_{k=1}^Kc_k(c_k^2-1)}}$$
+$$\rho=\frac{n(n^2-1)-\frac{1}{2}\sum\limits_{j=1}^J b_j(b_j^2-1)-\frac{1}{2}\sum\limits_{k=1}^K c_k(c_k^2-1)-6\sum\limits_{i=1}^n d_i^2}{\sqrt{n(n^2-1)-\sum\limits_{j=1}^J b_j(b_j^2-1)}\sqrt{n(n^2-1)-\sum\limits_{k=1}^Kc_k(c_k^2-1)}}$$
+
+oder
+
+$$\rho=\frac{s_{rg_xrg_y}}{\sqrt{s_{rg_xrg_x}s_{rg_yrg_y}}}$$
 
  Entspricht ohne Bindungen:
 
-$$R=1-\frac{6\sum\limits_{i=1}^nd_i^2}{n(n^2-1)}$$
+$$\rho=1-\frac{6\sum\limits_{i=1}^nd_i^2}{n(n^2-1)}$$
 
 mit
 
@@ -353,7 +356,7 @@ mit
 
 \ \\
 
-Wertebereich: $-1 \le R \le 1$
+Wertebereich: $-1 \le \rho \le 1$
 
 \subsubsection*{\textit{Für zwei metrische Variablen}}
 
@@ -511,7 +514,7 @@ $$P(B)=\sum\limits_{i=1}^nP(B|A_i)P(A_i)$$
 
 $$P(A|B)=\frac{P(B|A)P(A)}{P(B)} \hspace{0.5cm} \text{für } P(A), P(B) > 0$$
 
-\paragraph{Statistische Unabhängigkeit}
+\paragraph{Stochastische Unabhängigkeit}
 
 \begin{alignat*}{2}
  \text{A, B unabhängig}  \Leftrightarrow  && P(A\cap B) &= P(A)+P(B) \\
@@ -521,7 +524,42 @@ $$P(A|B)=\frac{P(B|A)P(A)}{P(B)} \hspace{0.5cm} \text{für } P(A), P(B) > 0$$
 \end{multicols}
 
 
+\begin{multicols}{2}[\subsection{Zufallsvariablen}][4cm]
 
+  \paragraph{Diskrete Zufallsvariablen}
+  
+
+
+\end{multicols}
+
+\subsection{Verteilungen}
+
+\begin{multicols}{2}[\subsubsection{Diskrete Verteilungen}][4cm]
+
+  \paragraph{Diskrete Gleichverteilung}
+  
+
+
+\end{multicols}
+
+\begin{multicols}{2}[\subsubsection{Stetige Verteilungen}][4cm]
+
+  \paragraph{Stetige Gleichverteilung}
+  
+
+
+\end{multicols}
+
+\begin{multicols}{2}[\subsubsection{Grenzwertsätze und Approximationen}][4cm]
+
+  \paragraph{Gesetz der großen Zahlen}
+  
+
+
+\end{multicols}
+
+
+  
 %-------------------------------------------------------------------------------
 
 % SECTION: HYPOTHESENTESTS
@@ -529,6 +567,16 @@ $$P(A|B)=\frac{P(B|A)P(A)}{P(B)} \hspace{0.5cm} \text{für } P(A), P(B) > 0$$
 %-------------------------------------------------------------------------------
 
 \section{Hypothesentests}
+
+\subsection{Tests für Einstichprobenprobleme}
+
+\begin{multicols}{2}[\subsubsection{Normalverteilung}][4cm]
+
+  \paragraph{ $\mu$ gesucht, $\sigma^2 $ bekannt (Einfacher Gauß-Test)}
+  
+
+
+\end{multicols}
 
 %-------------------------------------------------------------------------------
 
