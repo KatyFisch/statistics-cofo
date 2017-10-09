@@ -25,6 +25,7 @@
 \onehalfspacing
 \usepackage[hidelinks]{hyperref}
 \usepackage[all]{nowidow} %funktioniert nicht....
+\setlength\parindent{0pt}
 
 %Hier sind die unterschiedlichen Ausführlichkeitsgrade definiert
 \includecomment{Extensiv} 
@@ -44,6 +45,9 @@
     backgroundcolor=white}
 \specialcomment{Beweis}{\begin{mdframed}[style=MyFrame] Beweis: \ \\}{\end{mdframed}}
 \specialcomment{Rechreg}{\noindent \textit{Rechenregeln:} \begin{itemize}[nosep,label=$\star$] }{\end{itemize}}
+\renewcommand\ThisComment[1]{% Fix for Umlauts in comments
+  \immediate\write\CommentStream{\unexpanded{#1}}%
+}
 
 % Hier die Ausführlichkeit bestimmen:
 %\excludecomment{Extensiv} 
@@ -537,8 +541,24 @@ $$P(A|B)=\frac{P(B|A)P(A)}{P(B)} \hspace{0.5cm} \text{für } P(A), P(B) > 0$$
 \begin{multicols}{2}[\subsubsection{Diskrete Verteilungen}][4cm]
 
   \paragraph{Diskrete Gleichverteilung}
-  
 
+  \paragraph{Poisson}
+  Zählmodelle für seltene Ereignisse
+
+\begin{Annahmen}
+\noindent Immer nur ein Ereignis pro Zeitpunkt, Eintreten der Ereignisse ist unabhängig von bisheriger Geschichte, mittlere Anzahl der Ereignisse pro Zeit ist konstant und proportional zur Länge des betrachteten Zeitintervalls.
+  
+\end{Annahmen}
+
+  \begin{align*}
+    & X \sim Po(\lambda) \text{ mit } \lambda \in \left[ 0, + \infty \right] \\
+    & P(X=x|\lambda) =\frac{\lambda^x exp^{-\lambda}}{x!} \\
+    & E(X|p) = \lambda , Var(X|p) = \lambda
+  \end{align*}
+
+\noindent Häufig wird die Varianz durchdas Poisson-Modell unterschätzt, es liegt Überdispersion vor.
+  
+\noindent  \textit{Approximation} der Binomialverteilung für kleine p
 
 \end{multicols}
 
@@ -695,17 +715,18 @@ Wertebereich: $0 \le R^2 \le 1$
 
 \begin{multicols}{2}[\subsubsection{Grundlagen}][4cm] 
 
-  \paragraph{Bayes-Formel}
-  $$P(A|B)=\frac{P(B|A)P(A)}{P(B)} \hspace{0.5cm} \text{für } P(A), P(B) > 0$$
+\paragraph{Bayes-Formel}
+$$P(A|B)=\frac{P(B|A)P(A)}{P(B)} \hspace{0.5cm} \text{für } P(A), P(B) > 0$$
 
-  \center  oder allgemeiner:
-  
+\begin{center}oder allgemeiner:\end{center}
+
+\vspace{-1 em}
+
 \begin{align*}
   f(\theta | X) &= \frac{f(X | \theta ) \cdot f(\theta)}{\int f(X|\tilde{\theta}) f(\tilde{\theta})  d \tilde{\theta}}\\
-  &= C \cdot f(X | \theta ) \cdot f(\theta) \\
+  &= C \cdot f(X | \theta ) \cdot f(\theta) \hspace{1 em} \text{wähle C so, dass $\int f(\theta | X)=1$} \\
   &\propto f(X | \theta ) \cdot f(\theta)
 \end{align*}
-
 
 \paragraph{Punktschätzer}
 
@@ -715,10 +736,33 @@ Wertebereich: $0 \le R^2 \le 1$
 
 \paragraph{Prädiktive Posteriori}
 
-\paragraph{Uninformative Priori}
+$$f(x_Z|\mathbf{x}) =\int f(x_Z, \lambda|\mathbf{x})d\lambda = \int f(x_Z|\lambda)p(\lambda|\mathbf{x})$$
+
+\paragraph{Uninformative Priori} ~\\
+
+$f(\theta)=const. \text{ für } \theta > 0$
+,  damit:
+ $f(\theta | X) = C \cdot f(X | \theta )$
+
+\noindent (Da $\int f(\theta) =1$ so nicht möglich, ist das eigentlich keine Dichte)
 
 \paragraph{Konjugierte Priori}
 
+\begin{Extensiv}
+~\\
+  \noindent Wenn die Priori- und die Posteriori-Verteilung denselben Typ hat für eine gegebene Likelihoodfunktion, so nennt man sie konjugiert.
+  
+\end{Extensiv}
+
+\vspace{1 em}
+\noindent Binomial-Beta-Modell: \begin{itemize}
+  \vspace{-0.7 em}
+\setlength\itemsep{-0.7 em}
+\item Priori $ \sim Be(\alpha,\beta)$
+\item $X$ $ \sim Binom(n,p,k)$
+\item Posteriori $\sim Be(\alpha + k, \beta + n - k)$
+  
+\end{itemize}
 
 \end{multicols}
 
