@@ -545,15 +545,45 @@ $$P(A|B)=\frac{P(B|A)P(A)}{P(B)} \hspace{0.5cm} \text{für } P(A), P(B) > 0$$
 
 $$Y: \Omega \to \mathbb{R}$$
 
-Die Untermenge möglicher Werte von $\mathbb{R}$ heißt Träger
+\noindent Die Untermenge möglicher Werte von $\mathbb{R}$ heißt Träger
 
-\paragraph{Diskrete und stetige Zufallsvariablen} \ \\
+\noindent Notation: Realisationen von $Y$ werden als Kleinbuchstaben dargestellt. $Y=y$ bedeutet, dass $Y$ die Realisation $y$ angenommen hat.
 
-Ist der Träger endlich oder abzählbar unendlich, so heißt die Zufallsvariable \textit{diskret}, 
-sonst heißt sie \textit{stetig}.
+\paragraph{Stetige und diskrete Zufallsvariablen} \ \\
+
+\noindent Ist der Träger überabzählbar unendlich, so heißt die Zufallsvariable \textit{stetig}, sonst heißt sie \textit{diskret}.
+
+\begin{itemize}
+\item \textbf{Dichte \boldmath$f(\cdot)$:} 
+
+Für stetige Variablen:
+$P(Y \in \left[a, b\right]) = \int_{a}^{b} f_Y(y) dy$
+
+Für diskrete Variablen lässt sich die Dichte (und andere Funktionen) wie die gleichen Funktionen für den stetigen Fall aufschreiben, wenn man 
+$\int_{-\infty}^{y} f_Y(\tilde{y})d\tilde{y} := \sum_{k:k \leq y} P(Y=k)$ definiert. Diese Notation wird hier verwendet.
+
+\item \textbf{Verteilungsfunktion \boldmath$F(\cdot)$:} 
+$F_Y(y) =P(Y\leq y)$
+\end{itemize}
+
+Zusammenhang:
+
+$$F_Y(y) = \int_{-\infty}^{y} f_Y(\tilde{y})d\tilde{y}$$
+
+\noindent Ist der Träger endlich oder abzählbar unendlich, so heißt die Zufallsvariable \textit{diskret}.
+
+\paragraph{Momente}
+
+\begin{itemize}
+\item \textbf{Erwartungswert (1.\ Moment)}: $\mu = E(Y) = \int y f_Y(y)dy$
+\item \textbf{Varianz (2.\ zentriertes Moment)}: $\sigma^2 = Var(Y) = E(\{Y-E(Y)\}^2) = \int (y - E(Y))^2 f(y) dy$ \\
+Varianzverschiebungssatz: $E(\{Y-\mu\}^2) = E(Y^2) - \mu^2$
+\begin{Beweis}
+$E(\{Y-\mu\}^2) = E(Y^2 - 2Y\mu + \mu^2) = E(Y^2) - 2\mu^2 + \mu^2 = E(Y^2) - \mu^2$
+\end{Beweis}
+\item \textbf{k.\ Moment}: $E(Y^k) = \int y^k f_Y(y) dy$,\\ \textbf{k.\ zentrales Moment}: $E(\{Y-E(Y)\}^k)$
+\end{itemize}
   
-
-
 \end{multicols}
 
 \subsection{Verteilungen}
@@ -561,8 +591,23 @@ sonst heißt sie \textit{stetig}.
 \begin{multicols}{2}[\subsubsection{Diskrete Verteilungen}][4cm]
 
   \paragraph{Diskrete Gleichverteilung}
+  
+    \begin{align*}
+    & Y \sim U(\{y_1, ..., y_k\}),\: y \in \{y_1, ..., y_k\} \\
+    & P(Y=y_i) =\frac{1}{k},\: i = 1, ...,k \\
+    & E(Y) = \frac{k+1}{2} ,\: Var(Y) = \frac{k^2 - 1}{12}
+  \end{align*}
+  
+    \paragraph{Binomialverteilung}
+  Erfolge in unabhängigen Versuchen 
 
-  \paragraph{Poisson}
+  \begin{align*}
+    & Y \sim Bin(n, \pi) \text{ mit } n \in \mathbb{N}, \pi \in \left[0,1\right] ,\: y \in \{0, ..., n\} \\
+    & P(Y=y|\lambda) = \binom{n}{y}\pi^k(1-\pi)^{n-y} \\
+    & E(Y|\pi,n) = n\pi ,\: Var(Y|\pi,n) = n\pi(1-\pi)
+  \end{align*}
+
+  \paragraph{Poissonverteilung}
   Zählmodelle für seltene Ereignisse
 
 \begin{Annahmen}
@@ -571,22 +616,77 @@ sonst heißt sie \textit{stetig}.
 \end{Annahmen}
 
   \begin{align*}
-    & X \sim Po(\lambda) \text{ mit } \lambda \in \left[ 0, + \infty \right] \\
-    & P(X=x|\lambda) =\frac{\lambda^x exp^{-\lambda}}{x!} \\
-    & E(X|p) = \lambda , Var(X|p) = \lambda
+    & Y \sim Po(\lambda) \text{ mit } \lambda \in \left[ 0, + \infty \right] ,\: y \in \mathbb{N}_0 \\
+    & P(Y=y|\lambda) =\frac{\lambda^y exp^{-\lambda}}{y!} \\
+    & E(Y|p) = \lambda ,\: Var(Y|p) = \lambda
   \end{align*}
 
 \noindent Häufig wird die Varianz durchdas Poisson-Modell unterschätzt, es liegt Überdispersion vor.
   
 \noindent  \textit{Approximation} der Binomialverteilung für kleine p
 
+  
+    \paragraph{Geometrische Verteilung}
+
+  \begin{align*}
+    & Y \sim Geom(\pi) \text{ mit } \pi \in \left[0,1\right] ,\: y \in \mathbb{N}_0 \\
+    & P(Y=y|\pi) = \pi(1-\pi)^{y-1} \\
+    & E(Y|\pi) = \frac{1}{\pi} ,\: Var(Y|\pi) = \frac{1-\pi}{\pi^2}
+  \end{align*}
+  
+    \paragraph{Negative Binomialverteilung}
+
+  \begin{align*}
+    & Y \sim NegBin(\alpha, \beta) \text{ mit } \alpha, \beta \geq 0 ,\: y \in \mathbb{N}_0 \\
+    & P(Y=y|\alpha, \beta) = \binom{\alpha + y - 1}{\alpha - 1} \left(\frac{\beta}{\beta - 1}\right)^{\alpha} \left(\frac{1}{\beta + 1}\right)^y \\
+    & E(Y|\alpha,\beta) = \frac{\alpha}{\beta} ,\: Var(Y|\alpha,\beta) = \frac{\alpha}{\beta^2}(\beta+1)
+  \end{align*}
+
 \end{multicols}
 
 \begin{multicols}{2}[\subsubsection{Stetige Verteilungen}][4cm]
 
-  \paragraph{Stetige Gleichverteilung}
+	\paragraph{Stetige Gleichverteilung}
   
-
+    \begin{align*}
+    & Y \sim U(a,b) \text{ mit } \alpha, \beta \in \mathbb{R}, a \le b,\: y \in \left[a,b\right] \\
+    & p(y|a,b) =\frac{1}{b-a} \\
+    & E(Y|a,b) = \frac{a+b}{2} ,\: Var(Y|a,b) = \frac{(b-a)^2}{12}
+  \end{align*}
+  
+    \paragraph{Univariate Normalverteilung}
+  
+    \begin{align*}
+    & Y \sim N(\mu, \sigma^2) \text{ mit } \mu \in \mathbb{R}, \sigma^2 > 0,\: y \in \mathbb{R} \\
+    & p(y|\mu, \sigma^2) =\frac{1}{\sqrt{2\pi\sigma^2}} \exp \left(-\frac{(y-\mu)^2}{2 \sigma^2} \right) \\
+    & E(Y|\mu, \sigma^2) = \mu ,\: Var(Y|\mu, \sigma^2) = \sigma^2
+  \end{align*}
+  
+    \paragraph{Multivariate Normalverteilung}
+  
+    \begin{align*}
+    & Y \sim N(\mu, \Sigma) \text{ mit } \mu \in \mathbb{R}^d, \Sigma \in \mathbb{R}^{d\times d} s.p.d.,\: y \in \mathbb{R}^d \\
+    & p(y|\mu, \Sigma) = (2\pi)^{-\frac{d}{2}} \det (\Sigma)^{-\frac{1}{2}} \exp \left( -\frac{1}{2}(y-\mu)^{T} \Sigma^{-1}(y-\mu)\right) \\
+    & E(Y|\mu, \Sigma) = \mu ,\: Var(Y|\mu, \Sigma) = \Sigma
+  \end{align*}
+  
+    \paragraph{Log-Normalverteilung}
+  
+    \begin{align*}
+    & Y \sim LogN(\mu, \sigma^2) \text{ mit } \mu \in \mathbb{R}, \sigma^2 > 0,\: y > 0 \\
+    & p(y|\mu, \sigma^2) =\frac{1}{\sqrt{2\pi\sigma^2 y}} \exp \left(-\frac{(\log y-\mu)^2}{2 \sigma^2} \right) \\
+    & E(Y|\mu, \sigma^2) = \exp (\mu + \frac{\sigma^2}{2}) ,\\
+    & Var(Y|\mu, \sigma^2) = \exp (2\mu + \sigma^2)(\exp (\sigma^2) - 1)
+  \end{align*}
+  
+    \paragraph{Nichtzentrale Studentverteilung}
+  
+    \begin{align*}
+    & Y \sim t_\nu(\mu, \sigma) \text{ mit } \mu \in \mathbb{R}, \sigma^2, \nu > 0,\: y \in \mathbb{R}\\
+    & p(y|\mu, \sigma^2, \nu) =\frac{\Gamma \left( \frac{\nu + 1}{2}\right) }{\Gamma (a) \Gamma (b)} \left(1+ \frac{(y-\mu)^2}{\nu \sigma^2} \right)^{-\frac{\nu + 1}{2}} \\
+    & E(Y|\mu, \sigma^2, \nu) = \mu \text{ f"ur }  \nu > 1,\\
+    & Var(Y|\mu, \sigma^2, \nu) = \sigma^2 \frac{\nu}{\nu-2} \text{ f"ur }  \nu > 2
+  \end{align*}
 
 \end{multicols}
 
