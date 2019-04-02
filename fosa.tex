@@ -443,8 +443,6 @@ $$h^* \approx 3.5\sigma n^{-\frac{1}{3}}$$
 
 \subsection{Kombinatorik}
 
-
-
 % first column
 \begin{minipage}[t]{0.7\textwidth}
 \addvbuffer[12pt 8pt]{\begin{tabular}{l l || c | c}
@@ -472,20 +470,25 @@ Dabei gilt:
 
 \begin{multicols}{2}[\subsection{Wahrscheinlichkeitsrechnung}][4cm]
 
+
 \paragraph{Laplace-Wahrscheinlichkeit}
 
 $$P(A)=\frac{|A|}{|\Omega|}$$
 
-\paragraph{Axiome von Kolmogorov}
 
+\paragraph{Axiome von Kolmogorov} \ \\
+
+\noindent mathematische Definition von Wahrscheinlichkeit
 
 \addvbuffer[12pt 8pt]{\begin{tabular}{c l}
 
-(1) & $0 \le P(A) \le 1$ \\
+(1) & $0 \le P(A) \le 1 \hspace{0.5 cm} \forall A \in \mathcal{A}$ \\
 
 (2) & $P(\Omega) = 1$ \\
 
-(3) & $P(A\cup B) = P(A)+P(B) \hspace{0.5cm} \text{(für A und B disjunkt)}$ \\
+(3) & $P(\bigcup_{i=1}^{\infty}{A_i}) = \sum_{i=1}^{\infty}{P(A_i)}$ \\ 
+    & $\forall A_i \in \mathcal{A}, i=1,...,\infty \text{ mit } A_i \cap A_j = \emptyset \text{ f"ur } i \neq j$ \\
+
 \end{tabular}}
 
 
@@ -501,6 +504,14 @@ Folgerungen:
 \end{itemize}
 
 \end{Mathfolg}
+
+\paragraph{Mises' Wahrscheinlichtkeitsbegriff} \ \\
+
+\noindent frequentistische Definition von Wahrscheinlichkeit
+
+$$P(A) = \lim\limits_{n \to \infty}\frac{n_A(n))}{n}$$
+
+mit $n$ Anzahl der Wiederholungen eines Zufallsexperiments und $n_A(n)$ Anzahl an Ereignissen $A$
 
 \paragraph{Bedingte Wahrscheinlichkeit}
 
@@ -530,7 +541,16 @@ $$P(A|B)=\frac{P(B|A)P(A)}{P(B)} \hspace{0.5cm} \text{für } P(A), P(B) > 0$$
 
 \begin{multicols}{2}[\subsection{Zufallsvariablen}][4cm]
 
-  \paragraph{Diskrete Zufallsvariablen}
+\paragraph{Definition}
+
+$$Y: \Omega \to \mathbb{R}$$
+
+Die Untermenge möglicher Werte von $\mathbb{R}$ heißt Träger
+
+\paragraph{Diskrete und stetige Zufallsvariablen} \ \\
+
+Ist der Träger endlich oder abzählbar unendlich, so heißt die Zufallsvariable \textit{diskret}, 
+sonst heißt sie \textit{stetig}.
   
 
 
