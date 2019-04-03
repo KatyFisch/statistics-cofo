@@ -587,6 +587,46 @@ $E(\{Y-\mu\}^2) = E(Y^2 - 2Y\mu + \mu^2) = E(Y^2) - 2\mu^2 + \mu^2 = E(Y^2) - \m
   
 \end{multicols}
 
+\begin{multicols}{2}[\subsection{Zufallsvektoren}][4cm]
+
+\paragraph{Dichte und Verteilungsfunktion}
+
+$$F(y_1, ..., y_q) = P(Y_1 \leq y_1, ..., Y_q \leq y_q)$$
+\begin{align*}
+& P(a_1 \leq Y_1 \leq b_1, ..., a_q \leq Y_q \leq b_q) \\
+& = \int_{a_1}^{b_1} ...\int_{a_q}^{b_q} f(y_1, .., y_q)dy_1...dy_q
+\end{align*}
+
+\paragraph{Marginale Dichte}
+
+$$f_{Y_1}(y_1) = \int_{-\infty}^{\infty}...\int_{-\infty}^{\infty} f(y_1,...,y_k)dy_2...dy_k$$
+
+\paragraph{Bedingte Dichte}
+
+$$f_{Y_1|Y_2}(y_1|y_2) = \frac{f(y_1, ..., y_2)}{f(y_2)} \text{ f"ur } f(y_2) > 0$$
+
+\paragraph{Iterierter Erwartungswert}
+
+$$\mathrm{E}(Y)=\mathrm{E}_X(\mathrm{E}(Y|X))$$
+\begin{Beweis}
+$$\mathrm{E}(Y) = \int yf(y)dy = \int\int y f(y|x)dy f_X(x)dx = \mathrm{E}_X(\mathrm{E}(Y|X))$$
+\end{Beweis}
+$$\mathrm{Var}(Y) = \mathrm{E}_X(\mathrm{Var}(Y|X)) + \mathrm{Var}_X(\mathrm{E}(Y|X))$$
+\begin{Beweis}
+\begin{align*}
+\mathrm{Var}(Y) =&  \int (y- \mu_Y)^2 f(y)dy\\
+=& \int (y- \mu_Y)^2 f(y|x)f(x)dydx\\
+=& \int (y- \mu_{Y|x} + \mu_{Y|x} - \mu_Y)^2 f(y|x)f(x)dydx\\
+=& \int (y- \mu_{Y|x})^2 f(y|x)f(x)dydx + \\
+ & \int (\mu_{Y|x} - \mu_Y)^2 f(y|x)f(x)dydx + \\
+ & 2 \int (y- \mu_{Y|x})(\mu_{Y|x} - \mu_Y) f(y|x)f(x)dydx \\
+=& \int \mathrm{Var}(Y|x)f(x)dx + \int (\mu_{Y|x} - \mu_Y)^2f(x)dx\\
+=& \mathrm{E}_X(\mathrm{Var}(Y|X)) + \mathrm{Var}_X(\mathrm{E}(Y|X))
+\end{align*}
+\end{Beweis}
+
+\end{multicols}
+
 \subsection{Verteilungen}
 
 \begin{multicols}{2}[\subsubsection{Diskrete Verteilungen}][4cm]
