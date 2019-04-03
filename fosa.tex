@@ -22,6 +22,7 @@
 \usepackage{verbatimbox}
 \usepackage{enumitem}
 \usepackage[framemethod=TikZ]{mdframed}
+\usepackage{bigints}
 \onehalfspacing
 \usepackage[hidelinks]{hyperref}
 \usepackage[all]{nowidow} %funktioniert nicht....
@@ -593,32 +594,29 @@ $E(\{Y-\mu\}^2) = E(Y^2 - 2Y\mu + \mu^2) = E(Y^2) - 2\mu^2 + \mu^2 = E(Y^2) - \m
   \paragraph{Diskrete Gleichverteilung}
   
     \begin{align*}
-    & Y \sim U(\{y_1, ..., y_k\}),\: y \in \{y_1, ..., y_k\} \\
+    & Y \sim \mathrm{U}(\{y_1, ..., y_k\}),\: y \in \{y_1, ..., y_k\} \\
     & P(Y=y_i) =\frac{1}{k},\: i = 1, ...,k \\
-    & E(Y) = \frac{k+1}{2} ,\: Var(Y) = \frac{k^2 - 1}{12}
+    & \mathrm{E}(Y) = \frac{k+1}{2} ,\: \mathrm{Var}(Y) = \frac{k^2 - 1}{12}
   \end{align*}
   
     \paragraph{Binomialverteilung}
   Erfolge in unabhängigen Versuchen 
 
   \begin{align*}
-    & Y \sim Bin(n, \pi) \text{ mit } n \in \mathbb{N}, \pi \in \left[0,1\right] ,\: y \in \{0, ..., n\} \\
+    & Y \sim \mathrm{Bin}(n, \pi) \text{ mit } n \in \mathbb{N}, \pi \in \left[0,1\right] ,\: y \in \{0, ..., n\} \\
     & P(Y=y|\lambda) = \binom{n}{y}\pi^k(1-\pi)^{n-y} \\
-    & E(Y|\pi,n) = n\pi ,\: Var(Y|\pi,n) = n\pi(1-\pi)
+    & \mathrm{E}(Y|\pi,n) = n\pi ,\: \mathrm{Var}(Y|\pi,n) = n\pi(1-\pi)
   \end{align*}
 
   \paragraph{Poissonverteilung}
   Zählmodelle für seltene Ereignisse
 
-\begin{Annahmen}
-\noindent Immer nur ein Ereignis pro Zeitpunkt, Eintreten der Ereignisse ist unabhängig von bisheriger Geschichte, mittlere Anzahl der Ereignisse pro Zeit ist konstant und proportional zur Länge des betrachteten Zeitintervalls.
-  
-\end{Annahmen}
+\noindent Immer nur ein Ereignis pro Zeitpunkt, Eintreten der Ereignisse ist unabhängig von bisheriger Geschichte, mittlere Anzahl der Ereignisse pro Zeit ist konstant und proportional zur Länge des betrachteten Zeitintervalls.  
 
   \begin{align*}
-    & Y \sim Po(\lambda) \text{ mit } \lambda \in \left[ 0, + \infty \right] ,\: y \in \mathbb{N}_0 \\
+    & Y \sim \mathrm{Po}(\lambda) \text{ mit } \lambda \in \left[ 0, + \infty \right] ,\: y \in \mathbb{N}_0 \\
     & P(Y=y|\lambda) =\frac{\lambda^y exp^{-\lambda}}{y!} \\
-    & E(Y|p) = \lambda ,\: Var(Y|p) = \lambda
+    & \mathrm{E}(Y|p) = \lambda ,\: \mathrm{Var}(Y|p) = \lambda
   \end{align*}
 
 \noindent Häufig wird die Varianz durchdas Poisson-Modell unterschätzt, es liegt Überdispersion vor.
@@ -629,17 +627,17 @@ $E(\{Y-\mu\}^2) = E(Y^2 - 2Y\mu + \mu^2) = E(Y^2) - 2\mu^2 + \mu^2 = E(Y^2) - \m
     \paragraph{Geometrische Verteilung}
 
   \begin{align*}
-    & Y \sim Geom(\pi) \text{ mit } \pi \in \left[0,1\right] ,\: y \in \mathbb{N}_0 \\
+    & Y \sim \mathrm{Geom}(\pi) \text{ mit } \pi \in \left[0,1\right] ,\: y \in \mathbb{N}_0 \\
     & P(Y=y|\pi) = \pi(1-\pi)^{y-1} \\
-    & E(Y|\pi) = \frac{1}{\pi} ,\: Var(Y|\pi) = \frac{1-\pi}{\pi^2}
+    & \mathrm{E}(Y|\pi) = \frac{1}{\pi} ,\: \mathrm{Var}(Y|\pi) = \frac{1-\pi}{\pi^2}
   \end{align*}
   
     \paragraph{Negative Binomialverteilung}
 
   \begin{align*}
-    & Y \sim NegBin(\alpha, \beta) \text{ mit } \alpha, \beta \geq 0 ,\: y \in \mathbb{N}_0 \\
+    & Y \sim \mathrm{NegBin}(\alpha, \beta) \text{ mit } \alpha, \beta \geq 0 ,\: y \in \mathbb{N}_0 \\
     & P(Y=y|\alpha, \beta) = \binom{\alpha + y - 1}{\alpha - 1} \left(\frac{\beta}{\beta - 1}\right)^{\alpha} \left(\frac{1}{\beta + 1}\right)^y \\
-    & E(Y|\alpha,\beta) = \frac{\alpha}{\beta} ,\: Var(Y|\alpha,\beta) = \frac{\alpha}{\beta^2}(\beta+1)
+    & \mathrm{E}(Y|\alpha,\beta) = \frac{\alpha}{\beta} ,\: \mathrm{Var}(Y|\alpha,\beta) = \frac{\alpha}{\beta^2}(\beta+1)
   \end{align*}
 
 \end{multicols}
@@ -649,48 +647,145 @@ $E(\{Y-\mu\}^2) = E(Y^2 - 2Y\mu + \mu^2) = E(Y^2) - 2\mu^2 + \mu^2 = E(Y^2) - \m
 	\paragraph{Stetige Gleichverteilung}
   
     \begin{align*}
-    & Y \sim U(a,b) \text{ mit } \alpha, \beta \in \mathbb{R}, a \le b,\: y \in \left[a,b\right] \\
+    & Y \sim \mathrm{U}(a,b) \text{ mit } \alpha, \beta \in \mathbb{R}, a \le b,\: y \in \left[a,b\right] \\
     & p(y|a,b) =\frac{1}{b-a} \\
-    & E(Y|a,b) = \frac{a+b}{2} ,\: Var(Y|a,b) = \frac{(b-a)^2}{12}
+    & \mathrm{E}(Y|a,b) = \frac{a+b}{2} ,\: \mathrm{Var}(Y|a,b) = \frac{(b-a)^2}{12}
   \end{align*}
   
-    \paragraph{Univariate Normalverteilung}
+    \paragraph{Univariate Normalverteilung} symmetrisch mit $\mu$ und $\sigma^2$
   
     \begin{align*}
-    & Y \sim N(\mu, \sigma^2) \text{ mit } \mu \in \mathbb{R}, \sigma^2 > 0,\: y \in \mathbb{R} \\
+    & Y \sim \mathrm{N}(\mu, \sigma^2) \text{ mit } \mu \in \mathbb{R}, \sigma^2 > 0,\: y \in \mathbb{R} \\
     & p(y|\mu, \sigma^2) =\frac{1}{\sqrt{2\pi\sigma^2}} \exp \left(-\frac{(y-\mu)^2}{2 \sigma^2} \right) \\
-    & E(Y|\mu, \sigma^2) = \mu ,\: Var(Y|\mu, \sigma^2) = \sigma^2
+    & \mathrm{E}(Y|\mu, \sigma^2) = \mu ,\: \mathrm{Var}(Y|\mu, \sigma^2) = \sigma^2
   \end{align*}
   
-    \paragraph{Multivariate Normalverteilung}
+    \paragraph{Multivariate Normalverteilung} symmetrisch mit $\mu$ und $\Sigma$
   
     \begin{align*}
-    & Y \sim N(\mu, \Sigma) \text{ mit } \mu \in \mathbb{R}^d, \Sigma \in \mathbb{R}^{d\times d} s.p.d.,\: y \in \mathbb{R}^d \\
+    & Y \sim \mathrm{N}(\mu, \Sigma) \text{ mit } \mu \in \mathbb{R}^d, \Sigma \in \mathbb{R}^{d\times d} s.p.d.,\: y \in \mathbb{R}^d \\
     & p(y|\mu, \Sigma) = (2\pi)^{-\frac{d}{2}} \det (\Sigma)^{-\frac{1}{2}} \exp \left( -\frac{1}{2}(y-\mu)^{T} \Sigma^{-1}(y-\mu)\right) \\
-    & E(Y|\mu, \Sigma) = \mu ,\: Var(Y|\mu, \Sigma) = \Sigma
+    & \mathrm{E}(Y|\mu, \Sigma) = \mu ,\: \mathrm{Var}(Y|\mu, \Sigma) = \Sigma
   \end{align*}
   
     \paragraph{Log-Normalverteilung}
   
     \begin{align*}
-    & Y \sim LogN(\mu, \sigma^2) \text{ mit } \mu \in \mathbb{R}, \sigma^2 > 0,\: y > 0 \\
+    & Y \sim \mathrm{LogN}(\mu, \sigma^2) \text{ mit } \mu \in \mathbb{R}, \sigma^2 > 0,\: y > 0 \\
     & p(y|\mu, \sigma^2) =\frac{1}{\sqrt{2\pi\sigma^2 y}} \exp \left(-\frac{(\log y-\mu)^2}{2 \sigma^2} \right) \\
-    & E(Y|\mu, \sigma^2) = \exp (\mu + \frac{\sigma^2}{2}) ,\\
-    & Var(Y|\mu, \sigma^2) = \exp (2\mu + \sigma^2)(\exp (\sigma^2) - 1)
+    & \mathrm{E}(Y|\mu, \sigma^2) = \exp (\mu + \frac{\sigma^2}{2}) ,\\
+    & \mathrm{Var}(Y|\mu, \sigma^2) = \exp (2\mu + \sigma^2)(\exp (\sigma^2) - 1)
   \end{align*}
   
-    \paragraph{Nichtzentrale Studentverteilung}
+\noindent Zusammenhang: $\log (Y) \sim \mathrm{N}(\mu, \sigma^2) \Rightarrow Y \sim \mathrm{LogN}(\mu, \sigma^2)$
+  
+    \paragraph{Nichtzentrale Studentverteilung} statistische Tests für $\mu$ mit unbekannter (geschätzter) Varianz und $\nu$ Freiheitsgraden
   
     \begin{align*}
-    & Y \sim t_\nu(\mu, \sigma) \text{ mit } \mu \in \mathbb{R}, \sigma^2, \nu > 0,\: y \in \mathbb{R}\\
-    & p(y|\mu, \sigma^2, \nu) =\frac{\Gamma \left( \frac{\nu + 1}{2}\right) }{\Gamma (a) \Gamma (b)} \left(1+ \frac{(y-\mu)^2}{\nu \sigma^2} \right)^{-\frac{\nu + 1}{2}} \\
-    & E(Y|\mu, \sigma^2, \nu) = \mu \text{ f"ur }  \nu > 1,\\
-    & Var(Y|\mu, \sigma^2, \nu) = \sigma^2 \frac{\nu}{\nu-2} \text{ f"ur }  \nu > 2
+    & Y \sim \mathrm{t}_\nu(\mu, \sigma) \text{ mit } \mu \in \mathbb{R}, \sigma^2, \nu > 0,\: y \in \mathbb{R}\\
+    & p(y|\mu, \sigma^2, \nu) =\frac{\Gamma \left( \frac{\nu + 1}{2}\right) }{\Gamma (\frac{\nu}{2}) \Gamma (\sqrt{\nu\pi}\sigma)} \left(1+ \frac{(y-\mu)^2}{\nu \sigma^2} \right)^{-\frac{\nu + 1}{2}} \\
+    & \mathrm{E}(Y|\mu, \sigma^2, \nu) = \mu \text{ f"ur }  \nu > 1,\\
+    & \mathrm{Var}(Y|\mu, \sigma^2, \nu) = \sigma^2 \frac{\nu}{\nu-2} \text{ f"ur }  \nu > 2
+  \end{align*}
+  
+ \noindent Zusammenhang: $Y|\theta \sim \mathrm{N}(\mu, \frac{\sigma^2}{\theta}), \: \theta \sim  \mathrm{Ga}(\frac{\nu}{2}, \frac{\nu}{2}) \Rightarrow Y \sim \mathrm{t}_\nu(\mu, \sigma)$ 
+  
+	\paragraph{Betaverteilung}
+  
+    \begin{align*}
+    & Y \sim \mathrm{Be}(a, b) \text{ mit } a,b > 0,\: y \in \left[0,1\right]\\
+    & p(y|a, b) =\frac{\Gamma \left( a+b\right) }{\Gamma (a) \Gamma (b)} y^{a-1} (1-y)^{b-1} \\
+    & \mathrm{E}(Y|a, b) = \frac{a}{a+b},\\
+    & \mathrm{Var}(Y|a, b) = \frac{ab}{\left(a+b\right)^2(a+b+1)}, \\
+    & \mathrm{mod}(Y|a, b) = \frac{a-1}{a+b-2} \text{ f"ur } a,b > 1
+  \end{align*}
+  
+  
+  	\paragraph{Gammaverteilung}
+  
+    \begin{align*}
+    & Y \sim \mathrm{Ga}(a, b) \text{ mit } a,b > 0,\: y > 0\\
+    & p(y|a, b) = \frac{ b^a }{\Gamma (a)} y^{a-1} \exp (-by) \\
+    & \mathrm{E}(Y|a, b) = \frac{a}{b},\\
+    & \mathrm{Var}(Y|a, b) = \frac{a}{b^a}, \\
+    & \mathrm{mod}(Y|a, b) = \frac{a-1}{b} \text{ f"ur } a \ge 1
+  \end{align*}
+
+  	\paragraph{Invers-Gammaverteilung}
+  
+    \begin{align*}
+    & Y \sim \mathrm{IG}(a, b) \text{ mit } a,b > 0,\: y > 0\\
+    & p(y|a, b) = \frac{ b^a }{\Gamma (a)} y^{-a-1} \exp (-\frac{b}{y}) \\
+    & \mathrm{E}(Y|a, b) = \frac{b}{a-1} \text{ f"ur } a > 1,\\
+    & \mathrm{Var}(Y|a, b) = \frac{b^2}{(a-1)^2(a-2)} \text{ f"ur } a \ge 2, \\
+    & \mathrm{mod}(Y|a, b) = \frac{b}{a+1}
+  \end{align*}
+  
+\noindent Zusammenhang: $Y^{-1} \sim \mathrm{Ga}(a, b) \Leftrightarrow Y \sim \mathrm{IG}(a, b)$
+  
+  
+  	\paragraph{Exponentialverteilung} Zeit zwischen Poisson-Ereignissen
+  
+    \begin{align*}
+    & Y \sim \mathrm{Exp}(\lambda) \text{ mit } \lambda > 0,\: y \geq 0\\
+    & p(y|\lambda) = \lambda\exp (-\lambda y) \\
+    & \mathrm{E}(Y|\lambda) = \frac{1}{\lambda}, \:
+	\mathrm{Var}(Y|\lambda) = \frac{1}{\lambda^2}
+  \end{align*}
+  
+  
+  	\paragraph{Chi-Quadrat-Verteilung} quadrierte standardnormalverteilte Zufallsvariablen mit $\nu$ Freiheitsgraden
+  
+    \begin{align*}
+    & Y \sim \chi^2(\nu) \text{ mit } \nu > 0,,\: y \in \mathbb{R}\\
+    & p(y|\nu) = \frac{y^{\frac{\nu}{2}-1}e^{-\frac{y}{2}}}{2^{\frac{\nu}{2}}\Gamma \left(\frac{\nu}{2}\right)} \\
+    & \mathrm{E}(Y|\nu) = \nu, \:
+	\mathrm{Var}(Y|\nu) = 2\nu
   \end{align*}
 
 \end{multicols}
 
-\begin{multicols}{2}[\subsubsection{Grenzwertsätze und Approximationen}][4cm]
+\begin{multicols}{2}[\subsubsection{Exponentialfamilie}][4cm]
+
+  \paragraph{Definition} \ \\
+  \noindent Zur Exponentialfamilie gehören alle Verteilungen, deren Dichte wie folgt geschrieben werden kann:
+  
+  $$f_Y(y,\theta) = \exp^{t^T(y)\theta - \kappa (\theta)}h(y)$$
+  
+  mit $h(y) \geq 0$, $t(y)$ Vektor der kanonischen Statistiken, $\theta$ Parametervektor und $\kappa (\theta)$ Normalisationskonstante.
+  
+  \paragraph{Normalisierungskonstante}
+  
+  \begin{align*}
+  1 &= \int \exp^{t^T(y)\theta}h(y)dy \exp^{ - \kappa (\theta)} \\
+  \Leftrightarrow \kappa (\theta) &= \log \int \exp^{t^T(y)\theta}h(y)dy
+  \end{align*}
+  
+  \noindent $\kappa (\theta)$ ist die kumulanterzeugende Funktion, somit $\frac{\partial\kappa(\theta)}{\partial\theta} = \mathrm{E}(t(Y))$ und $\frac{\partial^2\kappa(\theta)}{\partial\theta^2} = \mathrm{Var}(t(Y))$
+  
+  
+  
+  \paragraph{Mitglieder}
+  
+  \begin{itemize}
+  \item \textbf{Poissonverteilung}
+  \item \textbf{Geometrische Verteilung}
+  \item \textbf{Exponentialverteilung}
+  \item \textbf{Normalverteilung}
+   $t(y) = \left(-\frac{y^2}{2},y \right)^T$,  
+   $\theta = \left(\frac{1}{\sigma^2}, \frac{\mu}{\sigma^2}\right)^T$,
+   $h(y) = \frac{1}{\sqrt{2\pi}}$,
+   $\kappa ( \theta ) = \frac{1}{2} \left( -\log \frac{1}{\sigma^2} + \frac{\mu^2}{\sigma^2} \right)$
+  \item \textbf{Gammaverteilung}
+  \item \textbf{Chi-Quadrat-Verteilung}
+  \item \textbf{Betaverteilung}
+  \end{itemize}
+  
+
+
+\end{multicols}
+
+\begin{multicols}{2}[\subsection{Grenzwertsätze}][4cm]
 
   \paragraph{Gesetz der großen Zahlen}
   
