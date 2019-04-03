@@ -842,7 +842,7 @@ $$\mathrm{Var}(Y) = \mathrm{E}_X(\mathrm{Var}(Y|X)) + \mathrm{Var}_X(\mathrm{E}(
   \paragraph{Zentraler Grenzwertsatz}
   
   $$Z_n \overset{d}{\longrightarrow} \mathrm{N}(0, \sigma^2)$$
-  mit  $Z_n = \sum_{i=1}^{n} \frac{Y_i}{\sqrt{n}}$ und $Y_i$ i.i.d. mit $mu=0$ und Varianz $\sigma^2$
+  mit  $Z_n = \sum_{i=1}^{n} \frac{Y_i}{\sqrt{n}}$ und $Y_i$ i.i.d. mit $\mu=0$ und Varianz $\sigma^2$
 \begin{Beweis}
 Für eine normalverteilte Zufallsvariable $Z \sim \mathrm{N}(\mu, \sigma^2)$ gilt $K_Z(t)=\mu t + \frac{1}{2}\sigma^2t^2$. Die ersten beiden Ableitungen $\frac{\partial^kK_Z(t)}{\partial t^k} \bigg|_{t = 0}$ entsprechen $\mu$ und $\sigma$. Alle anderen Momente sind null. 
 
@@ -850,7 +850,7 @@ Für eine normalverteilte Zufallsvariable $Z \sim \mathrm{N}(\mu, \sigma^2)$ gil
 \begin{align*}
 M_{Z_n}(t) &= \mathrm{E}\left(e^{t(Y_1 + Y_2 + ... +Y_n)/\sqrt{n}}\right)\\
 &= \mathrm{E}\left(e^{tY_1/\sqrt{n}} \cdot e^{tY_2/\sqrt{n}}\cdot ... \cdot e^{tY_n/\sqrt{n}}\right) \\
-&= \mathrm{E}\left(e^{tY_1/\sqrt{n}}\right) \mathrm{E}\left(e^{tY_2/\sqrt{n}}\right) ... \mathrm{E}\left(e^{tY_n/\sqrt{n}}\right)
+&= \mathrm{E}\left(e^{tY_1/\sqrt{n}}\right) \mathrm{E}\left(e^{tY_2/\sqrt{n}}\right) ... \mathrm{E}\left(e^{tY_n/\sqrt{n}}\right) \\
 &= M_Y^n(t/\sqrt{n})
 \end{align*}
 Analog gilt: $K_{Z_n}(t) = nK_Y(t/\sqrt{n})$.
@@ -858,7 +858,9 @@ Analog gilt: $K_{Z_n}(t) = nK_Y(t/\sqrt{n})$.
  \frac{\partial K_{Z_n}(t)}{\partial t} \bigg|_{t = 0} &= \frac{n}{\sqrt{n}} \frac{\partial K_Y(t)}{\partial t} \bigg|_{t = 0} = \sqrt{n}\mu \\
  \frac{\partial^2K_{Z_n}(t)}{\partial t^2} \bigg|_{t = 0} &= \frac{n}{n} \frac{\partial^2 K_Y(t)}{\partial t^2} \bigg|_{t = 0} = \sigma^2
 \end{align*}
-Mithilfe der Taylorreihe können wir 
+Mithilfe der Taylorreihe können wir $K_{Z_n}(t) = 0 + \sqrt{n}\mu t + \frac{1}{2}\sigma^2t^2 + ...$ schreiben, wobei die Terme in $...$ alle für $n \rightarrow \infty$ gegen 0 gehen.
+
+\noindent Damit gilt $K_{Z_n}(t) \overset{n\rightarrow\infty}{\longrightarrow} K_{Z}(t)$ mit $Z \sim \mathrm{N}(\sqrt{n}\mu,\sigma^2)$.
 \end{Beweis}
 
 \end{multicols}
