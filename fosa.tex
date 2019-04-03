@@ -584,6 +584,16 @@ $E(\{Y-\mu\}^2) = E(Y^2 - 2Y\mu + \mu^2) = E(Y^2) - 2\mu^2 + \mu^2 = E(Y^2) - \m
 \end{Beweis}
 \item \textbf{k.\ Moment}: $E(Y^k) = \int y^k f_Y(y) dy$,\\ \textbf{k.\ zentrales Moment}: $E(\{Y-E(Y)\}^k)$
 \end{itemize}
+
+\paragraph{Momenterzeugende Funktion}
+
+$$M_Y(t) = \mathrm{E}(e^{tY})$$
+
+mit $\frac{\partial^kM_Y(t)}{\partial t^k} \bigg|_{t = 0} = \mathrm{E}(Y^k)$ 
+
+kumulanterzeugende Funktion $K_Y(t) = \log M_Y(t)$
+
+Eine Zufallsvariable ist durch ihre momenterzeugende Funktion eindeutig definiert und andersherum (solange die Momente und Kumulanten endlich sind).
   
 \end{multicols}
 
@@ -829,7 +839,27 @@ $$\mathrm{Var}(Y) = \mathrm{E}_X(\mathrm{Var}(Y|X)) + \mathrm{Var}_X(\mathrm{E}(
 
   \paragraph{Gesetz der großen Zahlen}
   
+  \paragraph{Zentraler Grenzwertsatz}
+  
+  $$Z_n \overset{d}{\longrightarrow} \mathrm{N}(0, \sigma^2)$$
+  mit  $Z_n = \sum_{i=1}^{n} \frac{Y_i}{\sqrt{n}}$ und $Y_i$ i.i.d. mit $mu=0$ und Varianz $\sigma^2$
+\begin{Beweis}
+Für eine normalverteilte Zufallsvariable $Z \sim \mathrm{N}(\mu, \sigma^2)$ gilt $K_Z(t)=\mu t + \frac{1}{2}\sigma^2t^2$. Die ersten beiden Ableitungen $\frac{\partial^kK_Z(t)}{\partial t^k} \bigg|_{t = 0}$ entsprechen $\mu$ und $\sigma$. Alle anderen Momente sind null. 
 
+\noindent Für $Z_n = (Y_1 + Y_2 + ... +Y_n)/\sqrt{n}$ gilt:
+\begin{align*}
+M_{Z_n}(t) &= \mathrm{E}\left(e^{t(Y_1 + Y_2 + ... +Y_n)/\sqrt{n}}\right)\\
+&= \mathrm{E}\left(e^{tY_1/\sqrt{n}} \cdot e^{tY_2/\sqrt{n}}\cdot ... \cdot e^{tY_n/\sqrt{n}}\right) \\
+&= \mathrm{E}\left(e^{tY_1/\sqrt{n}}\right) \mathrm{E}\left(e^{tY_2/\sqrt{n}}\right) ... \mathrm{E}\left(e^{tY_n/\sqrt{n}}\right)
+&= M_Y^n(t/\sqrt{n})
+\end{align*}
+Analog gilt: $K_{Z_n}(t) = nK_Y(t/\sqrt{n})$.
+\begin{align*}
+ \frac{\partial K_{Z_n}(t)}{\partial t} \bigg|_{t = 0} &= \frac{n}{\sqrt{n}} \frac{\partial K_Y(t)}{\partial t} \bigg|_{t = 0} = \sqrt{n}\mu \\
+ \frac{\partial^2K_{Z_n}(t)}{\partial t^2} \bigg|_{t = 0} &= \frac{n}{n} \frac{\partial^2 K_Y(t)}{\partial t^2} \bigg|_{t = 0} = \sigma^2
+\end{align*}
+Mithilfe der Taylorreihe können wir 
+\end{Beweis}
 
 \end{multicols}
 
