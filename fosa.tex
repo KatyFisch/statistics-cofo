@@ -1,6 +1,6 @@
 % To Do: paragrah widow penalty   
 %        
-%      Hallo?  
+%      
 \documentclass[8pt]{extarticle}
 \usepackage[english, ngerman]{babel}
 \usepackage[utf8]{inputenc}
@@ -26,6 +26,13 @@
 \onehalfspacing
 \usepackage[hidelinks]{hyperref}
 \usepackage[all]{nowidow} %funktioniert nicht....
+\clubpenalty=9996
+\widowpenalty=9999
+\brokenpenalty=4991
+\predisplaypenalty=10000
+\postdisplaypenalty=1549
+\displaywidowpenalty=1602
+
 \setlength\parindent{0pt}
 
 %Hier sind die unterschiedlichen Ausführlichkeitsgrade definiert
@@ -865,6 +872,207 @@ Mithilfe der Taylorreihe können wir $K_{Z_n}(t) = 0 + \sqrt{n}\mu t + \frac{1}{
 
 \end{multicols}
 
+
+%-------------------------------------------------------------------------------
+
+% SECTION: INFERENZ
+
+%-------------------------------------------------------------------------------
+
+
+\section{Inferenz}
+
+
+\subsection{Methode der Momente}
+
+Die theoretischen Momente werden durch die empirischen geschätzt: \ \\
+\vspace{0.5em}
+$\mathrm{E}_{\hat{\theta}_{MM}}(Y^k) = m_k(y_1,...,y_n)$ \ \\
+\vspace{0.5em}
+\noindent Für die Exponentialfamilie gilt: $\hat{\theta}_{MM} = \hat{\theta}_{ML}$
+
+
+\begin{multicols}{2}[\subsection{Verlustfunktionen}][4cm]
+
+\paragraph{Verlust}
+
+$$\mathcal{L}: \mathcal{T} \times \Theta \rightarrow \mathbb{R}^+$$
+
+\noindent mit Parameterraum $\Theta \subset \mathbb{R}$, $t\in \mathcal{T}$ mit $t:\mathbb{R}^n \rightarrow \mathbb{R}$ eine Statistik, die den Parameter $\theta$ schätzt. 
+Es gilt: $\mathcal{L}(\theta, \theta) = 0$
+
+\begin{itemize}
+\item \textbf{absoluter Verlust (L1)}: $\mathcal{L}(t, \theta) = \left|t-\theta \right|$
+\item \textbf{quadratischer Verlust (L2)}: $\mathcal{L}(t, \theta) = (t-\theta)^2$
+\end{itemize}
+
+\noindent Da $\theta$ unbekannt ist, ist der Verlust eine theoretische Größe. Zudem ist er die Realisation einer Zufallsvariable, da er von einer konkreten Stichprobe abhängt.
+
+\paragraph{Risiko}
+
+\begin{align*}
+R(t(.), \theta) &= \mathrm{E}_\theta \left(\mathcal{L}(t(Y_1,...,Y_n),\theta)\right) \\
+&= \int_{-\infty}^\infty \mathcal{L}(t(Y_1,...,Y_n),\theta) \prod_{i=1}^n f(y_i;\theta)dy_i
+\end{align*}
+
+\paragraph{Minimax-Regel} \ \\
+\noindent Das Risiko beruht immer noch auf dem wahren Parameter $\theta$.
+Vorsichtige Schätzung: Wähle $\theta$ so, dass das Risiko maximal wird, und danach $t(.)$ so, dass das Risiko minimiert wird:
+
+$$\hat{\theta}_{minimax} = \underset{t(.)}{\text{arg min }} \left(\underset{\theta \in \Theta}{\text{max }} R(t(.);\theta)\right)$$
+
+\noindent Es wird der Worst Case minimiert.
+
+\paragraph{Mean Squared Error (MSE)}
+\begin{align*}
+MSE(t(.), \theta) &= \mathrm{E}_\theta\left(\{t(Y)-\theta\}^2\right) \\
+&=\mathrm{Var}_\theta\left(t(Y_1,...,Y_n)\right) + Bias^2((t(.); \theta)
+\end{align*}
+
+\noindent mit $Bias(t(.);\theta) = \mathrm{E}_\theta\left(t(Y_1,...,Y_n)\right)-\theta$
+
+\begin{Beweis}
+Sei $\mathcal{L}(t, \theta) = (t-\theta)^2$
+\begin{align*}
+R(t(.), \theta) = &\: \mathrm{E}_\theta \left(\{t(Y) -\theta\}^2\right) \\
+= &\: \mathrm{E}_\theta \left(\{t(Y) - \mathrm{E}_\theta(t(Y)) + \mathrm{E}_\theta(t(Y))-\theta\}^2\right) \\
+= &\: \mathrm{E}_\theta \left(\{t(Y) - \mathrm{E}_\theta(t(Y))\}^2\right) +
+\mathrm{E}_\theta \left(\{\mathrm{E}_\theta(t(Y))-\theta\}^2\right) \\
+& +  2\mathrm{E}_\theta \left(\{t(Y)-\mathrm{E}_\theta \left(t(Y)\right)\}\{\mathrm{E}_\theta \left(t(Y)\right)-\theta\}\right) \\
+= &\: \mathrm{Var}_\theta\left(t(Y_1,...,Y_n)\right) + Bias^2((t(.); \theta) + 0
+\end{align*}
+\end{Beweis}
+
+\paragraph{Kullback-Leibler-Divergenz} Vergleich von Verteilungen
+
+$$KL(t,\theta) = \int_{-\infty}^\infty \log\frac{f(\tilde{y};\theta)}{f(\tilde{y};t)} f(\tilde{y};\theta) d\tilde{y}$$
+
+\noindent Die KL-Divergenz ist keine Distanz, da sie nicht symmetrisch ist.
+\noindent Sie ist 0 für $t=\theta$ und größer/gleich 0 sonst.
+\begin{Beweis}
+Folgt aus $\log (x) \leq x-1 \forall x \geq 0$, mit Gleichheit für $x=1$.
+\end{Beweis}
+
+\noindent $R_{KL} (t(.), \theta)$ wird durch den MSE approximiert.
+\begin{Beweis}
+\vspace{-1.5em}
+\begin{align*}
+& R_{KL} (t(.), \theta) = \\ =&\: \int_{-\infty}^\infty \mathcal{L}_{KL}(t(Y_1,...,Y_n),\theta) \prod_{i=1}^n f(y_i;\theta)dy_i \\
+=&\: \int\int \log\frac{f(\tilde{y};\theta)}{f(\tilde{y};t)} f(\tilde{y};\theta) d\tilde{y} \prod_{i=1}^n f(y_i;\theta)dy_i \\
+=&\: \int\int \left(\log f(\tilde{y};\theta) - \log f(\tilde{y};t) \right) f(\tilde{y};\theta) d\tilde{y} - \prod_{i=1}^n f(y_i;\theta)dy_i \\
+\approx & \: - \int \underbrace{\left( \int \frac{\partial \log f(\tilde{y};\theta)}{\partial \theta} f(\tilde{y};\theta)d\tilde{y}\right)}_{0}\left(t-\theta\right) \prod_{i=1}^n f(y_i;\theta)dy_i  \\
++ &  \frac{1}{2} \int \underbrace{\left( - \int \frac{\partial^2 \log f(\tilde{y};\theta)}{\partial \theta^2} f(\tilde{y};\theta)d\tilde{y}\right)}_{I(\theta)}\left(t-\theta\right)^2 \prod_{i=1}^n f(y_i;\theta)dy_i 
+\end{align*}
+Wobei der letzte Schritt durch die Taylorreihe approximiert wurde:
+$\log f(\tilde{y}, t) \approx \log f(\tilde{y},\theta) + \frac{\partial\log f(\tilde{y}, \theta)}{\partial\theta} (t-\theta) + \frac{1}{2} \frac{\partial^2\log f(\tilde{y}, \theta)}{\partial\theta^2} (t-\theta)^2$
+\end{Beweis}
+\end{multicols}
+
+
+\begin{multicols}{2}[\subsection{Maximum Likelihood (ML)}][4cm]
+  \paragraph{Voraussetzungen}
+  
+  \begin{itemize}
+  \item $Y_i \sim f(y;\theta)\:\: i.i.d.$
+  \item $\theta \in \mathbb{R}^p$
+  \item $f(.;\theta)$ Fisher-regulär:
+  \begin{itemize}
+  \item $\{ y: f (y; \theta > 0) \}$ unabhängig von $\theta$
+  \item Möglicher Parameterraum $\Theta$ ist offen
+  \item $f(y;\theta)$ zweimal differenzierbar
+  \item $\int \frac{\partial}{\partial \theta} f(y;\theta)dy = \frac{\partial}{\partial \theta} \int f(y;\theta)dy$
+  \end{itemize}
+  \end{itemize}
+  
+  \paragraph{Zentrale Funktionen} \ \\
+  \begin{itemize}
+  \item \textbf{Likelihood} $L(\theta;y_1,...,y_n)$: $\prod_{i=1}^n f(y_i;\theta)$
+  \item \textbf{log-Likelihood} $l(\theta;y_1,..y_n)$: 
+$\log L(\theta;y_1,...,y_n) = \sum_{i=1}^n \log f(y_i;\theta)$
+  \item \textbf{Score} $s(\theta;y_1,...,y_n)$: $\frac{\partial l(\theta;y_1,..y_n)}{\partial \theta}$
+  \item \textbf{Fisher-Information} $I(\theta)$: $-\mathrm{E}_\theta\left(\frac{\partial s(\theta;Y_1,...,Y_n)}{\partial\theta}\right)$
+  \end{itemize}
+  
+  
+  \paragraph{Eigenschaften der Score-Funktion} \ \\
+  
+  erste Bartlett Gleichung:
+  
+  $$\mathrm{E}\left(s(\theta;Y)\right) = 0$$
+  
+\begin{Beweis}
+\vspace{-1.5em}
+\begin{align*}
+1 &= \int f(y;\theta) dy \\
+0 = \frac{\partial 1}{\partial\theta} &= \int \frac{\partial f(y;\theta)}{\partial \theta}dy = \int \frac{\partial f(y;\theta) / \partial\theta}{f(y;\theta)} f(y;\theta) dy \\ &= \int \frac{\partial}{\partial\theta} \log f(y;\theta) f(y;\theta) dy = \int s(\theta;y) f(y;\theta) dy
+\end{align*}
+\end{Beweis}
+  
+  zweite Bartlett Gleichung:
+  
+  $$\mathrm{Var}_\theta\left(s(Y;\theta)\right) = \mathrm{E}_\theta\left(-\frac{\partial^2 log f(Y;\theta)}{\partial\theta^2}\right) = I(\theta)$$
+  
+\begin{Beweis}
+\vspace{-1.5em}
+\begin{align*}
+0 = \frac{\partial 0}{\partial \theta} =& \frac{\partial}{\partial\theta}\int \frac{\partial}{\partial\theta} \log f(y;\theta) f(y;\theta) dy \hspace{2em}\text{      siehe oben}\\
+=& \int \left( \frac{\partial^2}{\partial \theta^2} \log f(y;\theta)\right) f(y;\theta) dy  \\
+&+ \int\frac{\partial \log f(y;\theta)}{\partial \theta}\frac{\partial f(y;\theta)}{\partial \theta}dy \\
+=& \: \mathrm{E}_\theta \left( \frac{\partial^2}{\partial \theta^2} \log f(Y;\theta)\right)  \\
+&+ \int\frac{\partial \log f(y;\theta)}{\partial \theta}\frac{\partial \log f(y;\theta)}{\partial \theta} f(y;\theta) dy 
+\end{align*}
+$$\Leftrightarrow \mathrm{E}_\theta \left(s(\theta;Y) s(\theta;Y)\right) = \mathrm{E}_\theta \left(- \frac{\partial^2}{\partial \theta^2} \log f(Y;\theta)\right)$$
+\noindent Bartletts zweite Gleichung gilt dann, weil $\mathrm{E}\left(s(\theta;Y)\right) = 0$
+\end{Beweis}
+  
+  \paragraph{ML-Schätzer}
+   $$\hat{\theta}_{ML} = \text{arg max } l(\theta; y_1,...y_n)$$
+   
+   für Fisher-reguläre Verteilungen:
+   $s\left(\hat{\theta}_{ML};y_1,...,y_n\right) = 0$
+   
+   Der ML-Schätzer ist invariant.
+  
+
+\end{multicols}
+
+
+\begin{multicols}{2}[\subsection{Suffizienz und Konsistenz}][4cm]
+
+\paragraph{Suffizienz} \ \\
+\noindent Eine Statistik $t(y_1,...,y_n)$ ist suffizient für $\theta$, wenn die bedingte Verteilung $f(y_1,...,y_n|t_0 = t(y_1,...,y_n);\theta)$ unabhängig von $\theta$ ist. \vspace{0.5em}
+
+\textbf{Neyman-Kriterium:}
+$$t(Y_1,...,Y_n) \text{ suffizient } \Leftrightarrow f(y;\theta) = h(y)g\left(t(y);\theta\right)$$
+\begin{Beweis}
+``$\Rightarrow$'':
+$$f(y;\theta) = \underbrace{f(y|t = t(y);\theta)}_{h(y)} \underbrace{f_t(t|y;\theta)}_{g(t(y);\theta)}$$
+
+\noindent ``$\Leftarrow$'':
+$$f_t(t;\theta) = \int_{t=t(y)} f(y;\theta)dy = \int_{t=t(y)} h(y) g(t;\theta)dy$$
+\indent Damit:
+$$f\left(y|t=t(y);\theta\right) = \frac{f(y,t=t(y);\theta)}{f_t(t,\theta)}
+= \begin{cases}
+\frac{h(y)g(t;\theta)}{g(t;\theta)} & t=t(y) \\
+0 & \, \text{sonst}
+\end{cases}$$
+\end{Beweis}
+
+\textbf{Minimalsuffizienz:} \ \\
+$t(.)$ ist suffizient und $\forall\: \tilde{t}(.)\: \exists\: h(.) \text{ s.t. } t(y) = h(\tilde{t}(y))$
+
+\paragraph{(schwache) Konsistenz}
+$$MSE(\hat{\theta},\theta) \overset{n\rightarrow\infty}{\longrightarrow} 0 \Rightarrow \hat{\theta} \text{ konsistent}$$
+
+
+\end{multicols}
+
+
+\begin{multicols}{2}[\subsection{Konfidenzintervalle}][4cm]
+
+\end{multicols}
+
+
   
 %-------------------------------------------------------------------------------
 
@@ -969,132 +1177,6 @@ SS_{Residual} &= \sum\limits_{i=1}^n(y_i-\hat{y}_i)^2=\sum\limits_{i=1}^n e_i^2=
 $$R^2=\frac{SS_{Explained}}{SS_{Total}}=1-\frac{SS_{Residual}}{SS_{Total}}=r^2$$
 
 Wertebereich: $0 \le R^2 \le 1$
-
-\end{multicols}
-
-%-------------------------------------------------------------------------------
-
-% SECTION: INFERENZ
-
-%-------------------------------------------------------------------------------
-
-
-\section{Inferenz}
-
-
-\subsection{Methode der Momente}
-
-Die theoretischen Momente werden durch die empirischen geschätzt: \ \\
-\vspace{0.5em}
-$\mathrm{E}_{\hat{\theta}_{MM}}(Y^k) = m_k(y_1,...,y_n)$ \ \\
-\vspace{0.5em}
-\noindent Für die Exponentialfamilie gilt: $\hat{\theta}_{MM} = \hat{\theta}_{ML}$
-
-
-\begin{multicols}{2}[\subsection{Verlustfunktionen}][4cm]
-
-\paragraph{Verlust}
-
-$$\mathcal{L}: \mathcal{T} \times \Theta \rightarrow \mathbb{R}^+$$
-
-\noindent mit Parameterraum $\Theta \subset \mathbb{R}$, $t\in \mathcal{T}$ mit $t:\mathbb{R}^n \rightarrow \mathbb{R}$ eine Statistik, die den Parameter $\theta$ schätzt. 
-
-Es gilt: $\mathcal{L}(\theta, \theta) = 0$
-
-\begin{itemize}
-\item \textbf{absoluter Verlust (L1)}: $\mathcal{L}(t, \theta) = (t-\theta)^2$
-\item \textbf{quadratischer Verlust (L2)}: $\mathcal{L}(t, \theta) = \left|t-\theta \right|$
-\end{itemize}
-
-\noindent Da $\theta$ unbekannt ist, ist der Verlust eine theoretische Größe. Zudem ist er die Realisation einer Zufallsvariable, da er von einer konkreten Stichprobe abhängt.
-
-\paragraph{Risiko}
-
-\begin{align*}
-R(t(.), \theta) &= \mathrm{E}_\theta \left(\mathcal{L}(t(Y_1,...,Y_n),\theta)\right) \\
-&= \int_{-\infty}^\infty \mathcal{L}(t(Y_1,...,Y_n),\theta) \prod_{i=1}^n f(y_i;\theta)dy_i
-\end{align*}
-
-hier auch Kullback Leibler Distanz?
-
-\end{multicols}
-
-
-\begin{multicols}{2}[\subsection{Maximum Likelihood (ML)}][4cm]
-  \paragraph{Voraussetzungen}
-  
-  \begin{itemize}
-  \item $Y_i \sim f(y;\theta)\:\: i.i.d.$
-  \item $\theta \in \mathbb{R}^p$
-  \item $f(.;\theta)$ Fisher-regulär:
-  \begin{itemize}
-  \item $\{ y: f (y; \theta > 0) \}$ unabhängig von $\theta$
-  \item Möglicher Parameterraum $\Theta$ ist offen
-  \item $f(y;\theta)$ zweimal differenzierbar
-  \item $\int \frac{\partial}{\partial \theta} f(y;\theta)dy = \frac{\partial}{\partial \theta} \int f(y;\theta)dy$
-  \end{itemize}
-  \end{itemize}
-  
-  \paragraph{Zentrale Funktionen} \ \\
-  \begin{itemize}
-  \item \textbf{Likelihood} $L(\theta;y_1,...,y_n)$: $\prod_{i=1}^n f(y_i;\theta)$
-  \item \textbf{log-Likelihood} $l(\theta;y_1,..y_n)$: 
-$\log L(\theta;y_1,...,y_n) = \sum_{i=1}^n \log f(y_i;\theta)$
-  \item \textbf{Score} $s(\theta;y_1,...,y_n)$: $\frac{\partial l(\theta;y_1,..y_n)}{\partial \theta}$
-  \item \textbf{Fisher-Information} $I(\theta)$: $-\mathrm{E}_\theta\left(\frac{\partial s(\theta;Y_1,...,Y_n)}{\partial\theta}\right)$
-  \end{itemize}
-  
-  
-  \paragraph{Eigenschaften der Score-Funktion} \ \\
-  
-  erste Bartlett Gleichung:
-  
-  $$\mathrm{E}\left(s(\theta;Y)\right) = 0$$
-  
-\begin{Beweis}
-\vspace{-1.5em}
-\begin{align*}
-1 &= \int f(y;\theta) dy \\
-0 = \frac{\partial 1}{\partial\theta} &= \int \frac{\partial f(y;\theta)}{\partial \theta}dy = \int \frac{\partial f(y;\theta) / \partial\theta}{f(y;\theta)} f(y;\theta) dy \\ &= \int \frac{\partial}{\partial\theta} \log f(y;\theta) f(y;\theta) dy = \int s(\theta;y) f(y;\theta) dy
-\end{align*}
-\end{Beweis}
-  
-  zweite Bartlett Gleichung:
-  
-  $$\mathrm{Var}_\theta\left(s(Y;\theta)\right) = \mathrm{E}_\theta\left(-\frac{\partial^2 log f(Y;\theta)}{\partial\theta^2}\right) = I(\theta)$$
-  
-\begin{Beweis}
-\vspace{-1.5em}
-\begin{align*}
-0 = \frac{\partial 0}{\partial \theta} =& \frac{\partial}{\partial\theta}\int \frac{\partial}{\partial\theta} \log f(y;\theta) f(y;\theta) dy \hspace{2em}\text{      siehe oben}\\
-=& \int \left( \frac{\partial^2}{\partial \theta^2} \log f(y;\theta)\right) f(y;\theta) dy  \\
-&+ \int\frac{\partial \log f(y;\theta)}{\partial \theta}\frac{\partial f(y;\theta)}{\partial \theta}dy \\
-=& \: \mathrm{E}_\theta \left( \frac{\partial^2}{\partial \theta^2} \log f(Y;\theta)\right)  \\
-&+ \int\frac{\partial \log f(y;\theta)}{\partial \theta}\frac{\partial \log f(y;\theta)}{\partial \theta} f(y;\theta) dy
-\end{align*}
-$\Leftrightarrow \mathrm{E}_\theta \left(s(\theta;Y) s(\theta;Y)\right) = \mathrm{E}_\theta \left(- \frac{\partial^2}{\partial \theta^2} \log f(Y;\theta)\right)$
-
-\noindent Bartletts zweite Gleichung gilt dann, weil $\mathrm{E}\left(s(\theta;Y)\right) = 0$
-\end{Beweis}
-  
-  \paragraph{ML-Schätzer}
-   $$\hat{\theta}_{ML} = \text{arg max } l(\theta; y_1,...y_n)$$
-   
-   für Fisher-reguläre Verteilungen:
-   $s\left(\hat{\theta}_{ML};y_1,...,y_n\right) = 0$
-   
-   Der ML-Schätzer ist invariant.
-  
-
-\end{multicols}
-
-
-\begin{multicols}{2}[\subsection{Suffizienz, Konstistenz und Effizienz}][4cm]
-
-\end{multicols}
-
-
-\begin{multicols}{2}[\subsection{Konfidenzintervalle}][4cm]
 
 \end{multicols}
 
