@@ -35,6 +35,13 @@
 
 \setlength\parindent{0pt}
 
+
+
+\newcommand\independent{\protect\mathpalette{\protect\independenT}{\perp}}
+\def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
+
+
+
 %Hier sind die unterschiedlichen Ausführlichkeitsgrade definiert
 \includecomment{Extensiv} 
 \includecomment{Beweis} 
@@ -51,7 +58,7 @@
     innerrightmargin=10pt,
     innerleftmargin=10pt,
     backgroundcolor=white}
-\specialcomment{Beweis}{\begin{mdframed}[style=MyFrame] Beweis: \ \\}{\end{mdframed}}
+\specialcomment{Beweis}{\begin{mdframed}[style=MyFrame,nobreak=true] Beweis: \ \\}{\end{mdframed}}
 \specialcomment{Rechreg}{\noindent \textit{Rechenregeln:} \begin{itemize}[nosep,label=$\star$] }{\end{itemize}}
 \renewcommand\ThisComment[1]{% Fix for Umlauts in comments
   \immediate\write\CommentStream{\unexpanded{#1}}%
@@ -934,12 +941,33 @@ MSE(t(.), \theta) &= \mathrm{E}_\theta\left(\{t(Y)-\theta\}^2\right) \\
 \begin{Beweis}
 Sei $\mathcal{L}(t, \theta) = (t-\theta)^2$
 \begin{align*}
-R(t(.), \theta) = &\: \mathrm{E}_\theta \left(\{t(Y) -\theta\}^2\right) \\
-= &\: \mathrm{E}_\theta \left(\{t(Y) - \mathrm{E}_\theta(t(Y)) + \mathrm{E}_\theta(t(Y))-\theta\}^2\right) \\
-= &\: \mathrm{E}_\theta \left(\{t(Y) - \mathrm{E}_\theta(t(Y))\}^2\right) +
-\mathrm{E}_\theta \left(\{\mathrm{E}_\theta(t(Y))-\theta\}^2\right) \\
-& +  2\mathrm{E}_\theta \left(\{t(Y)-\mathrm{E}_\theta \left(t(Y)\right)\}\{\mathrm{E}_\theta \left(t(Y)\right)-\theta\}\right) \\
-= &\: \mathrm{Var}_\theta\left(t(Y_1,...,Y_n)\right) + Bias^2((t(.); \theta) + 0
+R(t(.), \theta) = &\: \mathrm{E}_\theta (\{t(Y) -\theta\}^2) \\
+= &\: \mathrm{E}_\theta (\{t(Y) - \mathrm{E}_\theta(t(Y)) + \mathrm{E}_\theta(t(Y))-\theta\}^2) \\
+= &\: \mathrm{E}_\theta (\{t(Y) - \mathrm{E}_\theta(t(Y))\}^2) +
+\mathrm{E}_\theta (\{\mathrm{E}_\theta(t(Y))-\theta\}^2) \\
+& +  2\mathrm{E}_\theta (\{t(Y)-\mathrm{E}_\theta \left(t(Y))\}\{\mathrm{E}_\theta (t(Y)\right)-\theta\}) \\
+= &\: \mathrm{Var}_\theta(t(Y_1,...,Y_n)) + Bias^2((t(.); \theta) + 0
+\end{align*}
+\end{Beweis}
+
+\textbf{Cramér-Rao-Ungleichung}
+
+$$MSE(\hat{\theta}, \theta) \geq Bias^2(\hat{\theta},\theta) + 
+\frac{\left(1+
+\frac{\partial Bias(\hat{\theta}, \theta)}{partial \theta}
+\right)^2}{I(\theta)}$$
+
+\begin{Beweis}
+Für ungebiaste Schätzer: $ \theta = \mathrm{E}_\theta(\hat{\theta}) = \int t(y)f(y;\theta)dy$
+\begin{align*}
+1 &= \int t(y) \frac{\partial f(y;\theta)}{\partial \theta} dy \\
+&= \int t(y) \frac{\partial \log f(y;\theta)}{\partial \theta} f(y;\theta) dy \\
+&= \int t(y) s(y;\theta) f(y;\theta) dy \\
+&= \int \left( t(y)-\theta\right)\left(s(\theta;y)-0\right)f(y;\theta)dy
+& \overset{\text{1. Bartlett-Gleichung}}{\mathrm{E}_\theta \left(s(\theta;y)\right) = 0}\\
+&= \mathrm{Cov}_\theta\left(t(Y);s(\theta;Y)\right) \\
+&\geq \sqrt{\mathrm{Var}_\theta(t(Y))} \sqrt{\mathrm{Var}_\theta(s(\theta;Y))} & \text{Cauchy-Schwarz} \\
+&= \sqrt{MSE(t(Y);\theta)} \sqrt{I(\theta)}
 \end{align*}
 \end{Beweis}
 
@@ -990,13 +1018,14 @@ $\log f(\tilde{y}, t) \approx \log f(\tilde{y},\theta) + \frac{\partial\log f(\t
   \item \textbf{log-Likelihood} $l(\theta;y_1,..y_n)$: 
 $\log L(\theta;y_1,...,y_n) = \sum_{i=1}^n \log f(y_i;\theta)$
   \item \textbf{Score} $s(\theta;y_1,...,y_n)$: $\frac{\partial l(\theta;y_1,..y_n)}{\partial \theta}$
-  \item \textbf{Fisher-Information} $I(\theta)$: $-\mathrm{E}_\theta\left(\frac{\partial s(\theta;Y_1,...,Y_n)}{\partial\theta}\right)$
+  \item \textbf{Fisher-Information} $I(\theta)$: $-\mathrm{E}_\theta\left(\frac{\partial s(\theta;Y)}{\partial\theta}\right)$
+  \item \textbf{beobachtete Fisher-Information} $I_{obs}(\theta)$: $-\mathrm{E}_\theta\left(\frac{\partial s(\theta;y)}{\partial\theta}\right)$
   \end{itemize}
   
   
   \paragraph{Eigenschaften der Score-Funktion} \ \\
   
-  erste Bartlett Gleichung:
+  erste Bartlett-Gleichung:
   
   $$\mathrm{E}\left(s(\theta;Y)\right) = 0$$
   
@@ -1008,12 +1037,13 @@ $\log L(\theta;y_1,...,y_n) = \sum_{i=1}^n \log f(y_i;\theta)$
 \end{align*}
 \end{Beweis}
   
-  zweite Bartlett Gleichung:
+  zweite Bartlett-Gleichung:
   
   $$\mathrm{Var}_\theta\left(s(Y;\theta)\right) = \mathrm{E}_\theta\left(-\frac{\partial^2 log f(Y;\theta)}{\partial\theta^2}\right) = I(\theta)$$
   
 \begin{Beweis}
 \vspace{-1.5em}
+
 \begin{align*}
 0 = \frac{\partial 0}{\partial \theta} =& \frac{\partial}{\partial\theta}\int \frac{\partial}{\partial\theta} \log f(y;\theta) f(y;\theta) dy \hspace{2em}\text{      siehe oben}\\
 =& \int \left( \frac{\partial^2}{\partial \theta^2} \log f(y;\theta)\right) f(y;\theta) dy  \\
@@ -1021,6 +1051,7 @@ $\log L(\theta;y_1,...,y_n) = \sum_{i=1}^n \log f(y_i;\theta)$
 =& \: \mathrm{E}_\theta \left( \frac{\partial^2}{\partial \theta^2} \log f(Y;\theta)\right)  \\
 &+ \int\frac{\partial \log f(y;\theta)}{\partial \theta}\frac{\partial \log f(y;\theta)}{\partial \theta} f(y;\theta) dy 
 \end{align*}
+
 $$\Leftrightarrow \mathrm{E}_\theta \left(s(\theta;Y) s(\theta;Y)\right) = \mathrm{E}_\theta \left(- \frac{\partial^2}{\partial \theta^2} \log f(Y;\theta)\right)$$
 \noindent Bartletts zweite Gleichung gilt dann, weil $\mathrm{E}\left(s(\theta;Y)\right) = 0$
 \end{Beweis}
@@ -1064,14 +1095,44 @@ $t(.)$ ist suffizient und $\forall\: \tilde{t}(.)\: \exists\: h(.) \text{ s.t. }
 \paragraph{(schwache) Konsistenz}
 $$MSE(\hat{\theta},\theta) \overset{n\rightarrow\infty}{\longrightarrow} 0 \Rightarrow \hat{\theta} \text{ konsistent}$$
 
-
 \end{multicols}
 
 
 \begin{multicols}{2}[\subsection{Konfidenzintervalle}][4cm]
 
-\end{multicols}
+\paragraph{Definition}
+$$\begin{gathered}
+\left[t_l(Y),t_r(Y)\right] \text{ Konfidenzintervall } \\
+\Leftrightarrow \\
+P_\theta\left((t_l(Y) \leq \theta \leq t_r(Y)\right) \geq 1-\alpha
+\end{gathered}$$
 
+
+\noindent mit $1-\alpha$ Konfidenzlevel und $\alpha$ Signifikanzlevel
+
+\paragraph{Pivotale Statistik}
+
+$$\begin{gathered}
+g(Y;\theta) \text{ pivotal}\\
+\Leftrightarrow \\
+\text{Verteilung von } g(Y;\theta) \text{ unabhängig von } \theta
+\end{gathered}$$
+
+\textbf{Approximativ pivotale Statistik}
+
+$$g(\hat{\theta};\theta) = \frac{\hat{\theta} - \theta}{\sqrt{\textrm{Var}(\hat{\theta})}} \overset{\alpha}{\sim} \mathrm{N}(0,1)$$
+
+mit $\hat{\theta} = t(Y) \overset{\alpha}{\sim} \mathrm{N}(\theta,\mathrm{Var}(\hat{\theta})$
+
+$$KI = \left[ \hat{\theta} - z_{1-\frac{\alpha}{2}}\sqrt{\mathrm{Var}(\hat{\theta})}, \hat{\theta} + z_{1-\frac{\alpha}{2}}\sqrt{\mathrm{Var}(\hat{\theta})} \right]$$
+
+\begin{Beweis}
+$1-\alpha \approx P \left( z_{\frac{\alpha}{2}} \leq \frac{\hat{\theta} - \theta}{\sqrt{\textrm{Var}(\hat{\theta})}} \leq z_{1-\frac{\alpha}{2}}\right)$
+\end{Beweis}
+
+\paragraph{Exakte binomiale Konfidenzintervalle}
+
+\end{multicols}
 
   
 %-------------------------------------------------------------------------------
