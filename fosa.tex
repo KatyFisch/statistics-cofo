@@ -1,4 +1,4 @@
-% To Do: paragrah widow penalty   
+\textbf{•}% To Do: paragrah widow penalty   
 %        
 %      
 \documentclass[8pt]{extarticle}
@@ -1059,10 +1059,30 @@ $$\Leftrightarrow \mathrm{E}_\theta \left(s(\theta;Y) s(\theta;Y)\right) = \math
   \paragraph{ML-Schätzer}
    $$\hat{\theta}_{ML} = \text{arg max } l(\theta; y_1,...y_n)$$
    
-   für Fisher-reguläre Verteilungen:
+\noindent für Fisher-reguläre Verteilungen: $\hat{\theta}_{ML}$ hat asymptotisch die kleinstmögliche Varianz, gegeben durch die Cramér-Rao-Ungleichung, 
    $s\left(\hat{\theta}_{ML};y_1,...,y_n\right) = 0$
    
-   Der ML-Schätzer ist invariant.
+\noindent Der ML-Schätzer ist invariant $\hat{\gamma} = g(\hat{\theta})$ wenn $\gamma = g(\theta)$. 
+   
+\begin{Beweis}
+$\gamma = g(\theta)\, \Leftrightarrow \,\theta = g^{-1}(\gamma)$
+
+\noindent Für die Loglikelihood von $\gamma$ an der Stelle $\hat{\theta}$ gilt:
+
+$$\frac{\partial l(g^{-1}(\hat{\gamma}))}{\partial \gamma} = \frac{\partial g^{-1}(\gamma)}{\partial\gamma} \underbrace{\frac{\partial l(\hat{\theta})}{\partial \theta}}_{=0} = 0$$
+\end{Beweis}   
+
+\noindent Die Fisher-Information ist dann $\frac{\partial\theta}{\partial\gamma} I(\theta) \frac{\partial\theta}{\partial\gamma}$
+
+\begin{Beweis}
+\begin{align*}
+I(\gamma) &= 
+\frac{\partial^2 l(g^{-1}(\hat{\gamma}))}{\partial \gamma^2} = 
+\frac{\partial}{\partial\gamma} \left( \frac{\partial g^{-1}(\gamma)}{\partial\gamma} \frac{\partial l(\theta)}{\partial\theta} \right) \\
+&= \frac{\partial^2 g^{-1}(\gamma)}{\partial\gamma}\frac{\partial l(\theta)}{\partial\theta} + 
+\end{align*}
+\end{Beweis}
+
   
 
 \end{multicols}
