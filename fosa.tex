@@ -1,4 +1,4 @@
-\textbf{•}% To Do: paragrah widow penalty   
+% To Do: paragrah widow penalty   
 %        
 %      
 \documentclass[8pt]{extarticle}
@@ -1062,7 +1062,9 @@ $$\Leftrightarrow \mathrm{E}_\theta \left(s(\theta;Y) s(\theta;Y)\right) = \math
 \noindent für Fisher-reguläre Verteilungen: $\hat{\theta}_{ML}$ hat asymptotisch die kleinstmögliche Varianz, gegeben durch die Cramér-Rao-Ungleichung, 
    $s\left(\hat{\theta}_{ML};y_1,...,y_n\right) = 0$
    
-\noindent Der ML-Schätzer ist invariant $\hat{\gamma} = g(\hat{\theta})$ wenn $\gamma = g(\theta)$. 
+$\hat{\theta} \overset{a}{\sim} \mathrm{N}\left(\theta, I^{-1}(\theta)\right)$
+   
+\noindent Der ML-Schätzer ist invariant: $\hat{\gamma} = g(\hat{\theta})$ wenn $\gamma = g(\theta)$. 
    
 \begin{Beweis}
 $\gamma = g(\theta)\, \Leftrightarrow \,\theta = g^{-1}(\gamma)$
@@ -1076,12 +1078,19 @@ $$\frac{\partial l(g^{-1}(\hat{\gamma}))}{\partial \gamma} = \frac{\partial g^{-
 
 \begin{Beweis}
 \begin{align*}
-I(\gamma) &= 
-\frac{\partial^2 l(g^{-1}(\hat{\gamma}))}{\partial \gamma^2} = 
-\frac{\partial}{\partial\gamma} \left( \frac{\partial g^{-1}(\gamma)}{\partial\gamma} \frac{\partial l(\theta)}{\partial\theta} \right) \\
-&= \frac{\partial^2 g^{-1}(\gamma)}{\partial\gamma}\frac{\partial l(\theta)}{\partial\theta} + 
+I_{\gamma}(\gamma) &= 
+-\mathrm{E}\left(\frac{\partial^2 l(g^{-1}(\hat{\gamma}))}{\partial \gamma^2} \right)= 
+-\mathrm{E}\left(\frac{\partial}{\partial\gamma} \left( \frac{\partial g^{-1}(\gamma)}{\partial\gamma} \frac{\partial l(\theta)}{\partial\theta} \right)\right) \\
+&= -\mathrm{E}\left(\underbrace{\frac{\partial^2 g^{-1}(\gamma)}{\partial\gamma}\frac{\partial l(\theta)}{\partial\theta}}_{\text{Erwartungswert 0}} + \frac{\partial g^{-1}(\gamma)}{\partial\gamma}\frac{\partial^2l(\theta)}{\partial\theta^2}\frac{\partial g^{-1}(\gamma)}{\partial\gamma}\right) \\
+&= \frac{\partial g^{-1}(\gamma)}{\partial\gamma} I(\theta) \frac{\partial g^{-1}(\gamma)}{\partial\gamma} = \frac{\partial \theta}{\partial\gamma} I(\theta) \frac{\partial \theta}{\partial\gamma}
 \end{align*}
 \end{Beweis}
+
+\noindent Delta-Regel: $\gamma \overset{a}{\sim} \mathrm{N}(\hat{\gamma}, \frac{\partial \theta}{\partial\gamma} I^{-1}(\theta) \frac{\partial \theta}{\partial\gamma} $
+
+\paragraph{Numerische Berechnung des ML-Schätzers}
+Fisher-scoring als statistische Version des Newton-Raphson-Verfahrens
+
 
   
 
