@@ -1156,41 +1156,7 @@ $$MSE(\hat{\theta},\theta) \overset{n\rightarrow\infty}{\longrightarrow} 0 \Righ
 \end{multicols}
 
 
-\begin{multicols}{2}[\subsection{Confidence Intervals}][4cm]
 
-\paragraph{Definition}
-$$\begin{gathered}
-\left[t_l(Y),t_r(Y)\right] \text{ Konfidenzintervall } \\
-\Leftrightarrow \\
-P_\theta\left((t_l(Y) \leq \theta \leq t_r(Y)\right) \geq 1-\alpha
-\end{gathered}$$
-
-
-\noindent mit $1-\alpha$ Konfidenzlevel und $\alpha$ Signifikanzlevel
-
-\paragraph{Pivotale Statistik}
-
-$$\begin{gathered}
-g(Y;\theta) \text{ pivotal}\\
-\Leftrightarrow \\
-\text{Verteilung von } g(Y;\theta) \text{ unabhängig von } \theta
-\end{gathered}$$
-
-\textbf{Approximativ pivotale Statistik}
-
-$$g(\hat{\theta};\theta) = \frac{\hat{\theta} - \theta}{\sqrt{\textrm{Var}(\hat{\theta})}} \overset{\alpha}{\sim} \mathrm{N}(0,1)$$
-
-mit $\hat{\theta} = t(Y) \overset{\alpha}{\sim} \mathrm{N}(\theta,\mathrm{Var}(\hat{\theta})$
-
-$$KI = \left[ \hat{\theta} - z_{1-\frac{\alpha}{2}}\sqrt{\mathrm{Var}(\hat{\theta})}, \hat{\theta} + z_{1-\frac{\alpha}{2}}\sqrt{\mathrm{Var}(\hat{\theta})} \right]$$
-
-\begin{Proof}
-$1-\alpha \approx P \left( z_{\frac{\alpha}{2}} \leq \frac{\hat{\theta} - \theta}{\sqrt{\textrm{Var}(\hat{\theta})}} \leq z_{1-\frac{\alpha}{2}}\right)$
-\end{Proof}
-
-%\paragraph{Exakte binomiale Konfidenzintervalle}
-
-\end{multicols}
 
   
 %-------------------------------------------------------------------------------
@@ -1201,12 +1167,12 @@ $1-\alpha \approx P \left( z_{\frac{\alpha}{2}} \leq \frac{\hat{\theta} - \theta
 
 \section{Statistical Hypothesis Testing}
 
-\begin{multicols}{2}[\subsection{Significance, Relevance, p-Value}][4cm]
+\begin{multicols}{2}[\subsection{Significance and Confidence Intervals}][4cm]
 
 \paragraph{Significance Test}  \ \\
 \noindent Assuming two states $H_0$ and $H_1$ and two corresponding decisions ``$H_0$'' and ``$H_1$'', a decision rule (a threshold $c \in \mathbb{R}$ for the test statistic $T(X)$) is constructed s.\,t.:
 
-$$P(``H_1"|H_0) = 1-\alpha$$
+$$P(``H_1"|H_0) \leq \alpha$$
 
 \begin{center}
 \begin{tabular}{c |c c}
@@ -1227,6 +1193,34 @@ $$power = P(``H_1"|H_1) = 1-\beta$$
 
 $$p-value \leq \alpha \Leftrightarrow ``H_0"$$
 
+
+
+
+\paragraph{Confidence Interval}
+$$\begin{gathered}
+\left[t_l(Y),t_r(Y)\right] \text{ Confidence Interval } \\
+\Leftrightarrow \\
+P_\theta\left((t_l(Y) {\leq} \theta {\leq} t_r(Y)\right) \geq 1{-}\alpha
+\end{gathered}$$
+
+
+\noindent with $1-\alpha$ confidence level und $\alpha$ significance level
+\vspace{0.5em}
+
+\textbf{Corresponding Test}
+
+$$\theta \notin \left[t_l(y), t_r(y)\right] \Leftrightarrow ``H_1"$$
+
+
+%\paragraph{Exakte binomiale Konfidenzintervalle}
+
+\paragraph{Specificity}  or True Negative Rate ($1 -$empirical type I error)
+
+$$TNR = \frac{\#TN}{\#N} = \frac{\#TN}{\#TN + \#FP}$$
+
+\paragraph{Sensitivity}  or True Positive Rate, Recall (empirical power)
+
+$$TPR = \frac{\#TP}{\#P} = \frac{\#TP}{\#TP + \#FN}$$
 
 \end{multicols}
 
@@ -1350,9 +1344,74 @@ $$^*F_n(F^{{-}1}(y;\theta)) = \frac{1}{n}\sum_{i=1}^n\mathbbm{1}_{\{X_i\leq F^{{
 
 \noindent For an estimated parameter the distribution of $T(X)$ is not independent of $F_0$: $T(X) \overset{H_0}{\sim} KS$ only holds asymptotically.
 
+\paragraph{Pivotal Statistic}
+
+$$\begin{gathered}
+g(Y;\theta) \text{ pivotal}\\
+\Leftrightarrow \\
+\text{Distribution of } g(Y;\theta) \text{ independent of } \theta
+\end{gathered}$$
+
+\textbf{Approximative Pivotal Statistic}
+\indent $H_0\!:\; X_i \sim F \text{ pivotal} \;\;\; vs. \;\;\; H_1\!:\; X_i \sim F \text{not pivotal }$
+
+$$g(\hat{\theta};\theta) = \frac{\hat{\theta} - \theta}{\sqrt{\textrm{Var}(\hat{\theta})}} \overset{\alpha}{\sim} \mathrm{N}(0,1)$$
+
+with $\hat{\theta} = t(Y) \overset{\alpha}{\sim} \mathrm{N}(\theta,\mathrm{Var}(\hat{\theta})$
+
+$$KI = \left[ \hat{\theta} - z_{1-\frac{\alpha}{2}}\sqrt{\mathrm{Var}(\hat{\theta})}, \hat{\theta} + z_{1-\frac{\alpha}{2}}\sqrt{\mathrm{Var}(\hat{\theta})} \right]$$
+
+\begin{Proof}
+$1-\alpha \approx P \left( z_{\frac{\alpha}{2}} \leq \frac{\hat{\theta} - \theta}{\sqrt{\textrm{Var}(\hat{\theta})}} \leq z_{1-\frac{\alpha}{2}}\right)$
+\end{Proof}
+
+
 \end{multicols}
 
 \begin{multicols}{2}[\subsection{Multiple Tests}][4cm]
+
+\paragraph{Family-Wise Error Rate (FWER)}
+as $p\text{-}value \sim U(0,1)$
+
+For m tests:
+
+$$\alpha \leq P\left(\cup_{k=1}^m (p_k \leq \alpha)| H_{0k},k=1,...,m\right) \leq m\alpha$$
+
+$$FWER := P(\exists k: ``H_1k"|\forall k:\: H_0k)$$
+
+
+\paragraph{Bonferoni Adjustment} 
+
+$$\alpha_{B} = \frac{\alpha}{m}$$
+
+\paragraph{\v{S}id\'{a}k Adjustment} only for independent tests
+
+$$\alpha_{S} = 1- (1-\alpha)^{1/m}$$
+
+\begin{Proof}
+\vspace{-1.5em}
+\begin{align*}
+ \alpha &\overset{!}{=} P\left(\cup_{k=1}^m (p_k \leq \alpha)| H_{0k},k=1,...,m\right)\\
+ &= 1- (1-\alpha)^{1/m}
+\end{align*}
+\end{Proof}
+
+\paragraph{Holm's Procedure} also takes power into account
+
+\noindent Order the p-values: $p_{(1)} \leq...\leq p_{(m)} $
+
+\noindent Step $x \in \mathbb{N}^+$: if $p(x) > \frac{\alpha}{m + 1 - x}$ reject $H_{01}$ to $H_{0x}$ and stop, else move on to step $x+1$. 
+
+\paragraph{False Discovery Rate (FDR)} balances type I and II errors, especially for $n<<m$ problems
+
+$$FDR = \mathrm{E}\left(\frac{\#``H1"|H_0}{\#``H1"}\right)$$
+
+\noindent Order the p-values: $p_{(1)} \leq...\leq p_{(m)} $, choose $\alpha\in(0,1)$
+
+\noindent j is largest index s.\,t.\ $p(j) \leq \alpha j/m$, reject all $H_0i$ for $i\leq j$
+
+\vspace{1em}
+It can be shown that $FDR \leq m_0\alpha/m$, with $m_0 = \# H_0$
 
 \end{multicols}
 
