@@ -1,4 +1,4 @@
-% To Do: paragrah widow penalty   
+% To Do: Links
 %        
 %      
 \documentclass[8pt]{extarticle}
@@ -620,7 +620,7 @@ $$f_{Y_1}(y_1) = \int_{-\infty}^{\infty}...\int_{-\infty}^{\infty} f(y_1,...,y_k
 
 \paragraph{Conditional Density}
 
-$$f_{Y_1|Y_2}(y_1|y_2) = \frac{f(y_1, ..., y_2)}{f(y_2)} \text{ f"ur } f(y_2) > 0$$
+$$f_{Y_1|Y_2}(y_1|y_2) = \frac{f(y_1, ..., y_2)}{f(y_2)} \text{ for } f(y_2) > 0$$
 
 \paragraph{Iterated Expectation}
 
@@ -648,7 +648,7 @@ $$\mathrm{Var}(Y) = \mathrm{E}_X(\mathrm{Var}(Y|X)) + \mathrm{Var}_X(\mathrm{E}(
 
 \begin{multicols}{2}[\subsubsection{Discrete Distributions}][4cm]
 
-  \paragraph{Diskrete Gleichverteilung}
+  \paragraph{Discrete Uniform}
   
     \begin{align*}
     & Y \sim \mathrm{U}(\{y_1, ..., y_k\}),\: y \in \{y_1, ..., y_k\} \\
@@ -656,43 +656,43 @@ $$\mathrm{Var}(Y) = \mathrm{E}_X(\mathrm{Var}(Y|X)) + \mathrm{Var}_X(\mathrm{E}(
     & \mathrm{E}(Y) = \frac{k+1}{2} ,\: \mathrm{Var}(Y) = \frac{k^2 - 1}{12}
   \end{align*}
   
-    \paragraph{Binomialverteilung}
-  Erfolge in unabhängigen Versuchen 
+    \paragraph{Binomial}
+  Successes in independent trials 
 
   \begin{align*}
-    & Y \sim \mathrm{Bin}(n, \pi) \text{ mit } n \in \mathbb{N}, \pi \in \left[0,1\right] ,\: y \in \{0, ..., n\} \\
+    & Y \sim \mathrm{Bin}(n, \pi) \text{ with } n \in \mathbb{N}, \pi \in \left[0,1\right] ,\: y \in \{0, ..., n\} \\
     & P(Y=y|\lambda) = \binom{n}{y}\pi^k(1-\pi)^{n-y} \\
     & \mathrm{E}(Y|\pi,n) = n\pi ,\: \mathrm{Var}(Y|\pi,n) = n\pi(1-\pi)
   \end{align*}
 
-  \paragraph{Poissonverteilung}
-  Zählmodelle für seltene Ereignisse
+  \paragraph{Poisson}
+  Counting model for rare events
 
-\noindent Immer nur ein Ereignis pro Zeitpunkt, Eintreten der Ereignisse ist unabhängig von bisheriger Geschichte, mittlere Anzahl der Ereignisse pro Zeit ist konstant und proportional zur Länge des betrachteten Zeitintervalls.  
+\noindent only one event at a time, no autocorrelation, mean number of events over time is constant and proportional to length of the considered time interval 
 
   \begin{align*}
-    & Y \sim \mathrm{Po}(\lambda) \text{ mit } \lambda \in \left[ 0, + \infty \right] ,\: y \in \mathbb{N}_0 \\
+    & Y \sim \mathrm{Po}(\lambda) \text{ with } \lambda \in \left[ 0, + \infty \right] ,\: y \in \mathbb{N}_0 \\
     & P(Y=y|\lambda) =\frac{\lambda^y exp^{-\lambda}}{y!} \\
     & \mathrm{E}(Y|p) = \lambda ,\: \mathrm{Var}(Y|p) = \lambda
   \end{align*}
 
-\noindent Häufig wird die Varianz durchdas Poisson-Modell unterschätzt, es liegt Überdispersion vor.
+\noindent The model tends to overestimate the variance (Overdispersion).
   
-\noindent  \textit{Approximation} der Binomialverteilung für kleine p
+\noindent   \textit{Approximation} of the Binomial for small p
 
   
-    \paragraph{Geometrische Verteilung}
+    \paragraph{Geometric}
 
   \begin{align*}
-    & Y \sim \mathrm{Geom}(\pi) \text{ mit } \pi \in \left[0,1\right] ,\: y \in \mathbb{N}_0 \\
+    & Y \sim \mathrm{Geom}(\pi) \text{ with } \pi \in \left[0,1\right] ,\: y \in \mathbb{N}_0 \\
     & P(Y=y|\pi) = \pi(1-\pi)^{y-1} \\
     & \mathrm{E}(Y|\pi) = \frac{1}{\pi} ,\: \mathrm{Var}(Y|\pi) = \frac{1-\pi}{\pi^2}
   \end{align*}
   
-    \paragraph{Negative Binomialverteilung}
+    \paragraph{Negative Binomial}
 
   \begin{align*}
-    & Y \sim \mathrm{NegBin}(\alpha, \beta) \text{ mit } \alpha, \beta \geq 0 ,\: y \in \mathbb{N}_0 \\
+    & Y \sim \mathrm{NegBin}(\alpha, \beta) \text{ with } \alpha, \beta \geq 0 ,\: y \in \mathbb{N}_0 \\
     & P(Y=y|\alpha, \beta) = \binom{\alpha + y - 1}{\alpha - 1} \left(\frac{\beta}{\beta - 1}\right)^{\alpha} \left(\frac{1}{\beta + 1}\right)^y \\
     & \mathrm{E}(Y|\alpha,\beta) = \frac{\alpha}{\beta} ,\: \mathrm{Var}(Y|\alpha,\beta) = \frac{\alpha}{\beta^2}(\beta+1)
   \end{align*}
@@ -701,56 +701,57 @@ $$\mathrm{Var}(Y) = \mathrm{E}_X(\mathrm{Var}(Y|X)) + \mathrm{Var}_X(\mathrm{E}(
 
 \begin{multicols}{2}[\subsubsection{Continuous Distributions}][4cm]
 
-	\paragraph{Stetige Gleichverteilung}
+	\paragraph{Continuous Uniform}
   
     \begin{align*}
-    & Y \sim \mathrm{U}(a,b) \text{ mit } \alpha, \beta \in \mathbb{R}, a \le b,\: y \in \left[a,b\right] \\
+    & Y \sim \mathrm{U}(a,b) \text{ with } \alpha, \beta \in \mathbb{R}, a \le b,\: y \in \left[a,b\right] \\
     & p(y|a,b) =\frac{1}{b-a} \\
     & \mathrm{E}(Y|a,b) = \frac{a+b}{2} ,\: \mathrm{Var}(Y|a,b) = \frac{(b-a)^2}{12}
   \end{align*}
   
-    \paragraph{Univariate Normalverteilung} symmetrisch mit $\mu$ und $\sigma^2$
+    \paragraph{Univariate Normal} symmetric with $\mu$ and $\sigma^2$
   
     \begin{align*}
-    & Y \sim \mathrm{N}(\mu, \sigma^2) \text{ mit } \mu \in \mathbb{R}, \sigma^2 > 0,\: y \in \mathbb{R} \\
+    & Y \sim \mathrm{N}(\mu, \sigma^2) \text{ with } \mu \in \mathbb{R}, \sigma^2 > 0,\: y \in \mathbb{R} \\
     & p(y|\mu, \sigma^2) =\frac{1}{\sqrt{2\pi\sigma^2}} \exp \left(-\frac{(y-\mu)^2}{2 \sigma^2} \right) \\
     & \mathrm{E}(Y|\mu, \sigma^2) = \mu ,\: \mathrm{Var}(Y|\mu, \sigma^2) = \sigma^2
   \end{align*}
   
-    \paragraph{Multivariate Normalverteilung} symmetrisch mit $\mu$ und $\Sigma$
+    \paragraph{Multivariate Normal} symmetric mit $\mu_i$ and $\Sigma$
   
     \begin{align*}
-    & Y \sim \mathrm{N}(\mu, \Sigma) \text{ mit } \mu \in \mathbb{R}^d, \Sigma \in \mathbb{R}^{d\times d} s.p.d.,\: y \in \mathbb{R}^d \\
+    & Y \sim \mathrm{N}(\mu, \Sigma) \text{ with } \mu \in \mathbb{R}^d, \Sigma \in \mathbb{R}^{d\times d} s.p.d.,\: y \in \mathbb{R}^d \\
     & p(y|\mu, \Sigma) = (2\pi)^{-\frac{d}{2}} \det (\Sigma)^{-\frac{1}{2}} \exp \left( -\frac{1}{2}(y-\mu)^{T} \Sigma^{-1}(y-\mu)\right) \\
     & \mathrm{E}(Y|\mu, \Sigma) = \mu ,\: \mathrm{Var}(Y|\mu, \Sigma) = \Sigma
   \end{align*}
   
-    \paragraph{Log-Normalverteilung}
+    \paragraph{Log-Normal}
   
     \begin{align*}
-    & Y \sim \mathrm{LogN}(\mu, \sigma^2) \text{ mit } \mu \in \mathbb{R}, \sigma^2 > 0,\: y > 0 \\
+    & Y \sim \mathrm{LogN}(\mu, \sigma^2) \text{ eith } \mu \in \mathbb{R}, \sigma^2 > 0,\: y > 0 \\
     & p(y|\mu, \sigma^2) =\frac{1}{\sqrt{2\pi\sigma^2 y}} \exp \left(-\frac{(\log y-\mu)^2}{2 \sigma^2} \right) \\
     & \mathrm{E}(Y|\mu, \sigma^2) = \exp (\mu + \frac{\sigma^2}{2}) ,\\
     & \mathrm{Var}(Y|\mu, \sigma^2) = \exp (2\mu + \sigma^2)(\exp (\sigma^2) - 1)
   \end{align*}
   
-\noindent Zusammenhang: $\log (Y) \sim \mathrm{N}(\mu, \sigma^2) \Rightarrow Y \sim \mathrm{LogN}(\mu, \sigma^2)$
+\noindent Relationship: $\log (Y) \sim \mathrm{N}(\mu, \sigma^2) \Rightarrow Y \sim \mathrm{LogN}(\mu, \sigma^2)$
   
-    \paragraph{Nichtzentrale Studentverteilung} statistische Tests für $\mu$ mit unbekannter (geschätzter) Varianz und $\nu$ Freiheitsgraden
+    \paragraph{non-standardized Student's t} statistical Tests for $\mu$ with unknown (estimated) variance and $\nu$ degrees of freedom
   
     \begin{align*}
-    & Y \sim \mathrm{t}_\nu(\mu, \sigma) \text{ mit } \mu \in \mathbb{R}, \sigma^2, \nu > 0,\: y \in \mathbb{R}\\
+    & Y \sim \mathrm{t}_\nu(\mu, \sigma^2) \text{ with } \mu \in \mathbb{R}, \sigma^2, \nu > 0,\: y \in \mathbb{R}\\
     & p(y|\mu, \sigma^2, \nu) =\frac{\Gamma \left( \frac{\nu + 1}{2}\right) }{\Gamma (\frac{\nu}{2}) \Gamma (\sqrt{\nu\pi}\sigma)} \left(1+ \frac{(y-\mu)^2}{\nu \sigma^2} \right)^{-\frac{\nu + 1}{2}} \\
-    & \mathrm{E}(Y|\mu, \sigma^2, \nu) = \mu \text{ f"ur }  \nu > 1,\\
-    & \mathrm{Var}(Y|\mu, \sigma^2, \nu) = \sigma^2 \frac{\nu}{\nu-2} \text{ f"ur }  \nu > 2
+    & \mathrm{E}(Y|\mu, \sigma^2, \nu) = \mu \text{ for }  \nu > 1,\\
+    & \mathrm{Var}(Y|\mu, \sigma^2, \nu) = \sigma^2 \frac{\nu}{\nu-2} \text{ for }  \nu > 2
   \end{align*}
   
- \noindent Zusammenhang: $Y|\theta \sim \mathrm{N}(\mu, \frac{\sigma^2}{\theta}), \: \theta \sim  \mathrm{Ga}(\frac{\nu}{2}, \frac{\nu}{2}) \Rightarrow Y \sim \mathrm{t}_\nu(\mu, \sigma)$ 
+ \noindent Relationship: $Y|\theta \sim \mathrm{N}(\mu, \frac{\sigma^2}{\theta}), \: \theta \sim  \mathrm{Ga}(\frac{\nu}{2}, \frac{\nu}{2}) \Rightarrow Y \sim \mathrm{t}_\nu(\mu, \sigma)$ 
+ $t_\nu(\mu,\sigma^2)$ has heavier tails then the normal distribution. $t_\infty(\mu,\sigma^2)$ approaches $\mathrm{N}(\mu,\sigma^2)$.
   
-	\paragraph{Betaverteilung}
+	\paragraph{Beta}
   
     \begin{align*}
-    & Y \sim \mathrm{Be}(a, b) \text{ mit } a,b > 0,\: y \in \left[0,1\right]\\
+    & Y \sim \mathrm{Be}(a, b) \text{ with } a,b > 0,\: y \in \left[0,1\right]\\
     & p(y|a, b) =\frac{\Gamma \left( a+b\right) }{\Gamma (a) \Gamma (b)} y^{a-1} (1-y)^{b-1} \\
     & \mathrm{E}(Y|a, b) = \frac{a}{a+b},\\
     & \mathrm{Var}(Y|a, b) = \frac{ab}{\left(a+b\right)^2(a+b+1)}, \\
@@ -758,43 +759,43 @@ $$\mathrm{Var}(Y) = \mathrm{E}_X(\mathrm{Var}(Y|X)) + \mathrm{Var}_X(\mathrm{E}(
   \end{align*}
   
   
-  	\paragraph{Gammaverteilung}
+  	\paragraph{Gamma}
   
     \begin{align*}
-    & Y \sim \mathrm{Ga}(a, b) \text{ mit } a,b > 0,\: y > 0\\
+    & Y \sim \mathrm{Ga}(a, b) \text{ with } a,b > 0,\: y > 0\\
     & p(y|a, b) = \frac{ b^a }{\Gamma (a)} y^{a-1} \exp (-by) \\
     & \mathrm{E}(Y|a, b) = \frac{a}{b},\\
     & \mathrm{Var}(Y|a, b) = \frac{a}{b^a}, \\
     & \mathrm{mod}(Y|a, b) = \frac{a-1}{b} \text{ f"ur } a \ge 1
   \end{align*}
 
-  	\paragraph{Invers-Gammaverteilung}
+  	\paragraph{Inverse-Gamma}
   
     \begin{align*}
-    & Y \sim \mathrm{IG}(a, b) \text{ mit } a,b > 0,\: y > 0\\
+    & Y \sim \mathrm{IG}(a, b) \text{ with } a,b > 0,\: y > 0\\
     & p(y|a, b) = \frac{ b^a }{\Gamma (a)} y^{-a-1} \exp (-\frac{b}{y}) \\
     & \mathrm{E}(Y|a, b) = \frac{b}{a-1} \text{ f"ur } a > 1,\\
     & \mathrm{Var}(Y|a, b) = \frac{b^2}{(a-1)^2(a-2)} \text{ f"ur } a \ge 2, \\
     & \mathrm{mod}(Y|a, b) = \frac{b}{a+1}
   \end{align*}
   
-\noindent Zusammenhang: $Y^{-1} \sim \mathrm{Ga}(a, b) \Leftrightarrow Y \sim \mathrm{IG}(a, b)$
+\noindent Relationship: $Y^{-1} \sim \mathrm{Ga}(a, b) \Leftrightarrow Y \sim \mathrm{IG}(a, b)$
   
   
-  	\paragraph{Exponentialverteilung} Zeit zwischen Poisson-Ereignissen
+  	\paragraph{Exponential} Time between Poisson events
   
     \begin{align*}
-    & Y \sim \mathrm{Exp}(\lambda) \text{ mit } \lambda > 0,\: y \geq 0\\
+    & Y \sim \mathrm{Exp}(\lambda) \text{ with } \lambda > 0,\: y \geq 0\\
     & p(y|\lambda) = \lambda\exp (-\lambda y) \\
     & \mathrm{E}(Y|\lambda) = \frac{1}{\lambda}, \:
 	\mathrm{Var}(Y|\lambda) = \frac{1}{\lambda^2}
   \end{align*}
   
   
-  	\paragraph{Chi-Quadrat-Verteilung} quadrierte standardnormalverteilte Zufallsvariablen mit $\nu$ Freiheitsgraden
+  	\paragraph{Chi-Squared} squared standard normal random variables with $\nu$ degrees of freedom
   
     \begin{align*}
-    & Y \sim \chi^2(\nu) \text{ mit } \nu > 0,,\: y \in \mathbb{R}\\
+    & Y \sim \chi^2(\nu) \text{ with } \nu > 0,,\: y \in \mathbb{R}\\
     & p(y|\nu) = \frac{y^{\frac{\nu}{2}-1}e^{-\frac{y}{2}}}{2^{\frac{\nu}{2}}\Gamma \left(\frac{\nu}{2}\right)} \\
     & \mathrm{E}(Y|\nu) = \nu, \:
 	\mathrm{Var}(Y|\nu) = 2\nu
@@ -805,37 +806,37 @@ $$\mathrm{Var}(Y) = \mathrm{E}_X(\mathrm{Var}(Y|X)) + \mathrm{Var}_X(\mathrm{E}(
 \begin{multicols}{2}[\subsubsection{Exponential Family}][4cm]
 
   \paragraph{Definition} \ \\
-  \noindent Zur Exponentialfamilie gehören alle Verteilungen, deren Dichte wie folgt geschrieben werden kann:
+  \noindent The exponential family comprises all distributions, whose density can be written as follows:
   
   $$f_Y(y,\theta) = \exp^{t^T(y)\theta - \kappa (\theta)}h(y)$$
   
-  mit $h(y) \geq 0$, $t(y)$ Vektor der kanonischen Statistiken, $\theta$ Parametervektor und $\kappa (\theta)$ Normalisationskonstante.
+  with $h(y) \geq 0$, $t(y)$ vector of the canonical statistic, $\theta$ as parameter and $\kappa (\theta)$ the normalising constant.
   
-  \paragraph{Normalisierungskonstante}
+  \paragraph{Normalising Constant}
   
   \begin{align*}
   1 &= \int \exp^{t^T(y)\theta}h(y)dy \exp^{ - \kappa (\theta)} \\
   \Leftrightarrow \kappa (\theta) &= \log \int \exp^{t^T(y)\theta}h(y)dy
   \end{align*}
   
-  \noindent $\kappa (\theta)$ ist die kumulanterzeugende Funktion, somit $\frac{\partial\kappa(\theta)}{\partial\theta} = \mathrm{E}(t(Y))$ und $\frac{\partial^2\kappa(\theta)}{\partial\theta^2} = \mathrm{Var}(t(Y))$
+  \noindent $\kappa (\theta)$ is the cumulant generating function, therefore $\frac{\partial\kappa(\theta)}{\partial\theta} = \mathrm{E}(t(Y))$ and $\frac{\partial^2\kappa(\theta)}{\partial\theta^2} = \mathrm{Var}(t(Y))$
   
   
   
-  \paragraph{Mitglieder}
+  \paragraph{Members}
   
   \begin{itemize}
-  \item \textbf{Poissonverteilung}
-  \item \textbf{Geometrische Verteilung}
-  \item \textbf{Exponentialverteilung}
-  \item \textbf{Normalverteilung}
+  \item \textbf{Poisson}
+  \item \textbf{Geometric}
+  \item \textbf{Exponential}
+  \item \textbf{Normal}
    $t(y) = \left(-\frac{y^2}{2},y \right)^T$,  
    $\theta = \left(\frac{1}{\sigma^2}, \frac{\mu}{\sigma^2}\right)^T$,
    $h(y) = \frac{1}{\sqrt{2\pi}}$,
    $\kappa ( \theta ) = \frac{1}{2} \left( -\log \frac{1}{\sigma^2} + \frac{\mu^2}{\sigma^2} \right)$
-  \item \textbf{Gammaverteilung}
-  \item \textbf{Chi-Quadrat-Verteilung}
-  \item \textbf{Betaverteilung}
+  \item \textbf{Gamma}
+  \item \textbf{Chi-Squared}
+  \item \textbf{Beta}
   \end{itemize}
   
 
@@ -844,30 +845,30 @@ $$\mathrm{Var}(Y) = \mathrm{E}_X(\mathrm{Var}(Y|X)) + \mathrm{Var}_X(\mathrm{E}(
 
 \begin{multicols}{2}[\subsection{Limit Theorems}][4cm]
 
-  \paragraph{Gesetz der großen Zahlen}
+  \paragraph{Law of Large Numbers}
   
-  \paragraph{Zentraler Grenzwertsatz}
+  \paragraph{Central Limit Theorem}
   
   $$Z_n \overset{d}{\longrightarrow} \mathrm{N}(0, \sigma^2)$$
-  mit  $Z_n = \sum_{i=1}^{n} \frac{Y_i}{\sqrt{n}}$ und $Y_i$ i.i.d. mit $\mu=0$ und Varianz $\sigma^2$
+  with  $Z_n = \sum_{i=1}^{n} \frac{Y_i}{\sqrt{n}}$ and $Y_i$ i.i.d. with expectation $0$ and variance $\sigma^2$
 \begin{Proof}
-Für eine normalverteilte Zufallsvariable $Z \sim \mathrm{N}(\mu, \sigma^2)$ gilt $K_Z(t)=\mu t + \frac{1}{2}\sigma^2t^2$. Die ersten beiden Ableitungen $\frac{\partial^kK_Z(t)}{\partial t^k} \bigg|_{t = 0}$ entsprechen $\mu$ und $\sigma$. Alle anderen Momente sind null. 
+For normal random variables $Z \sim \mathrm{N}(\mu, \sigma^2)$: $K_Z(t)=\mu t + \frac{1}{2}\sigma^2t^2$. The first two derivatives $\frac{\partial^kK_Z(t)}{\partial t^k} \bigg|_{t = 0}$ are $\mu$ and $\sigma$. All other moments are zero. 
 
-\noindent Für $Z_n = (Y_1 + Y_2 + ... +Y_n)/\sqrt{n}$ gilt:
+\noindent For $Z_n = (Y_1 + Y_2 + ... +Y_n)/\sqrt{n}$:
 \begin{align*}
 M_{Z_n}(t) &= \mathrm{E}\left(e^{t(Y_1 + Y_2 + ... +Y_n)/\sqrt{n}}\right)\\
 &= \mathrm{E}\left(e^{tY_1/\sqrt{n}} \cdot e^{tY_2/\sqrt{n}}\cdot ... \cdot e^{tY_n/\sqrt{n}}\right) \\
 &= \mathrm{E}\left(e^{tY_1/\sqrt{n}}\right) \mathrm{E}\left(e^{tY_2/\sqrt{n}}\right) ... \mathrm{E}\left(e^{tY_n/\sqrt{n}}\right) \\
 &= M_Y^n(t/\sqrt{n})
 \end{align*}
-Analog gilt: $K_{Z_n}(t) = nK_Y(t/\sqrt{n})$.
+Analoguously: $K_{Z_n}(t) = nK_Y(t/\sqrt{n})$.
 \begin{align*}
  \frac{\partial K_{Z_n}(t)}{\partial t} \bigg|_{t = 0} &= \frac{n}{\sqrt{n}} \frac{\partial K_Y(t)}{\partial t} \bigg|_{t = 0} = \sqrt{n}\mu \\
  \frac{\partial^2K_{Z_n}(t)}{\partial t^2} \bigg|_{t = 0} &= \frac{n}{n} \frac{\partial^2 K_Y(t)}{\partial t^2} \bigg|_{t = 0} = \sigma^2
 \end{align*}
-Mithilfe der Taylorreihe können wir $K_{Z_n}(t) = 0 + \sqrt{n}\mu t + \frac{1}{2}\sigma^2t^2 + ...$ schreiben, wobei die Terme in $...$ alle für $n \rightarrow \infty$ gegen 0 gehen.
+Using the Taylor Expansion, we can write$K_{Z_n}(t) = 0 + \sqrt{n}\mu t + \frac{1}{2}\sigma^2t^2 + ...$, where the terms in $...$ are tending towards 0 as $n \rightarrow \infty$.
 
-\noindent Damit gilt $K_{Z_n}(t) \overset{n\rightarrow\infty}{\longrightarrow} K_{Z}(t)$ mit $Z \sim \mathrm{N}(\sqrt{n}\mu,\sigma^2)$.
+\noindent Therefore: $K_{Z_n}(t) \overset{n\rightarrow\infty}{\longrightarrow} K_{Z}(t)$ with $Z \sim \mathrm{N}(\sqrt{n}\mu,\sigma^2)$.
 \end{Proof}
 
 \end{multicols}
@@ -875,7 +876,7 @@ Mithilfe der Taylorreihe können wir $K_{Z_n}(t) = 0 + \sqrt{n}\mu t + \frac{1}{
 
 %-------------------------------------------------------------------------------
 
-% SECTION: INFERENZ
+% SECTION: INFERENCE
 
 %-------------------------------------------------------------------------------
 
@@ -1186,7 +1187,7 @@ $$KI = \left[ \hat{\theta} - z_{1-\frac{\alpha}{2}}\sqrt{\mathrm{Var}(\hat{\thet
 $1-\alpha \approx P \left( z_{\frac{\alpha}{2}} \leq \frac{\hat{\theta} - \theta}{\sqrt{\textrm{Var}(\hat{\theta})}} \leq z_{1-\frac{\alpha}{2}}\right)$
 \end{Proof}
 
-\paragraph{Exakte binomiale Konfidenzintervalle}
+%\paragraph{Exakte binomiale Konfidenzintervalle}
 
 \end{multicols}
 
@@ -1197,17 +1198,115 @@ $1-\alpha \approx P \left( z_{\frac{\alpha}{2}} \leq \frac{\hat{\theta} - \theta
 
 %-------------------------------------------------------------------------------
 
-\section{Hypothesis Testing}
+\section{Statistical Hypothesis Testing}
 
-\subsection{Tests for One Sample}
+\begin{multicols}{2}[\subsection{Significance, Relevance, p-Value}][4cm]
 
-\begin{multicols}{2}[\subsubsection{Normal Distribution}][4cm]
+\paragraph{Significance Test}  \ \\
+\noindent Assuming two states $H_0$ and $H_1$ and two corresponding decisions "$H_0$" and "$H_1$", a decision rule (a threshold $c \in \mathbb{R}$ for the test statistic $T(X)$) is constructed s.\,t.:
 
-  \paragraph{ $\mu$ gesucht, $\sigma^2 $ bekannt (Einfacher Gauß-Test)}
-  
+$$P("H_1"|H_0) = 1-\alpha$$
+
+\begin{center}
+\begin{tabular}{c |c c}
+%\hline\hline
+& "$H_0$" & "$H_1$" \\
+\hline
+$H_0$ & $1-\alpha$ (correct) & $\alpha$ (type I error)\\
+$H_1$ & $\beta$ (type II error) & $1-\beta$ (correct) \\
+%\hline\hline
+\end{tabular}
+\end{center}
+
+\noindent The \textit{power} of a test is $P("H_1"|H_1) = 1-\beta$
+
+
 
 
 \end{multicols}
+
+\begin{multicols}{2}[\subsection{Tests for One Sample}][4cm]
+
+\subsubsection*{\textit{Normal Distribution $X_i \overset{iid}{\sim} N(\mu,\sigma^2)$}}
+
+  \paragraph{Test for $\mu$, known $\sigma^2 $ (Simple Gauss-Test)} \ \\
+  
+  \noindent $H_0\!:\; \mu = \mu_0 \;\;\; vs. \;\;\; H_1\!:\; \mu \neq \mu_0$
+  
+  $$T(X) = \frac{\bar{X} -\mu_0}{\sigma} \;\overset{H_0}{\sim} \;\mathrm{N}(0,1)$$
+  
+  
+  
+  \paragraph{Test for $\mu$, unknown $\sigma^2 $ (Simple t-Test)} \ \\
+  
+  \noindent $H_0\!:\; \mu = \mu_0 \;\;\; vs. \;\;\; H_1\!:\; \mu \neq \mu_0$
+  
+  $$T(X) = \frac{\bar{X} -\mu_0}{\hat{\sigma}/\sqrt{n}} \;\overset{H_0}{\sim}\; t_{n-1}$$
+  
+  \noindent with $\hat{\sigma} = \sqrt{\frac{1}{n-1} \sum_{i=1}^n(Y_i - \bar{Y})^2}$
+  
+\subsubsection*{\textit{ML Estimate $\hat{\theta} \overset{a}{\sim} \mathrm{N}(\theta, I^{-1}(\theta))$}}
+  
+  \paragraph{Wald Test} \ \\
+  
+  \noindent $H_0\!:\; \theta = \theta_0 \;\;\; vs. \;\;\; H_1\!:\; \theta \neq \theta_0$
+  
+  $$T(X) = |\hat{\theta} - \theta_0|\; \overset{H_0}{\sim}\; \mathrm{N}(0, I^{-1}(\theta_0))$$
+  
+  \noindent As $\hat{\theta}$ converges to $\theta_0$ under $H_0$, it can also be used to calculate the variance: $I^{-1}(\hat{\theta}$.
+  
+    \paragraph{Score Test} \ \\
+  
+  \noindent $H_0\!:\; \theta = \theta_0 \;\;\; vs. \;\;\; H_1\!:\; \theta \neq \theta_0$
+  
+  $$T(X) = |s(\theta_0;y)|\; \overset{H_0}{\sim}\; \mathrm{N}(0, I(\theta_0))$$
+  
+  \noindent Advantage compared to the Wald Test: $\hat{\theta}$ does not have to be calculated.
+  
+      \paragraph{Likelihood Ratio Test} \ \\
+  
+  \noindent $H_0\!:\; \theta = \theta_0 \;\;\; vs. \;\;\; H_1\!:\; \theta \neq \theta_0$
+  
+  $$T(X) = 2(l(\hat{\theta}) - l(\theta)) \; \overset{H_0}{\sim}\; \chi^2_1$$
+  
+      \paragraph{Neyman-Pearson Test} \ \\
+  
+  \noindent $H_0\!:\; \theta = \theta_0 \;\;\; vs. \;\;\; H_1\!:\; \theta = \theta_1$
+  
+  $$T(X) = l(\theta_0) - l(\theta_1)$$
+  
+  \noindent For a given significance level $\alpha$, the Neyman Pearson Test is the most powerful test for comparing two estimates for $\theta$.
+  
+\begin{Proof}
+Decision rule of the NP-Test: $\varphi^* {=} \begin{cases} 1 & if \frac{f(y;\theta_0)}{f(y;\theta_1)} \leq \mathrm{e}^c\\ 0 & \text{otherwise} \end{cases}$
+
+\noindent Need to show: $P(\varphi(Y) {=} 1|\theta_1) \leq P(\varphi^*(Y) {=} 1|\theta_1)\; \forall \varphi$ 
+\vspace{-1.5em}
+\begin{align*}
+\intertext{$P(\varphi^* {=} 1|\theta_1) - P(\varphi {=} 1|\theta_1) = $}
+&= \int \{\varphi^*(y) {-} \varphi(y)\} f(y;\theta_1)dy\\
+&\geq \frac{1}{\mathrm{e}^c} \int_{\varphi^*{=}1} \{\varphi^*(y) {-} \varphi(y)\}f(y;\theta_0)dy & f(y;\theta_1) \geq \frac{f(y;\theta_0)}{\mathrm{e}^c} \\
+&+ \frac{1}{\mathrm{e}^c} \int_{\varphi^*{=}0} \{\varphi^*(y) {-} \varphi(y)\}f(y;\theta_0)dy & f(y;\theta_1) \leq \frac{f(y;\theta_0)}{\mathrm{e}^c} \\
+&= \frac{1}{\mathrm{e}^c} \int \{\varphi^*(y) {-} \varphi(y)\}f(y;\theta_0)dy = 0
+\end{align*}
+As $\alpha = \int \varphi^*(y)f(y;\theta_0)dy = \int \varphi(y)f(y;\theta_0)dy$
+\end{Proof}
+
+
+\end{multicols}
+
+\begin{multicols}{2}[\subsection{Tests for Two Samples}][4cm]
+
+\end{multicols}
+
+\begin{multicols}{2}[\subsection{Tests for Goodness of Fit}][4cm]
+
+\end{multicols}
+
+\begin{multicols}{2}[\subsection{Multiple Tests}][4cm]
+
+\end{multicols}
+
 
 
 %-------------------------------------------------------------------------------
