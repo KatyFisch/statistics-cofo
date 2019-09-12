@@ -18,6 +18,7 @@
 \usepackage{amsfonts}
 \usepackage{comment}
 \usepackage{booktabs}
+\usepackage{bbm}
 \usepackage{wrapfig}
 \usepackage{verbatimbox}
 \usepackage{enumitem}
@@ -1194,7 +1195,7 @@ $1-\alpha \approx P \left( z_{\frac{\alpha}{2}} \leq \frac{\hat{\theta} - \theta
   
 %-------------------------------------------------------------------------------
 
-% SECTION: HYPOTHESENTESTS
+% SECTION: HYPOTHESIS TESTS
 
 %-------------------------------------------------------------------------------
 
@@ -1203,14 +1204,14 @@ $1-\alpha \approx P \left( z_{\frac{\alpha}{2}} \leq \frac{\hat{\theta} - \theta
 \begin{multicols}{2}[\subsection{Significance, Relevance, p-Value}][4cm]
 
 \paragraph{Significance Test}  \ \\
-\noindent Assuming two states $H_0$ and $H_1$ and two corresponding decisions "$H_0$" and "$H_1$", a decision rule (a threshold $c \in \mathbb{R}$ for the test statistic $T(X)$) is constructed s.\,t.:
+\noindent Assuming two states $H_0$ and $H_1$ and two corresponding decisions ``$H_0$'' and ``$H_1$'', a decision rule (a threshold $c \in \mathbb{R}$ for the test statistic $T(X)$) is constructed s.\,t.:
 
-$$P("H_1"|H_0) = 1-\alpha$$
+$$P(``H_1"|H_0) = 1-\alpha$$
 
 \begin{center}
 \begin{tabular}{c |c c}
 %\hline\hline
-& "$H_0$" & "$H_1$" \\
+& ``$H_0$'' & ``$H_1$'' \\
 \hline
 $H_0$ & $1-\alpha$ (correct) & $\alpha$ (type I error)\\
 $H_1$ & $\beta$ (type II error) & $1-\beta$ (correct) \\
@@ -1218,9 +1219,13 @@ $H_1$ & $\beta$ (type II error) & $1-\beta$ (correct) \\
 \end{tabular}
 \end{center}
 
-\noindent The \textit{power} of a test is $P("H_1"|H_1) = 1-\beta$
+\paragraph{Power} concerns the type II error \ \\
 
+$$power = P(``H_1"|H_1) = 1-\beta$$
 
+\paragraph{p-Value} measures the amount of evidence against $H_0$
+
+$$p-value \leq \alpha \Leftrightarrow ``H_0"$$
 
 
 \end{multicols}
@@ -1300,6 +1305,50 @@ As $\alpha = \int \varphi^*(y)f(y;\theta_0)dy = \int \varphi(y)f(y;\theta_0)dy$
 \end{multicols}
 
 \begin{multicols}{2}[\subsection{Tests for Goodness of Fit}][4cm]
+
+\paragraph{Discrete (Chi-Squared)} \ \\
+  
+  \noindent $H_0\!:\; X_i \sim F_0 \;\;\; vs. \;\;\; H_1\!:\; X_i \sim F \neq F_0$
+  
+  $$T(X) = \sum_{k=1}^K \frac{(n_k - l_k)^2}{l_k} \; \overset{H_0}{\sim}\; \chi^2_{K-1-p}$$
+  
+  with the following contingency table:
+  
+  \begin{center}
+  \begin{tabular}{r|cccc}
+  & 1 & 2 & & K\\
+  \hline
+  observed & $n_1$ & $n_2$ & ... & $n_K$\\
+  expected under $H_0$ & $l_1$ & $l_2$ & ... & $l_K$\\
+  \end{tabular}
+  \end{center}
+
+\noindent $l_k>5$ and $l_k>n-5$ for the $\chi^2_{K-1-p}$-distribution to hold, 
+
+\noindent $F_0$ needs to be known, but its $p$ parameters can be estimated.
+
+\noindent The test can be applied to discretized continuous variables. 
+
+\paragraph{Continuous (Kolmogorov-Smirnov Test)} \ \\
+  
+  \noindent $H_0\!:\; X_i \sim F_0 \;\;\; vs. \;\;\; H_1\!:\; X_i \sim F \neq F_0$
+  
+  $$T(X) = \sup_x |F_n(x) - F(x;\theta)| \; \overset{H_0}{\sim}\; KS$$
+
+\noindent with the distribution function $F(x;\theta)$ and the empirical counterpart $F_n(x) = \frac{1}{n}\sum_{i=1}^n \mathbbm{1}_{\{X_i\leq x\}}$
+
+
+\begin{Proof}
+\vspace{-3em}
+\begin{align*}
+\intertext{$P(\sup_x |F_n(x) - F(x;\theta)|\leq t) = $}
+&= P(\sup_y |F^{-1}(y;\theta) - x|\leq t) & \substack{x\in\left[0,1\right],\: x {=} F^{-1}(y;\theta)\\ F(F^{-1}(y;\theta);\theta){=}y}\\
+&\overset{*}{=} P(\sup_y |\frac{1}{n}\sum_{i=1} \mathbbm{1}_{\{U_i\leq y\}} - y|\leq t) & \text{ with } U_i \sim U(0,1)
+\end{align*}
+$$^*F_n(F^{{-}1}(y;\theta)) = \frac{1}{n}\sum_{i=1}^n\mathbbm{1}_{\{X_i\leq F^{{-}1}(y;\theta)\}}  = \frac{1}{n}\sum_{i=1}^n\mathbbm{1}_{\{F(y;\theta) \leq y\}}$$
+\end{Proof}
+
+\noindent For an estimated parameter the distribution of $T(X)$ is not independent of $F_0$: $T(X) \overset{H_0}{\sim} KS$ only holds asymptotically.
 
 \end{multicols}
 
