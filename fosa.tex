@@ -1672,14 +1672,89 @@ $\pi \sim\mathrm{Be}(\alpha,\beta)$ & $\mathrm{Bin}(n,\pi)$ & $\mathrm{Be}(\alph
 \begin{multicols}{2}[\subsection{Numerical Methods for the Posterior}][4cm]
 
 \paragraph{Numerical Integration} here: trapezoid approximation
-$$\int_\theta f(y|\vartheta)f_\theta(\vartheta)d\vartheta\approx$$ $$  \sum_{k=1}^K \frac{f(y;\theta_k)f_\theta(\theta_k) + f(y;\theta_{k-1})f_\theta(\theta_{k-1})}{2}(\theta_k {-} \theta_{k-1})$$
+$$\int_\Theta f(y|\vartheta)f_\theta(\vartheta)d\vartheta\approx$$ $$  \sum_{k=1}^K \frac{f(y;\theta_k)f_\theta(\theta_k) + f(y;\theta_{k-1})f_\theta(\theta_{k-1})}{2}(\theta_k {-} \theta_{k-1})$$
 
  \noindent only normalisation constant unknown, works well for one-dimensional integrals
 
 
 \paragraph{Laplace Approximation} \ \\
 
-\paragraph{Monte Carlo Approximation} \ \\
+$$\int_\Theta f(y|\vartheta)f_\theta(\vartheta)d\vartheta \approx f(y;\hat{\theta}_P) f_\theta(\hat{\theta}_P)(2\pi)^{p/2}\left|J_{P}(\hat{\theta}_P)\right|^{\frac{1}{2}}$$
+
+\noindent with the one-dimenional $J_{P} := {-}\frac{\partial^2 l_{(n)}(\theta,y)}{\partial \theta^2} {-} \frac{\partial^2 \log f\theta(\theta)}{\partial\theta^2}$ Fisher information considering the prior, $\hat{\theta}_P$ posterior mode estimate s.\,t.\ $s_{P,\theta}(\hat{\theta}_P)=0$
+
+\begin{Proof}
+For $n$ independent samples:\vspace{0.2em}
+
+$f_{post}(\theta|y)=\frac{\prod_{i=1}^n f(y_i|\theta)f_\theta(\theta)}{\int \prod_{i=1}^n f(y_i|\theta)f_\theta(\theta)d\theta}$
+\vspace{0.6em}
+
+\noindent Denominator:\vspace{0.2em}
+\vspace{0.2em}
+$\int \mathrm{e}^{\left\{ \sum_{i=1}^n \log f(y_i|\theta) + \log f_\theta(\theta)\right\}} d\theta =$ 
+
+\noindent $ \int \mathrm{e}^{\left\{ l(\theta;y){+}\log f_\theta(\theta) \right\}} d\theta \overset{TS}{\approx} \int \mathrm{e}^{(l_P(\hat{\theta}_P) {-} \frac{1}{2} J_P(\hat{\theta}_P)(\vartheta {-}\hat{\theta}_P)^2)}d\vartheta$
+\vspace{0.6em}
+
+\noindent Resembles the normal distribution, therefore the inverse of the normalisation constant can be calculated, which gives the inverse of the Laplace approximation in the univariate case.
+\end{Proof}
+
+\noindent Works well for large $n$ and is numerically simple also in higher dimensions.
+
+\paragraph{Monte Carlo Approximations} \ \\
+
+\noindent The denominator can be written as $\mathrm{E}_\theta(f(y;\theta)) =$ $ \int_\Theta f(y|\vartheta)f_\theta(\vartheta)d\vartheta$, which  can be estimated by the arithmetic mean for a sample of $\theta_1,...,\theta_N$, which needs to be drawn from the prior. The following methods to draw from non-standard distributions can be used for that.
+
+\begin{itemize}
+\item \textbf{Inverse CDF} \\
+$F(X)$ known. Since $F(x)=u$, $F^{-1}(u)=x$, $u \sim U(0,1)$ \\
+\textit{Repeat $m$ times:}
+\vspace{-0.5em}
+\begin{enumerate}
+\item Draw $u \sim U(0,1)$
+\item Compute $F^{-1}(u)$ to get a value $x$
+\end{enumerate}
+\end{itemize}
+\begin{Proof}
+\vspace{-1.3em}
+$$P(x\leq y) = P(F^{-1}(u)\leq y) = P(u\leq F(y)) = F(y)$$
+\end{Proof}
+
+\begin{itemize}
+\item \textbf{Rejection Sampling} \\
+An umbrella distribution $g(x)$ can be found s.\,t.\ $\frac{f(x)}{g(x)} \leq M \;\forall x$ with $f(x)>0$ when $g(x)>0$
+\vspace{-0.5em}
+\begin{enumerate}
+\item Draw candidate $y\sim g(x)$
+\item Acceptance probability $\alpha$ for $y$: $\alpha = \frac{f(x)}{Mg(x)}$
+\item Draw $u \sim U(0,1)$ and accept if $u\leq\alpha$, else: step 1
+\end{enumerate}
+\end{itemize}
+\begin{Proof}
+\vspace{-1.3em}
+\begin{align*}
+P\left(Y\leq x|U\leq\frac{f(Y)}{Mg(Y)}\right) 
+&= \frac{P\left(Y\leq x, U\leq\frac{f(Y)}{Mg(Y)}\right)}{P\left(U\leq\frac{f(Y)}{Mg(Y)}\right)}\\
+=\frac{\int_{-\infty}^x \int_0^{\frac{f(y)}{g(x)}} du\: g(y) dy}{\int_{-\infty}^\infty \int_0^{\frac{f(y)}{g(x)}} du\: g(y) dy} 
+&= \frac{\int_{-\infty}^x \frac{f(y)}{g(x)} g(y) dy}{\int_{-\infty}^\infty \frac{f(y)}{g(x)} g(y) dy}\\
+= \frac{\int_{-\infty}^x f(y) dy}{\int_{-\infty}^\infty f(y) dy} &= P(X\leq x)\\
+\end{align*}
+\end{Proof}
+
+\begin{itemize}
+\item \textbf{Importance Sampling} \\
+Directly estimate $\mathrm{E}_\theta(f(y;\theta))$.
+
+For sampling distribution $g(x)$
+$$\frac{1}{N}\sum_{i=1}^n \frac{f(x)}{g(x)}$$
+is a consistent estimator.
+\end{itemize}
+\begin{Proof}
+\vspace{-1em}
+$$\mathrm{E}_g\left(\frac{1}{N}\sum_{i=1}^n \frac{f(x)}{g(x)}\right) = \int \frac{f(x)}{g(x)}g(x)dx = \int f(x) dx = f(x)$$
+\end{Proof}
+
+
 
 \paragraph{Sampling from the Posterior} \ \\
 
