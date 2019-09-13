@@ -36,7 +36,14 @@
 
 \setlength\parindent{0pt}
 
-
+\newcommand{\zerodisplayskips}{%
+  \setlength{\abovedisplayskip}{2pt}%
+  \setlength{\belowdisplayskip}{2pt}%
+  \setlength{\abovedisplayshortskip}{2pt}%
+  \setlength{\belowdisplayshortskip}{2pt}}
+\appto{\normalsize}{\zerodisplayskips}
+\appto{\small}{\zerodisplayskips}
+\appto{\footnotesize}{\zerodisplayskips}
 
 \newcommand\independent{\protect\mathpalette{\protect\independenT}{\perp}}
 \def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
@@ -120,7 +127,7 @@
 \section{Deskriptive Statistics}
 
 
-\subsection{Summary Statistics: Sample}
+\subsection{Summary Statistics}
 
 \begin{multicols}{2}[\subsubsection{Location}][4cm] 
 
@@ -512,7 +519,7 @@ Implications:
 \item $P(\emptyset)=0$
 \item $P(A\cup B)=P(A)+P(B)-P(A\cap B)$
 \item $A \subseteq B \Rightarrow P(A) \le P(B)$
-\item $P(B)=\sum\limits_{i=1}^n P(B\cap A_i), \textnormal{ f"ur } A_i,...,A_n$  complete decomposition of $\Omega$  into pairwise disjoint events
+\item $P(B)=\sum\limits_{i=1}^n P(B\cap A_i), \textnormal{ for } A_i,...,A_n$  complete decomposition of $\Omega$  into pairwise disjoint events
 \end{itemize}
 
 \end{Mathfolg}
@@ -718,7 +725,7 @@ $$\mathrm{Var}(Y) = \mathrm{E}_X(\mathrm{Var}(Y|X)) + \mathrm{Var}_X(\mathrm{E}(
     & \mathrm{E}(Y|\mu, \sigma^2) = \mu ,\: \mathrm{Var}(Y|\mu, \sigma^2) = \sigma^2
   \end{align*}
   
-    \paragraph{Multivariate Normal} symmetric mit $\mu_i$ and $\Sigma$
+    \paragraph{Multivariate Normal} symmetric with $\mu_i$ and $\Sigma$
   
     \begin{align*}
     & Y \sim \mathrm{N}(\mu, \Sigma) \text{ with } \mu \in \mathbb{R}^d, \Sigma \in \mathbb{R}^{d\times d} s.p.d.,\: y \in \mathbb{R}^d \\
@@ -756,7 +763,7 @@ $$\mathrm{Var}(Y) = \mathrm{E}_X(\mathrm{Var}(Y|X)) + \mathrm{Var}_X(\mathrm{E}(
     & p(y|a, b) =\frac{\Gamma \left( a+b\right) }{\Gamma (a) \Gamma (b)} y^{a-1} (1-y)^{b-1} \\
     & \mathrm{E}(Y|a, b) = \frac{a}{a+b},\\
     & \mathrm{Var}(Y|a, b) = \frac{ab}{\left(a+b\right)^2(a+b+1)}, \\
-    & \mathrm{mod}(Y|a, b) = \frac{a-1}{a+b-2} \text{ f"ur } a,b > 1
+    & \mathrm{mod}(Y|a, b) = \frac{a-1}{a+b-2} \text{ for } a,b > 1
   \end{align*}
   
   
@@ -767,7 +774,7 @@ $$\mathrm{Var}(Y) = \mathrm{E}_X(\mathrm{Var}(Y|X)) + \mathrm{Var}_X(\mathrm{E}(
     & p(y|a, b) = \frac{ b^a }{\Gamma (a)} y^{a-1} \exp (-by) \\
     & \mathrm{E}(Y|a, b) = \frac{a}{b},\\
     & \mathrm{Var}(Y|a, b) = \frac{a}{b^a}, \\
-    & \mathrm{mod}(Y|a, b) = \frac{a-1}{b} \text{ f"ur } a \ge 1
+    & \mathrm{mod}(Y|a, b) = \frac{a-1}{b} \text{ for } a \ge 1
   \end{align*}
 
   	\paragraph{Inverse-Gamma}
@@ -775,8 +782,8 @@ $$\mathrm{Var}(Y) = \mathrm{E}_X(\mathrm{Var}(Y|X)) + \mathrm{Var}_X(\mathrm{E}(
     \begin{align*}
     & Y \sim \mathrm{IG}(a, b) \text{ with } a,b > 0,\: y > 0\\
     & p(y|a, b) = \frac{ b^a }{\Gamma (a)} y^{-a-1} \exp (-\frac{b}{y}) \\
-    & \mathrm{E}(Y|a, b) = \frac{b}{a-1} \text{ f"ur } a > 1,\\
-    & \mathrm{Var}(Y|a, b) = \frac{b^2}{(a-1)^2(a-2)} \text{ f"ur } a \ge 2, \\
+    & \mathrm{E}(Y|a, b) = \frac{b}{a-1} \text{ for } a > 1,\\
+    & \mathrm{Var}(Y|a, b) = \frac{b^2}{(a-1)^2(a-2)} \text{ for } a \ge 2, \\
     & \mathrm{mod}(Y|a, b) = \frac{b}{a+1}
   \end{align*}
   
@@ -887,28 +894,28 @@ Using the Taylor Expansion, we can write$K_{Z_n}(t) = 0 + \sqrt{n}\mu t + \frac{
 
 \subsection{Method of Moments}
 
-Die theoretischen Momente werden durch die empirischen geschätzt: \ \\
+The theoretical moments are estimated by their empirical counterparts: \ \\
 \vspace{0.5em}
 $\mathrm{E}_{\hat{\theta}_{MM}}(Y^k) = m_k(y_1,...,y_n)$ \ \\
 \vspace{0.5em}
-\noindent Für die Exponentialfamilie gilt: $\hat{\theta}_{MM} = \hat{\theta}_{ML}$
+\noindent For the exponential family: $\hat{\theta}_{MM} = \hat{\theta}_{ML}$
 
 
 \begin{multicols}{2}[\subsection{Loss Functions}][4cm]
 
-\paragraph{Verlust}
+\paragraph{Loss}
 
 $$\mathcal{L}: \mathcal{T} \times \Theta \rightarrow \mathbb{R}^+$$
 
-\noindent mit Parameterraum $\Theta \subset \mathbb{R}$, $t\in \mathcal{T}$ mit $t:\mathbb{R}^n \rightarrow \mathbb{R}$ eine Statistik, die den Parameter $\theta$ schätzt. 
-Es gilt: $\mathcal{L}(\theta, \theta) = 0$
+\noindent with parameter space $\Theta \subset \mathbb{R}$, $t\in \mathcal{T}$ with $t:\mathbb{R}^n \rightarrow \mathbb{R}$ a statistic, that estimates the parameter $\theta$,
+ $\mathcal{L}(\theta, \theta) = 0$ holds
 
 \begin{itemize}
-\item \textbf{absoluter Verlust (L1)}: $\mathcal{L}(t, \theta) = \left|t-\theta \right|$
-\item \textbf{quadratischer Verlust (L2)}: $\mathcal{L}(t, \theta) = (t-\theta)^2$
+\item \textbf{absolute loss (L1)}: $\mathcal{L}(t, \theta) = \left|t-\theta \right|$
+\item \textbf{quadratic loss (L2)}: $\mathcal{L}(t, \theta) = (t-\theta)^2$
 \end{itemize}
 
-\noindent Da $\theta$ unbekannt ist, ist der Verlust eine theoretische Größe. Zudem ist er die Realisation einer Zufallsvariable, da er von einer konkreten Stichprobe abhängt.
+\noindent As $\theta$ is unknown, the loss is a theoretical measure. Additionally, it is the realisation of a random variable as it is dependent on a concrete sample.
 
 \paragraph{Risiko}
 
@@ -917,13 +924,12 @@ R(t(.), \theta) &= \mathrm{E}_\theta \left(\mathcal{L}(t(Y_1,...,Y_n),\theta)\ri
 &= \int_{-\infty}^\infty \mathcal{L}(t(Y_1,...,Y_n),\theta) \prod_{i=1}^n f(y_i;\theta)dy_i
 \end{align*}
 
-\paragraph{Minimax-Regel} \ \\
-\noindent Das Risiko beruht immer noch auf dem wahren Parameter $\theta$.
-Vorsichtige Schätzung: Wähle $\theta$ so, dass das Risiko maximal wird, und danach $t(.)$ so, dass das Risiko minimiert wird:
+\paragraph{Minimax Approach} \ \\
+\noindent The risk still depends ton the true parameter $\theta$.
+Tentative estimation: Choose $\theta$, so that the risk is maximal and then $t(.)$, so that the risk is minimized (minimizing the worst case):
 
 $$\hat{\theta}_{minimax} = \underset{t(.)}{\text{arg min }} \left(\underset{\theta \in \Theta}{\text{max }} R(t(.);\theta)\right)$$
 
-\noindent Es wird der Worst Case minimiert.
 
 \paragraph{Mean Squared Error (MSE)}
 \begin{align*}
@@ -931,10 +937,10 @@ MSE(t(.), \theta) &= \mathrm{E}_\theta\left(\{t(Y)-\theta\}^2\right) \\
 &=\mathrm{Var}_\theta\left(t(Y_1,...,Y_n)\right) + Bias^2((t(.); \theta)
 \end{align*}
 
-\noindent mit $Bias(t(.);\theta) = \mathrm{E}_\theta\left(t(Y_1,...,Y_n)\right)-\theta$
+\noindent with $Bias(t(.);\theta) = \mathrm{E}_\theta\left(t(Y_1,...,Y_n)\right)-\theta$
 
 \begin{Proof}
-Sei $\mathcal{L}(t, \theta) = (t-\theta)^2$
+Let $\mathcal{L}(t, \theta) = (t-\theta)^2$
 \begin{align*}
 R(t(.), \theta) = &\: \mathrm{E}_\theta (\{t(Y) -\theta\}^2) \\
 = &\: \mathrm{E}_\theta (\{t(Y) - \mathrm{E}_\theta(t(Y)) + \mathrm{E}_\theta(t(Y))-\theta\}^2) \\
@@ -945,38 +951,38 @@ R(t(.), \theta) = &\: \mathrm{E}_\theta (\{t(Y) -\theta\}^2) \\
 \end{align*}
 \end{Proof}
 
-\textbf{Cramér-Rao-Ungleichung}
+\textbf{Cramér-Rao Inequality}
 
 $$MSE(\hat{\theta}, \theta) \geq Bias^2(\hat{\theta},\theta) + 
 \frac{\left(1+
-\frac{\partial Bias(\hat{\theta}, \theta)}{partial \theta}
+\frac{\partial Bias(\hat{\theta}, \theta)}{\partial \theta}
 \right)^2}{I(\theta)}$$
 
 \begin{Proof}
-Für ungebiaste Schätzer: $ \theta = \mathrm{E}_\theta(\hat{\theta}) = \int t(y)f(y;\theta)dy$
+For unbiased estimates: $ \theta = \mathrm{E}_\theta(\hat{\theta}) = \int t(y)f(y;\theta)dy$
 \begin{align*}
 1 &= \int t(y) \frac{\partial f(y;\theta)}{\partial \theta} dy \\
 &= \int t(y) \frac{\partial \log f(y;\theta)}{\partial \theta} f(y;\theta) dy \\
 &= \int t(y) s(y;\theta) f(y;\theta) dy \\
 &= \int \left( t(y)-\theta\right)\left(s(\theta;y)-0\right)f(y;\theta)dy
-& \overset{\text{1. Bartlett-Gleichung}}{\mathrm{E}_\theta \left(s(\theta;y)\right) = 0}\\
+& \overset{\text{1. Bartlett equation}}{\mathrm{E}_\theta \left(s(\theta;y)\right) = 0}\\
 &= \mathrm{Cov}_\theta\left(t(Y);s(\theta;Y)\right) \\
 &\geq \sqrt{\mathrm{Var}_\theta(t(Y))} \sqrt{\mathrm{Var}_\theta(s(\theta;Y))} & \text{Cauchy-Schwarz} \\
 &= \sqrt{MSE(t(Y);\theta)} \sqrt{I(\theta)}
 \end{align*}
 \end{Proof}
 
-\paragraph{Kullback-Leibler-Divergenz} Vergleich von Verteilungen
+\paragraph{Kullback-Leibler Divergence} Comparing distributions
 
 $$KL(t,\theta) = \int_{-\infty}^\infty \log\frac{f(\tilde{y};\theta)}{f(\tilde{y};t)} f(\tilde{y};\theta) d\tilde{y}$$
 
-\noindent Die KL-Divergenz ist keine Distanz, da sie nicht symmetrisch ist.
-\noindent Sie ist 0 für $t=\theta$ und größer/gleich 0 sonst.
+\noindent The KL divergence is not a distance as it is not symmetric.
+\noindent It is $0$ for $t=\theta$ and $\geq 0$ otherwise.
 \begin{Proof}
-Folgt aus $\log (x) \leq x-1 \forall x \geq 0$, mit Gleichheit für $x=1$.
+Follows from $\log (x) \leq x-1 \forall x \geq 0$, with equality for $x=1$.
 \end{Proof}
 
-\noindent $R_{KL} (t(.), \theta)$ wird durch den MSE approximiert.
+\noindent $R_{KL} (t(.), \theta)$ is approximated by the MSE.
 \begin{Proof}
 \vspace{-1.5em}
 \begin{align*}
@@ -986,8 +992,8 @@ Folgt aus $\log (x) \leq x-1 \forall x \geq 0$, mit Gleichheit für $x=1$.
 \approx & \: - \int \underbrace{\left( \int \frac{\partial \log f(\tilde{y};\theta)}{\partial \theta} f(\tilde{y};\theta)d\tilde{y}\right)}_{0}\left(t-\theta\right) \prod_{i=1}^n f(y_i;\theta)dy_i  \\
 + &  \frac{1}{2} \int \underbrace{\left( - \int \frac{\partial^2 \log f(\tilde{y};\theta)}{\partial \theta^2} f(\tilde{y};\theta)d\tilde{y}\right)}_{I(\theta)}\left(t-\theta\right)^2 \prod_{i=1}^n f(y_i;\theta)dy_i 
 \end{align*}
-Wobei der letzte Schritt durch die Taylorreihe approximiert wurde:
-$\log f(\tilde{y}, t) \approx \log f(\tilde{y},\theta) + \frac{\partial\log f(\tilde{y}, \theta)}{\partial\theta} (t-\theta) + \frac{1}{2} \frac{\partial^2\log f(\tilde{y}, \theta)}{\partial\theta^2} (t-\theta)^2$
+The last step is approximated by the Taylor Expansion:
+$\log f(\tilde{y}, t) \approx \log f(\tilde{y},\theta) {+} \frac{\partial\log f(\tilde{y}, \theta)}{\partial\theta} (t{-}\theta) {+} \frac{1}{2} \frac{\partial^2\log f(\tilde{y}, \theta)}{\partial\theta^2} (t{-}\theta)^2$
 \end{Proof}
 \end{multicols}
 
@@ -1128,6 +1134,10 @@ If $\theta \in \mathbb{R}^p$ the corresponding distribution is $\chi^2_p$.
 
 \begin{multicols}{2}[\subsection{Sufficiency und Consistency}][4cm]
 
+\paragraph{Statistic} \ \\
+$$t: \mathbb{R}^n \rightarrow \mathbb{R}$$
+$t(Y_1, ..., Y_n)$ depends on sample size n and is a random variable
+
 \paragraph{Suffizienz} \ \\
 \noindent Eine Statistik $t(y_1,...,y_n)$ ist suffizient für $\theta$, wenn die bedingte Verteilung $f(y_1,...,y_n|t_0 = t(y_1,...,y_n);\theta)$ unabhängig von $\theta$ ist. \vspace{0.5em}
 
@@ -1152,6 +1162,11 @@ $t(.)$ ist suffizient und $\forall\: \tilde{t}(.)\: \exists\: h(.) \text{ s.t. }
 
 \paragraph{(schwache) Konsistenz}
 $$MSE(\hat{\theta},\theta) \overset{n\rightarrow\infty}{\longrightarrow} 0 \Rightarrow \hat{\theta} \text{ konsistent}$$
+
+\begin{Proof}
+$P(|\hat{\theta} - \mathrm{E}_{\hat{\theta}}| \geq \delta) \leq \frac{Var_\theta(\hat{\theta})}{\delta^2}$ using the inequality of Chebyshev
+and $MSE(t(.), \theta) = \mathrm{Var}_\theta\left(t(Y_1,...,Y_n)\right) + Bias^2((t(.); \theta)$
+\end{Proof}
 
 \end{multicols}
 
@@ -1280,7 +1295,7 @@ $$TPR = \frac{\#TP}{\#P} = \frac{\#TP}{\#TP + \#FN}$$
 Decision rule of the NP-Test: $\varphi^* {=} \begin{cases} 1 & if \frac{f(y;\theta_0)}{f(y;\theta_1)} \leq \mathrm{e}^c\\ 0 & \text{otherwise} \end{cases}$
 
 \noindent Need to show: $P(\varphi(Y) {=} 1|\theta_1) \leq P(\varphi^*(Y) {=} 1|\theta_1)\; \forall \varphi$ 
-\vspace{-1.5em}
+
 \begin{align*}
 \intertext{$P(\varphi^* {=} 1|\theta_1) - P(\varphi {=} 1|\theta_1) = $}
 &= \int \{\varphi^*(y) {-} \varphi(y)\} f(y;\theta_1)dy\\
@@ -1288,7 +1303,8 @@ Decision rule of the NP-Test: $\varphi^* {=} \begin{cases} 1 & if \frac{f(y;\the
 &+ \frac{1}{\mathrm{e}^c} \int_{\varphi^*{=}0} \{\varphi^*(y) {-} \varphi(y)\}f(y;\theta_0)dy & f(y;\theta_1) \leq \frac{f(y;\theta_0)}{\mathrm{e}^c} \\
 &= \frac{1}{\mathrm{e}^c} \int \{\varphi^*(y) {-} \varphi(y)\}f(y;\theta_0)dy = 0
 \end{align*}
-As $\alpha = \int \varphi^*(y)f(y;\theta_0)dy = \int \varphi(y)f(y;\theta_0)dy$
+
+\noindent As $\alpha = \int \varphi^*(y)f(y;\theta_0)dy = \int \varphi(y)f(y;\theta_0)dy$
 \end{Proof}
 
 
@@ -1333,7 +1349,7 @@ As $\alpha = \int \varphi^*(y)f(y;\theta_0)dy = \int \varphi(y)f(y;\theta_0)dy$
 
 
 \begin{Proof}
-\vspace{-3em}
+\vspace{-1em}
 \begin{align*}
 \intertext{$P(\sup_x |F_n(x) - F(x;\theta)|\leq t) = $}
 &= P(\sup_y |F^{-1}(y;\theta) - x|\leq t) & \substack{x\in\left[0,1\right],\: x {=} F^{-1}(y;\theta)\\ F(F^{-1}(y;\theta);\theta){=}y}\\
@@ -1506,7 +1522,7 @@ Range: $0 \le R^2 \le 1$
 
 %-------------------------------------------------------------------------------
 
-% SECTION: KLASSIFIKATION
+% SECTION: CLASSIFICATION
 
 %-------------------------------------------------------------------------------
 
@@ -1517,7 +1533,7 @@ Range: $0 \le R^2 \le 1$
 
 %-------------------------------------------------------------------------------
 
-% SECTION: CLUSTERANALYSE
+% SECTION: CLUSTER ANALYSIS
 
 %-------------------------------------------------------------------------------
 
@@ -1525,7 +1541,7 @@ Range: $0 \le R^2 \le 1$
 
 %-------------------------------------------------------------------------------
 
-% SECTION: BAYESSCHE STATISTIK
+% SECTION: BAYESIAN STATISTICS
 
 %-------------------------------------------------------------------------------
 
@@ -1533,61 +1549,141 @@ Range: $0 \le R^2 \le 1$
 
 \begin{multicols}{2}[\subsection{Basics}][4cm] 
 
-\paragraph{Bayes-Formel}
+\paragraph{Bayes Theorem}
 $$P(A|B)=\frac{P(B|A)P(A)}{P(B)} \hspace{0.5cm} \text{für } P(A), P(B) > 0$$
 
-\begin{center}oder allgemeiner:\end{center}
+or more general:
 
 \vspace{-1 em}
 
 \begin{align*}
-  f(\theta | X) &= \frac{f(X | \theta ) \cdot f(\theta)}{\int f(X|\tilde{\theta}) f(\tilde{\theta})  d \tilde{\theta}}\\
-  &= C \cdot f(X | \theta ) \cdot f(\theta) \hspace{1 em} \text{wähle C so, dass $\int f(\theta | X)=1$} \\
-  &\propto f(X | \theta ) \cdot f(\theta)
+  f_{post}(\theta | X) &= \frac{f(X | \theta ) \cdot f_\theta(\theta)}{\int f(X|\tilde{\theta}) f_\theta(\tilde{\theta})  d \tilde{\theta}}\\
+  &= C \cdot f(X | \theta ) \cdot f_\theta(\theta) \hspace{1 em} \text{choose C so that $\int f(\theta | X)=1$} \\
+  &\propto f(X | \theta ) \cdot f_\theta(\theta)
 \end{align*}
 
-\paragraph{Punktschätzer}
+\paragraph{Point Estimates}
 
-\paragraph{Kredibilitätsintervall}
+\begin{align*}
+\hat{\theta}_{postmean} &= E_0(\vartheta|x) = \int_{\vartheta \in \Theta} \vartheta f_\theta(\vartheta|x)d\vartheta\\
+\hat{\theta}_{postmode} &= \mathrm{arg} \underset{\vartheta}{\max} f_\theta(\vartheta,x)\\
+\hat{\theta}_{Bayesrisk} &= \mathrm{arg} \underset{t(.)}{\min} R_{Bayes}(t(.))\\
+\intertext{with Bayes risk: $ R_{Bayes}(t(.)) = \int_{\Theta} R(t(.),\vartheta)f_\theta(\vartheta)d\vartheta$}
+\hat{\theta}_{postBayesrisk} &= \mathrm{arg} \underset{t(.)}{\min} R_{postBayes}(t(.)|y)\\
+\intertext{with posterior Bayes risk: $ R_{postBayes}(t(.)|y) = \int L(t(y),\vartheta) f_\theta(\vartheta|y) = \mathrm{E}_{\theta|y}(L(t(y),\theta)|y$}
+\end{align*}
 
-\paragraph{Sensitivitätsanalyse}
+\vspace{-2em}
+\paragraph{Credibility Interval}
 
-\paragraph{Prädiktive Posteriori}
+$$P_\theta(\theta\in \left[t_l(y),t_r(y)\right]|y) = \int_{t_l(y)}^{t_r(y)} f_\theta(\vartheta|y)d\vartheta = 1- \alpha$$
 
-$$f(x_Z|\mathbf{x}) =\int f(x_Z, \lambda|\mathbf{x})d\lambda = \int f(x_Z|\lambda)p(\lambda|\mathbf{x})$$
+\begin{itemize}
+\item symmetric: $\int_{-\infty}^{t_l(y)} f_\theta(\vartheta|y)d\vartheta = \int_{t_r(y)}^{\infty} f_\theta(\vartheta|y)d\vartheta = \frac{\alpha}{2}$
+\item highest density: $HDI = {\theta|f_\theta(\theta|y)\geq c}$, choose $c$ s.\,t.\  $\int_{\vartheta \in HDI(y)} f_\theta(\vartheta|y)d\vartheta = 1-\alpha$
+\end{itemize}
 
-\paragraph{Uninformative Priori} ~\\
+%\paragraph{Sensitivity Analysis}
 
-$f(\theta)=const. \text{ für } \theta > 0$
-,  damit:
+%\paragraph{Predictive Posterior}
+
+%$$f_{post}(x_Z|\mathbf{x}) =\int f(x_Z, \lambda|\mathbf{x})d\lambda = \int f(x_Z|\lambda)p(\lambda|\mathbf{x})$$
+
+\paragraph{Bayes Factor}
+
+\subsubsection*{\textit{Priors}}
+
+\paragraph{Flat (uninformative) Prior} \ \\
+
+\noindent $f_\theta(\theta)=const. \text{ for } \theta > 0$
+,  therefore:
  $f(\theta | X) = C \cdot f(X | \theta )$
 
-\noindent (Da $\int f(\theta) =1$ so nicht möglich, ist das eigentlich keine Dichte)
+\noindent As $\int f_\theta(\theta) =1$ not possible like this, this is not a real density.
 
-\paragraph{Konjugierte Priori}
+\noindent Changes for transformations of the parameter.
+
+\begin{Proof}
+
+\vspace{-2.3em}
+\centering
+For $\gamma = g(\theta)$: $f_\gamma(\gamma)=f_\theta(g^{-1}(\gamma))\left|\frac{\partial g^{-1}(\gamma)}{\partial \gamma}\right|$
+\end{Proof}
+
+ \noindent No prior is truly uninformative.
+
+
+\paragraph{Jeffrey's Prior} \ \\
+
+\noindent Remains unchanged for transformations of the parameter.
+
+\noindent For Fisher-regular distributions: $f(\theta) \propto \sqrt{I_\theta(\theta)}$
+
+\begin{Proof}
+For $\gamma = g(\theta)$ and $f_\theta(\theta) = \sqrt{I_\theta(\theta)}$:
+
+\noindent $f_\gamma(\gamma)  \propto f_\theta(g^{-1}(\gamma))\left|\frac{\partial g^{-1}(\gamma)}{\partial \gamma}\right| \propto \sqrt{\frac{\partial g^{-1}(\gamma)}{\partial \gamma}  I_\theta(g^{-1}(\gamma)) \frac{\partial g^{-1}(\gamma)}{\partial \gamma}}$ 
+
+\raggedleft
+$ = \sqrt{I_\gamma(\gamma)}$
+\end{Proof}
+
+\noindent\begin{minipage}{\dimexpr\linewidth}
+\raggedright
+Maximizes the information gained from the data (under appropriate regulatory conditions), i.\,e.\ maximizes $\mathrm{E}(KL(f_\theta(.), f_{post}(.,x))$
+\end{minipage}
+
+\paragraph{Empirical Bayes} \ \\
+
+\noindent Let the prior depend on a hyper-parameter: $f_\theta(\theta,\gamma)$
+
+\noindent Choose $\gamma$ s.\,t.\ $L(\gamma) = f(x;\gamma) = \int f(x;\vartheta) f_\theta(\vartheta, \gamma)d\vartheta$ is maximal.
+
+\noindent Using the data to find the prior contradicts the Bayes approach of incorporating prior knowledge.
+
+\paragraph{Hierarchical Prior} \ \\
+
+$$x|\theta \sim f(x;\theta);\;\;\; \theta|\gamma \sim f_\theta(\theta, \gamma);\;\;\; \gamma \sim f_\gamma(\gamma)$$
+
+\paragraph{Conjugate Priors}
 
 \begin{Extensiv}
 ~\\
-  \noindent Wenn die Priori- und die Posteriori-Verteilung denselben Typ hat für eine gegebene Likelihoodfunktion, so nennt man sie konjugiert.
-  
+  \noindent If Prior and Posterior belong to the same family of distributions for a given likelihood function, they are called conjugate. 
 \end{Extensiv}
 
-\vspace{1 em}
-\noindent Binomial-Beta-Modell: \begin{itemize}
-  \vspace{-0.7 em}
-\setlength\itemsep{-0.7 em}
-\item Priori $ \sim Be(\alpha,\beta)$
-\item $X$ $ \sim Binom(n,p,k)$
-\item Posteriori $\sim Be(\alpha + k, \beta + n - k)$
-  
-\end{itemize}
+\vspace{0.5em}
+\noindent Examples:
+\vspace{-0.5em}
+\begin{center}
+\begin{tabular}{ccc}
+Prior & Likelihood & Posterior\\
+\hline
+$\pi \sim\mathrm{Be}(\alpha,\beta)$ & $\mathrm{Bin}(n,\pi)$ & $\mathrm{Be}(\alpha {+} k, \beta {+} n {-} k)$\\
+ $\mu \sim \mathrm{N}(\gamma, \tau^2)$ & $\mathrm{N}(\mu, \sigma^2)$ & $\mathrm{N}(.,.)\overset{n\rightarrow\infty}{\longrightarrow} \mathrm{N}(\bar{y}, \frac{\sigma^2}{n})$\\
+ $\sigma^2 \sim \mathrm{IG}(\alpha, \beta)$ & $\mathrm{N}(\mu, \sigma^2)$ & $\mathrm{IG}(\alpha{+}\frac{n}{2},\beta{+}\frac{1}{2}\sum_{i=1}^{n}(y_i{-}\mu)^2)$\\
+ $\lambda \sim \mathrm{Ga}(\alpha, \beta)$ & $\mathrm{Po}(\lambda)$ & $\mathrm{Ga}(\alpha{+}n\bar{y}, \beta{+}n)$\\
+\end{tabular}
+\end{center}
 
 \end{multicols}
 
 
-\begin{multicols}{2}[\subsection{Markov Chain / Monte Carlo}][4cm]
+\begin{multicols}{2}[\subsection{Numerical Methods for the Posterior}][4cm]
+
+\paragraph{Numerical Integration} here: trapezoid approximation
+$$\int_\theta f(y|\vartheta)f_\theta(\vartheta)d\vartheta\approx$$ $$  \sum_{k=1}^K \frac{f(y;\theta_k)f_\theta(\theta_k) + f(y;\theta_{k-1})f_\theta(\theta_{k-1})}{2}(\theta_k {-} \theta_{k-1})$$
+
+ \noindent only normalisation constant unknown, works well for one-dimensional integrals
 
 
+\paragraph{Laplace Approximation} \ \\
+
+\paragraph{Monte Carlo Approximation} \ \\
+
+\paragraph{Sampling from the Posterior} \ \\
+
+\paragraph{Variational Bayes} \ \\
 
 \end{multicols}
 
