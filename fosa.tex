@@ -1589,7 +1589,12 @@ $$P_\theta(\theta\in \left[t_l(y),t_r(y)\right]|y) = \int_{t_l(y)}^{t_r(y)} f_\t
 
 %$$f_{post}(x_Z|\mathbf{x}) =\int f(x_Z, \lambda|\mathbf{x})d\lambda = \int f(x_Z|\lambda)p(\lambda|\mathbf{x})$$
 
-\paragraph{Bayes Factor}
+\paragraph{Bayes Factor} evidence contained in data for $M_1$ vs. $M_2$
+
+$$\frac{P(M_1|y)}{P(M_0|y)} =  \underbrace{\frac{f(y|M_1)}{f(y|M_0)}}_{\text{Bayes Factor}} \frac{P(M_1)}{P(M_0)}$$
+
+with marginal likelihood $f(y|M_i) = \int f(y|\vartheta)f_\theta(\vartheta|M_i)d\vartheta$
+
 
 \subsubsection*{\textit{Priors}}
 
@@ -1699,7 +1704,7 @@ $\int \mathrm{e}^{\left\{ \sum_{i=1}^n \log f(y_i|\theta) + \log f_\theta(\theta
 \noindent Resembles the normal distribution, therefore the inverse of the normalisation constant can be calculated, which gives the inverse of the Laplace approximation in the univariate case.
 \end{Proof}
 
-\noindent Works well for large $n$ and is numerically simple also in higher dimensions.
+\noindent Works well for large $n$ and is numerically simple also for big $p$.
 
 \paragraph{Monte Carlo Approximations} \ \\
 
@@ -1708,12 +1713,11 @@ $\int \mathrm{e}^{\left\{ \sum_{i=1}^n \log f(y_i|\theta) + \log f_\theta(\theta
 \begin{itemize}
 \item \textbf{Inverse CDF} \\
 $F(X)$ known. Since $F(x)=u$, $F^{-1}(u)=x$, $u \sim U(0,1)$ \\
-\textit{Repeat $m$ times:}
 \vspace{-0.5em}
 \begin{enumerate}
 \item Draw $u \sim U(0,1)$
-\item Compute $F^{-1}(u)$ to get a value $x$
-\end{enumerate}
+\item Compute $F^{-1}(u)$ to get a value $x$\vspace{-2em}
+\end{enumerate}\vspace{-1em}
 \end{itemize}
 \begin{Proof}
 \vspace{-1.3em}
@@ -1756,10 +1760,43 @@ $$\mathrm{E}_g\left(\frac{1}{N}\sum_{i=1}^n \frac{f(x)}{g(x)}\right) = \int \fra
 
 
 
-\paragraph{Sampling from the Posterior} \ \\
+\paragraph{Markov Chain Monte Carlo} sample from $f_{post}(\theta|X)$
 
-\paragraph{Variational Bayes} \ \\
+$f(y)$ unknown, however: $$\frac{f_{post}(\theta|x)}{f_{post}(\tilde{\theta}|x)} = \frac{f(x|\theta)f_\theta(\theta)}{f(y)} \frac{f(y)}{f(x|\tilde{\theta})f_\theta(\tilde{\theta})}= \frac{f(x|\theta)f_\theta(\theta)}{f(x|\tilde{\theta})f_\theta(\tilde{\theta})}$$
 
+\vspace{0.5em}
+ \textbf{Metropolis-Hastings}: Draw Markov Chain $\theta_1^*, ..., \theta_n^*$:
+\begin{enumerate}
+\item Draw candidate $\theta^*$ from proposal distribution $q\left(\theta|\theta_{(t)}^*\right)$
+\item Accept $\theta^*_{(t+1)} = \theta^*$ with probability $$\alpha(\theta_{(t)}|\theta^*) = \min\left\{1,\frac{f_{post}\left(\theta^*|y\right)q\left(\theta_{(t)}^*|\theta^*\right)}{f_{post}\left(\theta_{(t)}^*|y\right)q\left(\theta^*|\theta_{(t)}^*\right)}\right\}$$
+else choose $\theta^*_{(t+1)} = \theta_{(t)}^*$
+\end{enumerate}
+This sequence has a stationary distribution for $n\rightarrow \infty$.
+
+\noindent Choice of $q$: trade-off between exploring $\Theta$ and reaching a high $\alpha$.
+
+\noindent Burn-in and thinning out give $i.i.d.$ samples from $f_{post}(\theta|X)$.
+
+\textbf{Gibbs Sampling}: For high dimensions $\alpha$ is close to zero.
+
+Sample from the marginal distributions seperately:
+ $$\theta_i^* \sim f_{\theta_i | y, \theta \setminus \theta_i}\left(\theta_i^*|y, \theta_{t^*,i}\right)$$ 
+ 
+ with $\theta_{t^*, i}$ most recent estimates without $\theta_i$
+ 
+ \noindent A Gibbs sampled sequence converges to $f_{post}(\theta|X)$ as stationary.
+ 
+ \noindent Can also be used on its own, if marginal densities are known.
+
+
+\paragraph{Variational Bayes Principles}  \ \\
+
+Approximate $f_{post}(\theta|X)$ by $q_\theta=\underset{q_\theta\in Q}{\min} KL(f_{post}(.|X), q_\theta(.))$
+
+Restrict $q_\theta$ to independence: $q_\theta(\theta) = \prod_{k=1}^p q_k(\theta_k)$
+
+Update each component iteratively.
+Works well for big $p$. 
 \end{multicols}
 
 \end{document}
