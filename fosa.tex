@@ -34,6 +34,8 @@
 \postdisplaypenalty=1549
 \displaywidowpenalty=1602
 
+\allowdisplaybreaks
+
 \setlength\parindent{0pt}
 
 \newcommand{\zerodisplayskips}{%
@@ -1441,67 +1443,162 @@ It can be shown that $FDR \leq m_0\alpha/m$, with $m_0 = \# H_0$
 
 \section{Regression}
 
-\subsection{Assumptions}
 
-\subsection{Procedure}
-\begin{multicols}{2}[\subsubsection{Ordinary Least Squares (OLS)}][4cm]
 
-\paragraph{KQ-Schätzer (Einfachregression)}
+\subsection{Models}
 
-$$\hat{\beta}_1=\frac{Cov(x,y)}{Var(x)}=\frac{S_{xy}}{S_{xx}}= \frac{S_{xy}}{\sqrt{S_{xx}S_{yy}}} \cdot \sqrt{\frac{S_{yy}}{S_{xx}}}=r\sqrt{\frac{S_{yy}}{S_{xx}}}$$
+\begin{multicols}{2}[\subsubsection{Simple Linear Model}][4cm]
 
-\begin{Proof}
-$Cov(x,y)=Cov(x,\hat{\beta}_0=\bar{y}-\hat{\beta}_1\bar{x})=\hat{\beta}_1Var(x)$
 
-\raggedleft
-$ \iff \hat{\beta}_1= \frac{Cov(x,y)}{Var(x)}$
-\end{Proof}
 
-$$\hat{\beta}_0=\bar{y}-\hat{\beta}_1\bar{x}$$
-
-\begin{Proof}
-$E\left[y\right] = E\left[\hat{\beta}_0+\hat{\beta}_1 x+\hat{e}\right] \iff \hat{\beta}_0 = E\left[y\right] - \hat{\beta}_1E\left[x\right]$
-\end{Proof}
-
-\end{multicols}
-
-\subsection{Model}
-
-\begin{multicols}{2}[\subsubsection{Simple Linear Regression}][4cm]
-
-\paragraph{Theoretisches Modell}
+\paragraph{Theoretical Model}
 
 $$y_i=\beta_0+\beta_1x_i+u_i$$
 
-\paragraph{Empirisches Modell}
+\paragraph{Empirical Model}
 
-$$\hat{y}_i=\hat{\beta}_0+\hat{\beta}_1x_i+e_i$$
+$$y_i=\hat{\beta}_0+\hat{\beta}_1x_i+e_i$$
 
-\paragraph{Eigenschaften der Regressionsgeraden}
-\begin{equation*}
-\begin{split}
+$$\hat{y}_i=\hat{\beta}_0+\hat{\beta}_1x_i$$
+
+\paragraph{Assumptions}
+
+\begin{itemize}
+\item \textbf{Independent Observations} $y_1,...y_n$ are independent
+\item \textbf{Linearity of the Mean} $E(Y|x)= \beta_0 + \beta_1x$ or $\mathrm{E}(e|x)= 0$  
+\item \textbf{Constant Variation} $Var(Y|x) = \sigma^2$
+\end{itemize}
+For the normal linear model:
+\begin{itemize}
+\item \textbf{Normality} $\;e|x \sim \mathrm{N}(0,\sigma^2)\;$; $\;Y|x \sim \mathrm{N}(\hat{y},\sigma^2)\;$
+\end{itemize}
+
+\paragraph{Attributes of the Regression Line}
+\begin{align*}
 \hat{y}_i & = \hat{\beta}_0+\hat{\beta}_1x_i  =\bar{y}+ \hat{\beta}_1(x_i-\bar{x}) \\
 \hat{e}_i  & =  y_i-\hat{y}_i = y_i-(\hat{\beta}_0+\hat{\beta}_1x_i) \\
  & =y_i-(\bar{y}+ \hat{\beta}_1(x_i-\bar{x})) \\
 \sum\limits_{i=1}^n\hat{e}_i & = \sum\limits_{i=1}^ny_i-\sum\limits_{i=1}^n\bar{y}-\hat{\beta}_1\sum\limits_{i=1}^n(x_i-\bar{x}) \\
  & = n\bar{y}-n\bar{y}-\hat{\beta}_1(n\bar{x}-n\bar{x})=0 \\
 \bar{\hat{y}} & = \frac{1}{n}\sum\limits_{i=1}^n\hat{y}_i=\frac{1}{n}(n\bar{y}+\hat{\beta}_1(n\bar{x} - n\bar{x})) = \bar{y}
-\end{split}
-\end{equation*}
+\end{align*}
 
+\paragraph{Estimates (OLS)}
 
+$$\hat{\beta}_1=\frac{Cov(x,y)}{Var(x)}=\frac{S_{xy}}{S_{xx}}= \frac{S_{xy}}{\sqrt{S_{xx}S_{yy}}} \cdot \sqrt{\frac{S_{yy}}{S_{xx}}}=r\sqrt{\frac{S_{yy}}{S_{xx}}}$$
+\begin{Proof}
+$Cov(x,y)=Cov(x,\hat{\beta}_0=\bar{y}-\hat{\beta}_1\bar{x})=\hat{\beta}_1Var(x)$
+
+\raggedleft
+$ \iff \hat{\beta}_1= \frac{Cov(x,y)}{Var(x)}$
+\end{Proof}
+$$\hat{\beta}_0=\bar{y}-\hat{\beta}_1\bar{x}$$
+
+\begin{Proof}
+$E\left[y\right] = E\left[\hat{\beta}_0+\hat{\beta}_1 x+\hat{e}\right] \iff \hat{\beta}_0 = E\left[y\right] - \hat{\beta}_1E\left[x\right]$
+\end{Proof}
+
+The estimates are the same as for the ML procedure.
+
+\paragraph{Estimates (ML)} $Y|x \sim \mathrm{N}(\beta_0 + \beta_1x, \sigma^2)$
+
+\begin{align*}
+\hat{\beta}_0 &= \frac{1}{n}\sum_{i=1}^n y_i - \frac{1}{n}\sum_{i=1}^n x_i \hat{\beta}_1\\
+\hat{\beta}_1 &=  \sum_{i=1}^n x_i(y_i - \hat{\beta}_0  /\sum_{i=1}^n  x_i^2\\
+\hat{\sigma}^2 &= \frac{1}{n}\sum_{i=1}^n (y_i -\hat{\beta}_0 - x_i\hat{\beta}_1)^2
+\end{align*}
+
+The $\beta$-estimates are the same as for the OLS procedure.
+
+\begin{Proof}
+\vspace{-2em}
+$$l(\beta_0, \beta_1,\sigma^2) = \sum_{i=1}^n\left\{-\frac{1}{2} \sigma^2 - \frac{1}{2} \frac{(y_i-\beta_0 -\beta_1x_i)^2}{\sigma^2}\right\}$$
+\end{Proof}
 
 \end{multicols}
 
-\subsubsection{Multivariate Linear Regression}
+\begin{multicols}{2}[\subsubsection{Multivariate Linear Model}][4cm]
+
+\paragraph{Theoretical Model}
+
+$$Y = X\beta + u$$
+
+\paragraph{Empirical Model}
+
+$$Y = X\hat{\beta} + e$$
+$$\hat{Y} = X\hat{\beta} $$
+
+\noindent $y = (y_1, ... , y_n)^T$, $e = (e_1, ... , e_n)^T$, $X = \begin{pmatrix}
+1 & x_1& \ldots&x_p \\
+ \vdots & \vdots&\ddots & \vdots\\
+1 & x_n &\ldots&x_p
+\end{pmatrix}$
+
+\paragraph{Assumptions}
+
+\begin{itemize}
+\item \textbf{Independent Observations} $y_1,...y_n$ are independent
+\item \textbf{Linearity of the Mean} $\mathrm{E}(Y|x_{1:p})= X\beta$ or $\mathrm{E}(e|x_{1:p})= 0$ 
+\item \textbf{Constant Variation} $Var(Y|x) = \sigma^2$
+\end{itemize}
+For the normal linear model:
+\begin{itemize}
+\item \textbf{Normality} $\;e_i|x_{1:p} \sim \mathrm{N}(0,\sigma^2)\;$; $\;Y|x \sim \mathrm{N}(\hat{y},\sigma^2)\;$
+\end{itemize}
+
+\paragraph{Estimates (ML)} $Y|x_{1:p} \sim \mathrm{N}(X\beta, \sigma^2)$
+
+\begin{align*}
+\hat{\beta} &= \left(X^TX)^{-1}\right)X^Ty\\
+Var(\hat{\beta}) &= \sigma^2(X^TX)^{-1}) = I^{-1}(\beta)
+\end{align*}
+
+\begin{Proof}
+$l(\beta,\sigma^2) = -\frac{n}{2}\log\sigma^2 -\frac{1}{2\sigma^2}(y-X\beta)^T(y-X\beta)$
+\end{Proof}
+The estimates are the same as for the OLS procedure.
+
+\noindent $\beta$ is the \textbf{B}est \textbf{L}inear \textbf{U}nbiased \textbf{E}stimator
+
+\begin{Proof}
+Unbiased because of the Gauß-Markov Theorem:
+$\mathrm{E}(\hat{\beta}) = (X^TX)^{-1}X^T\mathrm{E}(Y|X) = (X^TX)^{-1}X^TX\beta = \beta$
+\end{Proof}
+
+$$\hat{\sigma}^2 = \frac{1}{n}(y-X\hat{\beta})^T(y-X\hat{\beta});\;\;\;\;\; \hat{\beta} \sim \mathrm{N}(\beta,\sigma^2(X^TX)^{-1})$$
+
+The ML-estimate for $\sigma^2$ is biased.
+
+\begin{Proof}
+$H{:=}X(X^TX)^{-1}X^T$ hat matrix; $HH{=}H{=}H^T$ (idempotent)
+\begin{align*}
+\mathrm{E}((Y{-}X\hat{\beta})^T(Y{-}X\hat{\beta})) &= \mathrm{E}((Y^T(I_n{-}H)^T((I_n{-}H)Y)\\
+&= \mathrm{E}(tr(Y^T(I_n{-}H)Y)\\
+&= \mathrm{E}(tr((I_n{-}H)YY^T)\\
+&= tr((I_n{-}H)\mathrm{E}(YY^T))\\
+&= tr((I_n{-}H)\mathrm{E}(X\beta\beta^TX^T + \sigma I_n))\\
+&= \sigma^2tr((I_n{-}H))\\
+&= \sigma^2 (n-p)
+\end{align*}
+\end{Proof}
+
+$$s^2 = \frac{1}{n-p}(y-X\hat{\beta})^T(y-X\hat{\beta});\;\;\;\;\; \hat{\beta} \sim t_{n-p}(\beta,s^2(X^TX)^{-1})$$
+
+with $s$ an unbiased estimator
+
+\end{multicols}
 
 %\subsubsection{Spezialfall: Zeitreihen}
+
+
+
+
 
 \begin{multicols}{2}[\subsection{Analysis of Variances (ANOVA)}][4cm]
 
 $$SS_{Total}=SS_{Explained}+SS_{Residual}$$
 
-mit
+with
 \begin{align*}
 SS_{Total}  &=  \sum\limits_{i=1}^n(y_i-\bar{y})^2 \\
 SS_{Explained} &= \sum\limits_{i=1}^n(\hat{y}_i-\bar{y})^2 \\
@@ -1512,7 +1609,7 @@ SS_{Residual} &= \sum\limits_{i=1}^n(y_i-\hat{y}_i)^2=\sum\limits_{i=1}^n e_i^2=
 
 \subsection{Goodness of Fit}
 
-\begin{multicols}{2}[\subsubsection{Bestimmtheitsmaß}][4cm]
+\begin{multicols}{2}[\subsubsection{Coefficient of Determination}][4cm]
 
 $$R^2=\frac{SS_{Explained}}{SS_{Total}}=1-\frac{SS_{Residual}}{SS_{Total}}=r^2$$
 
@@ -1716,8 +1813,8 @@ $F(X)$ known. Since $F(x)=u$, $F^{-1}(u)=x$, $u \sim U(0,1)$ \\
 \vspace{-0.5em}
 \begin{enumerate}
 \item Draw $u \sim U(0,1)$
-\item Compute $F^{-1}(u)$ to get a value $x$\vspace{-2em}
-\end{enumerate}\vspace{-1em}
+\item Compute $F^{-1}(u)$ to get a value $x$
+\end{enumerate}
 \end{itemize}
 \begin{Proof}
 \vspace{-1.3em}
