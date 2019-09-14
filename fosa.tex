@@ -1564,7 +1564,6 @@ The estimates are the same as for the OLS procedure.
 Unbiased because of the Gauß-Markov Theorem:
 $\mathrm{E}(\hat{\beta}) = (X^TX)^{-1}X^T\mathrm{E}(Y|X) = (X^TX)^{-1}X^TX\beta = \beta$
 \end{Proof}
-
 $$\hat{\sigma}^2 = \frac{1}{n}(y-X\hat{\beta})^T(y-X\hat{\beta});\;\;\;\;\; \hat{\beta} \sim \mathrm{N}(\beta,\sigma^2(X^TX)^{-1})$$
 
 The ML-estimate for $\sigma^2$ is biased.
@@ -1590,7 +1589,41 @@ with $s$ an unbiased estimator
 
 %\subsubsection{Spezialfall: Zeitreihen}
 
+\begin{multicols}{2}[\subsubsection{Bayesian Linear Model}][4cm]
 
+\paragraph{Prior} flat prior\ \\
+
+$$f_{\beta,\sigma^2} (\beta,\sigma^2) = \frac{1}{\sigma^2}$$
+
+\paragraph{Posterior} \ \\
+
+\noindent Resulting posterior: $$f_{post}(\beta,\sigma^2|y)\propto (\sigma^2)^{-\frac{n}{2}+1} \mathrm{e}^{-\frac{1}{2\sigma^2} (y{-}X\beta)^T(y{-}X\beta)}$$
+
+Note: $f_{post}(\beta,\sigma^2|y) = f(\beta|\sigma^2,y)f(\sigma^2|y)$
+
+
+
+\begin{align*}
+\beta|\sigma^2,y &\sim \mathrm{N}\left(\hat{\beta}, \sigma^2(X^TX)^{-1}\right)\\
+\sigma^2|y &\sim \mathrm{IG}\left(\frac{n-p}{2},\frac{s^2(n-p)}{2}\right)\\
+\beta|y &\sim t_{n-p}\left(\hat{\beta}, s^2(X^TX)^{-1}\right)
+\end{align*}
+\vspace{1em}
+
+\noindent The two distributions for $\beta$ mirror the results for $\hat{\beta}$ in the linear model.
+
+\end{multicols}
+
+\begin{multicols}{2}[\subsubsection{Quantile Regression}][4cm]
+
+\paragraph{Prediction Interval} range of $1-\alpha$ fraction of the data
+
+$$Var(\hat{Y}|x_{1:p}) = Var(X\hat{\beta}) + \sigma^2$$
+
+\noindent Determined by estimation variance (usually depicted in confidence intervals) plus residual variance.
+
+
+\end{multicols}
 
 
 
@@ -1895,5 +1928,7 @@ Restrict $q_\theta$ to independence: $q_\theta(\theta) = \prod_{k=1}^p q_k(\thet
 Update each component iteratively.
 Works well for big $p$. 
 \end{multicols}
+
+
 
 \end{document}
