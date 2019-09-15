@@ -1529,9 +1529,9 @@ $$Y = X\hat{\beta} + e$$
 $$\hat{Y} = X\hat{\beta} $$
 
 \noindent $y = (y_1, ... , y_n)^T$, $e = (e_1, ... , e_n)^T$, $X = \begin{pmatrix}
-1 & x_1& \ldots&x_p \\
+1 & x_{11}& \ldots&x_{1p} \\
  \vdots & \vdots&\ddots & \vdots\\
-1 & x_n &\ldots&x_p
+1 & x_{n1} &\ldots&x_{np}
 \end{pmatrix}$
 
 \paragraph{Assumptions}
@@ -1620,8 +1620,40 @@ Note: $f_{post}(\beta,\sigma^2|y) = f(\beta|\sigma^2,y)f(\sigma^2|y)$
 
 $$Var(\hat{Y}|x_{1:p}) = Var(X\hat{\beta}) + \sigma^2$$
 
-\noindent Determined by estimation variance (usually depicted in confidence intervals) plus residual variance.
+\noindent Determined by estimation variance (usually captured by confidence intervals) plus residual variance.
 
+\paragraph{Quantile}
+
+$$Q(\tau) = \inf \{y:F(y)\geq\tau\}$$
+
+If $F$ is invertable: $Q(\tau) =F^{-1}(\tau)$, $\tau\in (0,1)$
+
+
+\paragraph{Model}
+
+$$Q(\tau|x_{1:p}) = X\beta$$
+
+
+\noindent For median regression: $\hat{\beta} = \text{arg } \min \sum_{i=1}^n \left| y_i - x_i^T\beta\right|$
+
+In general: $$\hat{Q}(\tau) = \text{arg } \underset{\beta}{\min} \left( \sum_{i=1}^n \delta_\tau (y_i - x_i^T\beta)\right)$$
+\indent with check function $\delta_\tau(y) = y\left(\tau - \mathbbm{1}_{\{y<0\}}\right)$
+
+\begin{Proof}
+\vspace{-1.5em}
+\begin{align*}
+Q(\tau) &=\text{arg }\underset{q}{\min}\:\mathrm{E}(\delta_\tau(Y-q))\\
+&= 
+\text{arg }\underset{q}{\min} \left\{ (\tau{-}1)\!\!\int\displaylimits_{-\infty}^q (y{-}q)f(y)dy + \tau\!\! \int\displaylimits_{q}^\infty (y{-}q)f(y)dy\right\}
+\end{align*}
+Differentiating w.r.t. $q$ gives $(\tau{-}1)\!\!\int\displaylimits_{-\infty}^q f(y)dy - \tau\!\! \int\displaylimits_{q}^\infty f(y)dy$
+
+\noindent $= (1{-}\tau)F(q) - \tau(1{-}F(q) = F(q) -\tau$
+\end{Proof}
+
+\paragraph{Estimates} \ \\
+
+\noindent The estimates for $\beta$ can be computed with linear programming and are normally distributed with mean $\beta$.
 
 \end{multicols}
 
