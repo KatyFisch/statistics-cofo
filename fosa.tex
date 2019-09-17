@@ -1009,34 +1009,34 @@ $\log f(\tilde{y}, t) \approx \log f(\tilde{y},\theta) {+} \frac{\partial\log f(
 
 
 \begin{multicols}{2}[\subsection{Maximum Likelihood (ML)}][4cm]
-  \paragraph{Voraussetzungen}
+  \paragraph{Prerequisites}
   
   \begin{itemize}
   \item $Y_i \sim f(y;\theta)\:\: i.i.d.$
   \item $\theta \in \mathbb{R}^p$
-  \item $f(.;\theta)$ Fisher-regulär:
+  \item $f(.;\theta)$ Fisher-regular:
   \begin{itemize}
-  \item $\{ y: f (y; \theta > 0) \}$ unabhängig von $\theta$
-  \item Möglicher Parameterraum $\Theta$ ist offen
-  \item $f(y;\theta)$ zweimal differenzierbar
+  \item $\{ y: f (y; \theta > 0) \}$ independent of $\theta$
+  \item Parameter space $\Theta$ is open
+  \item $f(y;\theta)$ twice differentiable
   \item $\int \frac{\partial}{\partial \theta} f(y;\theta)dy = \frac{\partial}{\partial \theta} \int f(y;\theta)dy$
   \end{itemize}
   \end{itemize}
   
-  \paragraph{Zentrale Funktionen} \ \\
+  \paragraph{Central Functions} \ \\
   \begin{itemize}
   \item \textbf{Likelihood} $L(\theta;y_1,...,y_n)$: $\prod_{i=1}^n f(y_i;\theta)$
   \item \textbf{log-Likelihood} $l(\theta;y_1,..y_n)$: 
 $\log L(\theta;y_1,...,y_n) = \sum_{i=1}^n \log f(y_i;\theta)$
   \item \textbf{Score} $s(\theta;y_1,...,y_n)$: $\frac{\partial l(\theta;y_1,..y_n)}{\partial \theta}$
   \item \textbf{Fisher-Information} $I(\theta)$: $-\mathrm{E}_\theta\left(\frac{\partial s(\theta;Y)}{\partial\theta}\right)$
-  \item \textbf{beobachtete Fisher-Information} $I_{obs}(\theta)$: $-\mathrm{E}_\theta\left(\frac{\partial s(\theta;y)}{\partial\theta}\right)$
+  \item \textbf{observed Fisher-Information} $I_{obs}(\theta)$: $-\mathrm{E}_\theta\left(\frac{\partial s(\theta;y)}{\partial\theta}\right)$
   \end{itemize}
   
   
-  \paragraph{Eigenschaften der Score-Funktion} \ \\
+  \paragraph{Attributes of the Score-Function} \ \\
   
-  erste Bartlett-Gleichung:
+  first Bartlett-Equation:
   
   $$\mathrm{E}\left(s(\theta;Y)\right) = 0$$
   
@@ -1048,14 +1048,14 @@ $\log L(\theta;y_1,...,y_n) = \sum_{i=1}^n \log f(y_i;\theta)$
 \end{align*}
 \end{Proof}
   
-  zweite Bartlett-Gleichung:
+  second Bartlett-Equation:
   
   $$\mathrm{Var}_\theta\left(s(Y;\theta)\right) = \mathrm{E}_\theta\left(-\frac{\partial^2 log f(Y;\theta)}{\partial\theta^2}\right) = I(\theta)$$
   
 \begin{Proof}
 \vspace{-1.5em}
 \begin{align*}
-0 = \frac{\partial 0}{\partial \theta} =& \frac{\partial}{\partial\theta}\int \frac{\partial}{\partial\theta} \log f(y;\theta) f(y;\theta) dy \hspace{2em}\text{      siehe oben}\\
+0 = \frac{\partial 0}{\partial \theta} =& \frac{\partial}{\partial\theta}\int \frac{\partial}{\partial\theta} \log f(y;\theta) f(y;\theta) dy \hspace{2em}\text{      see above}\\
 =& \int \left( \frac{\partial^2}{\partial \theta^2} \log f(y;\theta)\right) f(y;\theta) dy  \\
 &+ \int\frac{\partial \log f(y;\theta)}{\partial \theta}\frac{\partial f(y;\theta)}{\partial \theta}dy \\
 =& \: \mathrm{E}_\theta \left( \frac{\partial^2}{\partial \theta^2} \log f(Y;\theta)\right)  \\
@@ -1063,23 +1063,23 @@ $\log L(\theta;y_1,...,y_n) = \sum_{i=1}^n \log f(y_i;\theta)$
 \end{align*}
 
 $$\Leftrightarrow \mathrm{E}_\theta \left(s(\theta;Y) s(\theta;Y)\right) = \mathrm{E}_\theta \left(- \frac{\partial^2}{\partial \theta^2} \log f(Y;\theta)\right)$$
-\noindent Bartletts zweite Gleichung gilt dann, weil $\mathrm{E}\left(s(\theta;Y)\right) = 0$
+\noindent Bartlett's second equation holdds then as $\mathrm{E}\left(s(\theta;Y)\right) = 0$
 \end{Proof}
   
-  \paragraph{ML-Schätzer}
+  \paragraph{ML-Estimate}
    $$\hat{\theta}_{ML} = \text{arg max } l(\theta; y_1,...y_n)$$
    
-\noindent für Fisher-reguläre Verteilungen: $\hat{\theta}_{ML}$ hat asymptotisch die kleinstmögliche Varianz, gegeben durch die Cramér-Rao-Ungleichung, 
+\noindent for Fisher-regular distributions: $\hat{\theta}_{ML}$ has aysmptotically the smallest variance, given by the Cramér-Rao inequality, 
    $s\left(\hat{\theta}_{ML};y_1,...,y_n\right) = 0$
    
 $\hat{\theta} \overset{a}{\sim} \mathrm{N}\left(\theta, I^{-1}(\theta)\right)$
    
-\noindent Der ML-Schätzer ist invariant: $\hat{\gamma} = g(\hat{\theta})$ wenn $\gamma = g(\theta)$. 
+\noindent The ML-estimate is invariant: $\hat{\gamma} = g(\hat{\theta})$ if $\gamma = g(\theta)$. 
    
 \begin{Proof}
 $\gamma = g(\theta)\, \Leftrightarrow \,\theta = g^{-1}(\gamma)$
 
-\noindent Für die Loglikelihood von $\gamma$ an der Stelle $\hat{\theta}$ gilt:
+\noindent For the log-likelihood of $\gamma$ at the location $\hat{\theta}$ holds:
 
 $$\frac{\partial l(g^{-1}(\hat{\gamma}))}{\partial \gamma} = \frac{\partial g^{-1}(\gamma)}{\partial\gamma} \underbrace{\frac{\partial l(\hat{\theta})}{\partial \theta}}_{=0} = 0$$
 \end{Proof}   
@@ -1149,9 +1149,9 @@ $$t: \mathbb{R}^n \rightarrow \mathbb{R}$$
 $t(Y_1, ..., Y_n)$ depends on sample size n and is a random variable
 
 \paragraph{Suffizienz} \ \\
-\noindent Eine Statistik $t(y_1,...,y_n)$ ist suffizient für $\theta$, wenn die bedingte Verteilung $f(y_1,...,y_n|t_0 = t(y_1,...,y_n);\theta)$ unabhängig von $\theta$ ist. \vspace{0.5em}
+\noindent A statistic $t(y_1,...,y_n)$ is sufficient for $\theta$, if the conditional distribution $f(y_1,...,y_n|t_0 = t(y_1,...,y_n);\theta)$ is independent of $\theta$. \vspace{0.5em}
 
-\textbf{Neyman-Kriterium:}
+\textbf{Neyman criterion:}
 $$t(Y_1,...,Y_n) \text{ suffizient } \Leftrightarrow f(y;\theta) = h(y)g\left(t(y);\theta\right)$$
 \begin{Proof}
 ``$\Rightarrow$'':
@@ -1159,19 +1159,19 @@ $$f(y;\theta) = \underbrace{f(y|t = t(y);\theta)}_{h(y)} \underbrace{f_t(t|y;\th
 
 \noindent ``$\Leftarrow$'':
 $$f_t(t;\theta) = \int_{t=t(y)} f(y;\theta)dy = \int_{t=t(y)} h(y) g(t;\theta)dy$$
-\indent Damit:
+\indent Therefore:
 $$f\left(y|t=t(y);\theta\right) = \frac{f(y,t=t(y);\theta)}{f_t(t,\theta)}
 = \begin{cases}
 \frac{h(y)g(t;\theta)}{g(t;\theta)} & t=t(y) \\
-0 & \, \text{sonst}
+0 & \, \text{otherwise}
 \end{cases}$$
 \end{Proof}
 
-\textbf{Minimalsuffizienz:} \ \\
-$t(.)$ ist suffizient und $\forall\: \tilde{t}(.)\: \exists\: h(.) \text{ s.t. } t(y) = h(\tilde{t}(y))$
+\textbf{Minimal Sufficiency:} \ \\
+$t(.)$ is sufficient and $\forall\: \tilde{t}(.)\: \exists\: h(.) \text{ s.t. } t(y) = h(\tilde{t}(y))$
 
-\paragraph{(schwache) Konsistenz}
-$$MSE(\hat{\theta},\theta) \overset{n\rightarrow\infty}{\longrightarrow} 0 \Rightarrow \hat{\theta} \text{ konsistent}$$
+\paragraph{(Weak) Consistency}
+$$MSE(\hat{\theta},\theta) \overset{n\rightarrow\infty}{\longrightarrow} 0 \Rightarrow \hat{\theta} \text{ consistent}$$
 
 \begin{Proof}
 $P(|\hat{\theta} - \mathrm{E}_{\hat{\theta}}| \geq \delta) \leq \frac{Var_\theta(\hat{\theta})}{\delta^2}$ using the inequality of Chebyshev
