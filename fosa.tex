@@ -2082,6 +2082,81 @@ Update each component iteratively.
 Works well for big $p$. 
 \end{multicols}
 
+\begin{multicols}{2}[\section{Sampling}][4cm]
+
+\paragraph{Bootstrap}
+
+\begin{enumerate}
+\item Draw $y^*_i$: $n$ samples with replacement from $y$
+\item Calculate the statistic of interest $t(y_i^*)$
+\item Repeat this B times
+\item \noindent \textit{Plug-in Principle}:
+Whenever the distribution function is involved in estimating a statistic, use the empirical bootstrapped version instead.
+\end{enumerate}
+
+\noindent In a \textbf{Parametric Bootstrap} the parameter is first estimated from the data and then Bootstrap samples are drawn from the resulting distribution.
+
+\paragraph{Bootstrap Probability} \ \\
+
+$$P(Y_i\in Y^*) = 1-(1-\frac{1}{n})^n\overset{n\rightarrow\infty}{\rightarrow} 1-e^{-1} \approx 0.632$$
+
+
+\paragraph{Subsampling}
+
+\begin{itemize}
+\item \textbf{replacement} $m$-out-of-$n$ bootstrap
+\item \textbf{non-replacement} subsampling directly from true $F$
+\end{itemize}
+
+\paragraph{Permutation Test} for two variables
+
+\begin{enumerate}
+\item Calculate $t(x,y)$, e.\,g.\ differences in mean, correlation...
+\item Draw samples $x^*$, $y^*$ of size $n$ from $x$ and $y$ without replacement (``shuffel'')\label{draw}
+\item Calculate $t(x^*, y^*)$ 
+\item $p-value = \frac{1}{B}\sum_{b=1}^B \mathbbm{1}_{\{t(x_b^*,y_b^*)\geq t(x,y)\}}$
+\end{enumerate}
+
+For a \textbf{Boostrap Test} do step \ref{draw} with replacement.
+
+\paragraph{Bootstrap in \textbf{Regression}}
+\begin{itemize}
+\item \textbf{Residual based}: 1.~Get Bootstrap sample $e_i^*$ from fitted residuals $\hat{e} = y- X\hat{\beta}$, 2.~Calculate new response $y_i^* = x_i\hat{\beta} + e_i^*$, 3.~Calculate $\hat{\beta}^*$
+\item \textbf{Model based} 1.~Draw a sample from $e_i \sim \mathrm{N}(0, \hat{\sigma}^2)$, 2.~Calculate new response $y_i^* = x_i\hat{\beta} + e_i^*$, 3.~Calculate $\hat{\beta}^*$
+\item \textbf{Pairwise} 1.~Draw $(y_i^*, x_i^*)$ from the original sample for $i=1,..,n$, 2.~Calculate $\hat{\beta}^*$
+\item \textbf{Wild} Set $\hat{e}_i^* = V_i^*\hat{e}_i$, with $V_i^*$ from the 2-point distribution $P(V_i^* {=}\frac{\sqrt{5}{+}1}{2})=\frac{\sqrt{5}{-}1}{2\sqrt{5}}$ and $P(V_i^* {=}{-}\frac{\sqrt{5}{-}1}{2})=\frac{\sqrt{5}{+}1}{2\sqrt{5}}$, chosen as $\mathrm{E}(V_i^*)=0$, $Var(V_i^*)=1$, $\mathrm{E}(V_i^{*3})=1$
+\end{itemize}
+
+\paragraph{Consistency of a Bootstrap Estimator} 
+
+$$ \underset{n\rightarrow\infty}{\lim} P_n\left\{\underset{t}{\sup}\left|G_n(t,F_n)-G_\infty(t,F)\right|>\epsilon\right\} = 0  \;\; \forall \epsilon $$
+
+\noindent with $F_n(y) = \frac{1}{n}\sum_{i=1}^n \mathbbm{1}_{\{Y_i\leq y\}}$ empirical distribution function, $G_n(t, F) = P(T_n\leq t)$ exact finite sample distribution, and $P_n$ joint probability of the sample
+
+\vspace{0.5em}
+\noindent The bootstrap estimate is inconsistent for the maximum of a sample or if the $\theta$ lies on the boundary of $\Theta$.
+
+\paragraph{Mallow's Metric}
+
+$$\rho_p(F,G) = \underset{\mathcal{T}_{XY}}{\inf}\{E(|X-Y|)^p\}^\frac{1}{p} $$
+
+\noindent for $F,G$ in the set of distributions where $\inf_{-\infty}^\infty |t|^pdF(t) <\infty$; $(X,Y) \sim T \in\mathcal{T}_{XY}$ with $X\sim F$ and $Y\sim G$
+
+\paragraph{Theorem of Beran and Ducharme} \ \\
+
+$G_n (., F_n)$ is consistent if $\forall \epsilon > 0, F$ the following holds:
+
+\begin{enumerate}
+\item $\underset{n\rightarrow\infty}{\lim}P_n(\rho(F_n,F)>\epsilon)=0$
+\item $G_\infty(t,F)$ is a continuous function of t
+\item $\forall t$ and sequences $\{H_n\}$ s.\,t.\ $\underset{n\rightarrow\infty}{\lim}\rho(H_n,F)=0$ holds: $G_n(t,H_n) \rightarrow G_\infty(t,F)$
+\end{enumerate}
+
+
+
+
+\end{multicols}
+
 
 
 \end{document}
