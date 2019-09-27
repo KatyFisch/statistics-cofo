@@ -1063,7 +1063,7 @@ $\log L(\theta;y_1,...,y_n) = \sum_{i=1}^n \log f(y_i;\theta)$
 \end{align*}
 
 $$\Leftrightarrow \mathrm{E}_\theta \left(s(\theta;Y) s(\theta;Y)\right) = \mathrm{E}_\theta \left(- \frac{\partial^2}{\partial \theta^2} \log f(Y;\theta)\right)$$
-\noindent Bartlett's second equation holdds then as $\mathrm{E}\left(s(\theta;Y)\right) = 0$
+\noindent Bartlett's second equation holds then as $\mathrm{E}\left(s(\theta;Y)\right) = 0$
 \end{Proof}
   
   \paragraph{ML-Estimate}
@@ -1073,6 +1073,8 @@ $$\Leftrightarrow \mathrm{E}_\theta \left(s(\theta;Y) s(\theta;Y)\right) = \math
    $s\left(\hat{\theta}_{ML};y_1,...,y_n\right) = 0$
    
 $\hat{\theta} \overset{a}{\sim} \mathrm{N}\left(\theta, I^{-1}(\theta)\right)$
+
+\noindent If the true model is unknown, the distribution is $\hat{\theta} \overset{a}{\sim} \mathrm{N}\left(\theta, I^{-1}(\theta)V(\theta)I^{-1}(\theta)\right)$ with $V(\theta)$ variance of the score function.
    
 \noindent The ML-estimate is invariant: $\hat{\gamma} = g(\hat{\theta})$ if $\gamma = g(\theta)$. 
    
@@ -1084,7 +1086,7 @@ $\gamma = g(\theta)\, \Leftrightarrow \,\theta = g^{-1}(\gamma)$
 $$\frac{\partial l(g^{-1}(\hat{\gamma}))}{\partial \gamma} = \frac{\partial g^{-1}(\gamma)}{\partial\gamma} \underbrace{\frac{\partial l(\hat{\theta})}{\partial \theta}}_{=0} = 0$$
 \end{Proof}   
 
-\noindent Die Fisher-Information ist dann $\frac{\partial\theta}{\partial\gamma} I(\theta) \frac{\partial\theta}{\partial\gamma}$
+\noindent Then, the Fisher information is $\frac{\partial\theta}{\partial\gamma} I(\theta) \frac{\partial\theta}{\partial\gamma}$
 
 \begin{Proof}
 \vspace{-1.5em}
@@ -1097,7 +1099,10 @@ I_{\gamma}(\gamma) &=
 \end{align*}
 \end{Proof}
 
-\noindent Delta-Regel: $\gamma \overset{a}{\sim} \mathrm{N}(\hat{\gamma}, \frac{\partial \theta}{\partial\gamma} I^{-1}(\theta) \frac{\partial \theta}{\partial\gamma} $
+\noindent Delta rule: $\gamma \overset{a}{\sim} \mathrm{N}(\hat{\gamma}, \frac{\partial \theta}{\partial\gamma} I^{-1}(\theta) \frac{\partial \theta}{\partial\gamma} )$
+
+
+
 
 \paragraph{Numerical computation of the ML estimate}
 Fisher- Scoring as statistical version of the Newton-Raphson procedure
@@ -1137,12 +1142,35 @@ $s(\theta,Y)$ is asymptotically normal.
 \end{Proof}
 
 If $\theta \in \mathbb{R}^p$ the corresponding distribution is $\chi^2_p$.
+
+\paragraph{Relation to Kullback-Leibler divergence} 
+
+$$\hat{\theta}_{ML} = \text{arg }\min \text{KL}(g,f)$$
+
+with $f$ distributional model used and $g$ true model
+
+\begin{Proof}
+\vspace{-1.5em}
+\begin{align*}
+KL(g,f) &= \int \log\frac{g(y)}{f(y)} g(y) dy\\
+&= \int \log(g(y)) g(y) dy - \int \log(f(y)) g(y) dy
+\end{align*}
+To minimize that, the second component needs to be maximized. Its derivative is $\int s(\theta;y)g(y)dy = \mathrm{E}_g(s(\theta;Y)) = 0$
+\end{Proof}
   
 
 \end{multicols}
 
 
-\begin{multicols}{2}[\subsection{Sufficiency und Consistency}][4cm]
+\begin{multicols}{2}[\subsection{Consistency and Sufficiency}][4cm]
+
+\paragraph{(Weak) Consistency}
+$$MSE(\hat{\theta},\theta) \overset{n\rightarrow\infty}{\longrightarrow} 0 \Rightarrow \hat{\theta} \text{ consistent}$$
+
+\begin{Proof}
+$P(|\hat{\theta} - \mathrm{E}_{\hat{\theta}}| \geq \delta) \leq \frac{Var_\theta(\hat{\theta})}{\delta^2}$ using the inequality of Chebyshev
+and $MSE(t(.), \theta) = \mathrm{Var}_\theta\left(t(Y_1,...,Y_n)\right) + Bias^2((t(.); \theta)$
+\end{Proof}
 
 \paragraph{Statistic} \ \\
 $$t: \mathbb{R}^n \rightarrow \mathbb{R}$$
@@ -1170,13 +1198,7 @@ $$f\left(y|t=t(y);\theta\right) = \frac{f(y,t=t(y);\theta)}{f_t(t,\theta)}
 \textbf{Minimal Sufficiency:} \ \\
 $t(.)$ is sufficient and $\forall\: \tilde{t}(.)\: \exists\: h(.) \text{ s.t. } t(y) = h(\tilde{t}(y))$
 
-\paragraph{(Weak) Consistency}
-$$MSE(\hat{\theta},\theta) \overset{n\rightarrow\infty}{\longrightarrow} 0 \Rightarrow \hat{\theta} \text{ consistent}$$
 
-\begin{Proof}
-$P(|\hat{\theta} - \mathrm{E}_{\hat{\theta}}| \geq \delta) \leq \frac{Var_\theta(\hat{\theta})}{\delta^2}$ using the inequality of Chebyshev
-and $MSE(t(.), \theta) = \mathrm{Var}_\theta\left(t(Y_1,...,Y_n)\right) + Bias^2((t(.); \theta)$
-\end{Proof}
 
 \end{multicols}
 
@@ -2153,10 +2175,78 @@ $G_n (., F_n)$ is consistent if $\forall \epsilon > 0, F$ the following holds:
 \end{enumerate}
 
 
-
-
 \end{multicols}
 
+\begin{multicols}{2}[\section{Model Selection}][4cm]
+
+\paragraph{AIC (Akaike Information Criterion)}
+
+$$AIC = -2\sum_{i=1}^n \log f(y_i;\hat{\theta}) + 2p$$
+
+\noindent The AIC estimates $2\mathrm{E}_{Y}\left\{\mathrm{KL}(g,f)\right\} - 2\int\log(g(y))g(y)dy$. The latter component is unknown, so the absolute value of the AIC is not informative. The AIC favours complex models. 
+
+For regressions: $AIC= 2n\log(\hat{\sigma}^2) + 2(p+2)$
+
+\paragraph{The AIC as theoretical cross validation} \ \\
+
+\noindent The AIC minimizes $\mathrm{E}_Y\left\{\mathrm{E}_Y\left[Y-\hat{\mu}\right]^2\right\}$ if we use the MSE instead of the Kullback-Leibler divergence. This can be estimated via cross validation.
+
+\paragraph{Bias Corrected AIC}
+
+$$AIC_{corr} = -2\sum_{i=1}^n \log f(y_i;\hat{\theta}) +2p\left(\frac{n}{n{-}p{-}1}\right)$$
+
+ should be preferred if $\frac{n}{p}<40$
+ 
+\paragraph{BIC (Bayesian Information Criterion)}
+ 
+$$BIC = -2\sum_{i=1}^n \log f(y_i;\hat{\theta}) + \log(n)p$$
+
+\noindent approximately maximizes the posterior probability of a model
+
+and selects less complex models as the AIC
+
+\paragraph{DIC (Deviance Information Criterion)} Bayesian AIC
+
+$$DIC = D(y,\hat{\theta}_{postmean}) + 2p_D = \int D(y,\vartheta)f_{post}(\vartheta|y)d\vartheta + p_D$$
+
+\noindent with deviance $D(y;\theta) := -2l(\theta)$ the difference in likelihood compared to the full mode and $\Delta D(y;\theta,\hat{\theta}) = 2\left\{l(\hat{\theta}) {-} l(\theta)\right\} \overset{a}{\sim}\chi_p^2$ the difference in deviance
+
+$$p_D := \mathrm{E}(\Delta D(y;\theta, \hat{\theta}_{\substack{post \\ mean}}|y) = \int\!\! D(y,\vartheta)f_{post}(\vartheta|y)d\vartheta {-} D(y,\hat{\theta}_{\substack{post \\ mean}})$$
+
+\noindent The integral can be approximated using MCMC.
+
+\paragraph{Model Averaging} Using probabilities as weights
+$$P(M_k|y) := \frac{\exp(-\frac{1}{2}\Delta IC_k)}{\sum_{k' =1}^K\exp(-\frac{1}{2}\Delta IC_k')}$$
+
+with $\Delta IC_k = IC_k - min(IC)$
+
+\noindent For regression covariates: $P(x_i|y) = \sum_{k=1}^K \mathbbm{1}_{\{x_i \:\text{in}\: M_k\}}P(M_k|y)$
+
+\paragraph{Inference After Model Selection} neglect is a quiet scandal
+
+\begin{align*}
+Var(\hat{\theta}) &= \mathrm{E}_{model}(Var(\hat{\theta}|model)) + Var_{model}(E(\hat{\theta}|model))\\
+&= \sum_{k=1}^K \pi_kVar_k(\hat{\theta}) + \sum_{k=1}^K \pi_k(\theta_k-\bar{\theta})^2
+\end{align*}
+
+\noindent The last component depends on the true parameter and will be biased if the estimates are used.
+
+Solutions:
+\begin{itemize}
+\item $\widehat{Var}(\hat{\theta}) = \left[ \sum_{k=1}^K \pi_k \sqrt{\widehat{Var}_k(\hat{\theta}_k) + (\hat{\theta}_k - \hat{\bar{\theta}})^2}\right]^2$
+\item Use the Variance of the full (saturated) model
+\item Use bootstrap for confidence intervals
+\end{itemize}
+
+\paragraph{Lasso} least absolute shrinkage and selection operator \ \\
+ 
+ $$l_p(\theta,\lambda) = l(\theta) - \lambda\sum_{j=1}^p |\theta_j|$$
+ 
+ \noindent This penalized log likelihood can be solved with iterative quadratic programming using a Taylor expansion. 
+ 
+ \noindent Using Bayesian view the penalty corresponds to a prior: $f_{\theta_j} (\theta_j)\propto \exp(-|\theta_j|)$ (Laplace prior)
+
+\end{multicols}
 
 
 \end{document}
