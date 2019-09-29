@@ -2248,5 +2248,53 @@ Solutions:
 
 \end{multicols}
 
+\begin{multicols}{2}[\section{Multivariate Things}][4cm]
+
+\paragraph{Covariance Matrix \boldmath$\Sigma$}
+\begin{itemize}
+\item symmetric, $\in \mathbb{R}^{n\times n}$ therefore $\frac{q(q+1)}{2}$ parameters
+\item positive definite, i.\,e.\ $\forall a \in \mathbb{R}^q: a^T\Sigma a \geq 0$
+\end{itemize}
+
+\paragraph{Marginal Independence}
+
+$$\Sigma_{jk} = 0 \Leftrightarrow Y_{ij} \text{ and } Y_{ik} \text{ are independent}$$
+
+\paragraph{Conditional Independence}
+
+$$\Omega = \Sigma^{-1}_{jk} = 0 \Leftrightarrow Y_{ij} \text{ and } Y_{ik} \text{ are independent given all other } Y$$
+
+with concentration matrix $\Omega$
+
+\begin{Proof}
+\vspace{-1.5em}
+\begin{align*}
+f(y_{.j}, y_{.k}|y_{.\overline{j,k}}) &= \frac{f(y)}{f_{.\overline{j,k}}} \propto f(y)
+\overset{\mathrm{N}(\mu,\Sigma)}{\propto} \exp\left\{-\frac{1}{2}y^T\Sigma^{-1}y\right\}
+\end{align*}
+\end{Proof}
+
+\paragraph{Principal Component Analysis (PCA)} \ \\
+\begin{enumerate}
+\item Use singular value decomposition $\Sigma = U \Lambda U^T$
+with $U$ matrix of orthonomal eigenvectors and $\Lambda = diag(\lambda_1,...,\lambda_q)$ matrix of sorted eigenvalues $\lambda_1 \geq \lambda_2 \geq ... \geq \lambda_q$ of $\Sigma$
+\item Prune smallest $k=q-r$ eigenvalues in $\tilde{\Lambda}$
+\item Simplify model with spectral decomposition $\tilde{Y} = \tilde{V}\tilde{\Lambda}^{1/2}\tilde{U}^T$ with $\tilde{V}$, $\tilde{U}$ first $r$ eigenvectors of $YY^T$ and $Y^TY$ respectively
+\item explained variance $\sum_{i=1}^{r}\lambda_i/\sum_{i=1}^{q}\lambda_i$
+\end{enumerate}
+
+\begin{Proof}
+Karhunen-Lo\`{e}ve expansion: $U\Lambda^{\frac{1}{2}}Z_{.} \sim \mathrm{N}(0, U\Lambda^{\frac{1}{2}}\Lambda^{\frac{1}{2}}U^T) = \mathrm{N}(0,\Sigma)$ with $Z_{.} \sim \mathrm{N}(0,\mathbbm{1})$, therefore $\tilde{Y}_{.} = \tilde{V}\tilde{\Lambda}^{\frac{1}{2}}\tilde{Z}_{.}$
+
+\noindent With spectral decomposition it follows: $Y=V\Lambda^{\frac{1}{2}}U^T$ (for column-centered $Y$)
+
+\end{Proof}
+
+
+
+
+
+\end{multicols}
+
 
 \end{document}
