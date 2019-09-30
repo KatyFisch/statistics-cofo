@@ -2381,7 +2381,64 @@ Karhunen-Lo\`{e}ve expansion: $U\Lambda^{\frac{1}{2}}Z_{.} \sim \mathrm{N}(0, U\
 
 \end{Proof}
 
+\end{multicols}
 
+
+
+\begin{multicols}{2}[\section{Missing/Deficient Data}][4cm]
+
+\paragraph{Missing Completely at Random (MCAR)} independent 
+
+$$P(R_i|Y_i) = P(R_i)$$
+
+with $R_{ij} = \begin{cases} 0 & \text{if}\ Y_{ij}\ \text{missing} \\ 1 & \text{otherwise}\end{cases} $ and $R_i = (R_{i1},...,R_{iq})$
+
+\noindent A complete case analysis will lead to unbiased results.
+
+\paragraph{Missing at Random (MAR)} depends on observed variables
+
+$$P(R_i|Y_i) = P(R_i|Y_{iO_i})$$
+
+with $O_i = \{j:R_{ij}=1\}$ and $M_i = \{j:R_{ij}=0\}$
+
+Complete case analysis $P(Y|X, Z)$:
+\begin{itemize}
+\item only response $Y_i$ MAR: unbiased
+\item only covariate $X_i$ MAR: biased \\
+Asymptotically unbiased with \textit{inverse probability weighting}:
+1. Estimate $\pi(y_i,z_i) = P(R_{X_i}{=}1|y_i,z_i)$ \\
+2. Use weighted score function $\hat{s}_{w}(\theta) = \sum_{i=1}^n \frac{R_{X_i}}{\hat{\pi}} s_i(\theta)$
+
+\item both MAR: biased and $\pi(y_i,z_i)$ can not be estimated due to missing $Y_i$
+\end{itemize}
+
+\paragraph{Missing Not at Random (MNAR)}
+
+$$P(R_i|Y_i) \neq P(R_i|Y_{iO_i})$$
+
+\noindent Can not be corrected to be unbiased.
+
+\paragraph{EM Algorithm} \ \\
+
+\noindent Expectation Step:
+
+$$Q(\theta,\theta_{(t)}) = \sum_{i=1}^n\int l_i(\theta)f(y_{iM}|y_{iO};\theta_{(t)})dy_{iM}$$
+
+\noindent Maximization Step:
+
+$$\frac{\partial Q(\theta,\theta_{(t)})}{\partial \theta} = s(\theta,\theta_{(t)}) \overset{!}{=} 0 $$
+
+
+%\begin{Proof}
+%$$l_i(\theta) = l_{iO_i} + \log f(y_{iM_i}|y_{iO_i};\theta)$$
+%$$l_O(\theta) =  l(\theta) - \sum_{i=1}^n \log f(y_{iM_i}|y_{iO_i};\theta)$$
+%$$l_O(\theta) = Q(\theta|\theta_{(t)}) - H(\theta,\theta_{(t)})$$
+%$$l_O(\theta_{(t+1)} \geq l_O(\theta_{(t)}$$
+%$$l_O(\theta) = \sum_{i=1}^n l_{iO}(\theta) = \sum_{i=1}^n \int f(y_i;\theta)dy_{iM}$$
+%\end{Proof}
+
+
+ 
 
 
 
