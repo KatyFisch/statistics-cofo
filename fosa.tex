@@ -612,7 +612,7 @@ $E(\{Y-\mu\}^2) = E(Y^2 - 2Y\mu + \mu^2) = E(Y^2) - 2\mu^2 + \mu^2 = E(Y^2) - \m
 \item \textbf{$k$th Moment}: $E(Y^k) = \int y^k f_Y(y) dy$,\\ \textbf{k.\ centralized Moment}: $E(\{Y-E(Y)\}^k)$
 \end{itemize}
 
-\paragraph{Moment Generating Function}
+\paragraph{Moment Generating Function }
 
 $$M_Y(t) = \mathrm{E}(e^{tY})$$
 
@@ -954,12 +954,13 @@ with the parametric generator function $\psi(u,\theta)$ continuous, strictly dec
 
 \begin{multicols}{2}[\subsection{Limit Theorems}][4cm]
 
-  \paragraph{Law of Large Numbers}
+  \paragraph{Law of Large Numbers} \newpage
   
   \paragraph{Central Limit Theorem}
   
   $$Z_n \overset{d}{\longrightarrow} \mathrm{N}(0, \sigma^2)$$
   with  $Z_n = \sum_{i=1}^{n} \frac{Y_i}{\sqrt{n}}$ and $Y_i$ i.i.d. with expectation $0$ and variance $\sigma^2$
+  
 \begin{Proof}
 For normal random variables $Z \sim \mathrm{N}(\mu, \sigma^2)$: $K_Z(t)=\mu t + \frac{1}{2}\sigma^2t^2$. The first two derivatives $\frac{\partial^kK_Z(t)}{\partial t^k} \bigg|_{t = 0}$ are $\mu$ and $\sigma$. All other moments are zero. 
 
@@ -1891,18 +1892,7 @@ with $z_i$ indicating group affiliation
 
 \end{multicols}
 
-\begin{multicols}{2}[\subsection{Analysis of Variances (ANOVA)}][4cm]
 
-$$SS_{Total}=SS_{Explained}+SS_{Residual}$$
-
-with
-\begin{align*}
-SS_{Total}  &=  \sum\limits_{i=1}^n(y_i-\bar{y})^2 \\
-SS_{Explained} &= \sum\limits_{i=1}^n(\hat{y}_i-\bar{y})^2 \\
-SS_{Residual} &= \sum\limits_{i=1}^n(y_i-\hat{y}_i)^2=\sum\limits_{i=1}^n e_i^2=S_{yy}-\hat{\beta}^2S_{xx} 
-\end{align*}
-
-\end{multicols}
 
 
 
@@ -2481,6 +2471,88 @@ Getting information about $\sigma_U^2$:
 \item \textbf{Assumptions} e.\,g.\ $\sigma_U^2=0$ (naive estimator)
 \end{itemize}
 \end{itemize}
+
+\end{multicols}
+
+
+\begin{multicols}{2}[\section{Experiment Design}][4cm]
+
+\paragraph{Omitted Variables} \ \\
+
+Regression setting ignoring omitted Variables:
+
+$$\int f_{Y|X,Z,U}f_{Z,U}dzdu = \int \frac{f_{Y,X,Z,U}}{f_{X|Z,U}}dzdu \neq f_{Y|X}$$
+
+\noindent with $Z$ observable and $U$ unobservable quantities influencing $Y$
+
+Solutions:
+\begin{itemize}
+\item \textit{Randomization}: randomly assign $X$ and then observe $Y$
+\item \textit{Balancing}: make $X$ independent of $Z$
+\end{itemize}
+
+
+\paragraph{Analysis of Variances (ANOVA)} of one categorical variable
+
+\noindent Linear constraint: $\sum_{k=1}^K n_k \beta_k = 0$ (usually controlled over $\beta_K$)
+
+\begin{align*}
+\hat{\beta}_{0, ML} &= \hat{\mu}_{ML} = \sum_{k=1}^K\sum_{j=1}^{n_k} \frac{y_{kj}}{n} = \bar{y}_{..}\\
+\hat{\beta}_{k,ML} &= \sum_{j=1}^{n_k} \frac{y_{kj}-\bar{y}_{..}}{n_k} = \bar{y}_{k.} - \bar{y}_{..}
+\end{align*}
+
+$$SS_{Total}=SS_{Explained}+SS_{Residual}$$
+
+with
+\begin{align*}
+SS_{Total}  &=  \sum\limits_{i=1}^n(y_i-\bar{y}_{..})^2 \\
+SS_{Explained} &= \sum\limits_{i=1}^n(\hat{y}_i-\bar{y}_{..})^2 \\
+SS_{Residual} &= \sum\limits_{i=1}^n(y_i-\hat{y}_i)^2=\sum\limits_{i=1}^n e_i^2=S_{yy}-\hat{\beta}^2S_{xx} 
+\end{align*}
+
+
+
+\textbf{F-Test}
+
+$$F=\frac{SS_{Explained}/(df_0 {-} df_X)}{SS_{Residual}/df_X} \sim \mathcal{F}_{df_0{-}df_X,df_X}$$
+
+with $df_0 = n{-}1$ and $df_X=n{-}K$
+
+
+\paragraph{Block Design} account for block effects
+
+$$Y_{kbj} = \mu+ \beta_k +\alpha_k+\epsilon_{kbj}$$
+
+\noindent Linear constraints: $\sum_{k=1}^K n_{k.} \beta_k = 0$ and $\sum_{b=1}^B n_{.b} \alpha_b = 0$ 
+
+For the F-Test: $df_0 = df_Z = n{-}B$ and $df_{X+Z}=n{-}K{-}B{+}1$
+
+\paragraph{Latin Squares} Sodoku pattern for more variables
+
+\paragraph{Instrumental Variable}
+
+$$Y = \beta_0 + X\beta_X + \overbrace{U\beta_U + \epsilon}^{\tilde{\epsilon}} \ \Rightarrow\  \frac{\partial Y}{\partial X} = \beta_X + \frac{\partial \tilde{\epsilon}}{\partial X}$$
+
+\noindent Construct instrumental variable $Z$: $Cov(Z,\epsilon){=}0$, $Cov(Z,X){\neq}0$:
+
+$$\frac{\partial Y}{\partial X}|(U{=}u) = \frac{\partial Y / \partial Z}{\partial X/ \partial Z}$$
+
+i.\,e. fit two regressions $Y|Z$ and $X|Z$ and set $\hat{\beta}_X = \frac{\hat{\beta}_{YZ}}{\hat{\beta}_{XZ}}$
+
+\paragraph{Propensity Score} 
+
+$$\tau = \mathrm{E}(Y(1)|D{=}1) - \mathrm{E}(Y(0)|D{=}1)$$
+
+\noindent with $\tau$ average treatment effect on the treated, $Y(1)$ response if treated with $D$, and $Y(0)$ analogous
+
+$$\mathrm{E}(Y(1)|D{=}1) - \mathrm{E}(Y(0)|D{=}0) = \tau + \underbrace{\mathrm{E}(Y(0)|D{=}1) - \mathrm{E}(Y(0)|D{=}0)}_{\text{selection bias}}$$
+
+If the selection bias is zero, $D$ and $X$ are unconfounded.
+
+$$\hat{\tau} = \sum_{i=1}^n (Y_i(1) -Y_{j(i)}(0))$$
+
+\noindent after matching treated individual $i$ with individual $j(i)$ from non-treatment group
+
 
 
 
