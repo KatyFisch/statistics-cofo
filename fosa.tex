@@ -2401,7 +2401,7 @@ $$P(R_i|Y_i) = P(R_i|Y_{iO_i})$$
 
 with $O_i = \{j:R_{ij}=1\}$ and $M_i = \{j:R_{ij}=0\}$
 
-Complete case analysis $P(Y|X, Z)$:
+\noindent Complete case analysis $P(Y|X, Z)$:
 \begin{itemize}
 \item only response $Y_i$ MAR: unbiased
 \item only covariate $X_i$ MAR: biased \\
@@ -2437,8 +2437,50 @@ $$\frac{\partial Q(\theta,\theta_{(t)})}{\partial \theta} = s(\theta,\theta_{(t)
 %$$l_O(\theta) = \sum_{i=1}^n l_{iO}(\theta) = \sum_{i=1}^n \int f(y_i;\theta)dy_{iM}$$
 %\end{Proof}
 
+\paragraph{Louis' Formula for Variance Estimates in EM Settings} \ \\
 
+$$J_O(\theta) = \sum_{i=1}^n \{\mathrm{E}(J_i(\theta)|y_{iO}) - \mathrm{E}(s_i(\theta)s_i(\theta)|y_{iO}) + s_{iO}(\theta)s_{iO}(\theta)\}$$
+
+
+ \paragraph{Multiple Imputation}
  
+ \begin{enumerate}
+ \item Create $K$ complete datasets by simulating missing data $\sim f_{post}(y_{iM}|y_{iO})$
+ \item Fit $K$ models $Y_i \sim f(y|\theta)$
+ \item Rubin's Rule: $\hat{\theta}_{MI} = \frac{1}{K}\sum_{k=1}^K \hat{\theta}^*_{(k)}$;
+  $\widehat{\text{Var}}(\hat{\theta}_{MI}) = \hat{V} {+} (1{+}\frac{1}{K})\bar{B}$ 
+ with $\hat{V} = \frac{1}{K} \sum_{k=1}^K I^{-1}(\hat{\theta}_{(k)}^*$ 
+ and $\bar{B} = \frac{1}{K-1} \sum_{k=1}^K (\hat{\theta}_{(k)}^* - \hat{\theta}_{MI}) (\hat{\theta}_{(k)}^* - \hat{\theta}_{MI})^T$
+ \end{enumerate}
+ 
+ \paragraph{Estimate Accuracy}
+ 
+ $$\hat{\mu}_g - \mu_g =\rho_{R_g} \times \sigma_g \times \sqrt{\frac{N-n}{n}}$$
+ with $\rho_{R_g}$  data quality (correlation between $R_j$ and $g(Y_j)$), $\sigma_g$ variability, and $\sqrt{\frac{N-n}{n}}$ data quantity; $g$ some known function
+
+\begin{itemize}
+\item MCAR: $MSE(\hat{\mu}_g) = \frac{1}{N-1} \times \sigma^2_g \times \frac{N-n}{n}$
+\item MNAR: $MSE(\hat{\mu}_g) = \mathrm{E}(\rho^2_{R_g}) \times \sigma^2_g \times \frac{N-n}{n}$ \\
+$n_{eff} = \frac{\frac{n}{N}}{1-\frac{n}{N}}\frac{1}{\mathrm{E}(\rho^2_{R_g})}$
+\end{itemize}
+
+\paragraph{Measurement Error}
+
+$$U = X - X_m \text{ with } \mathrm{E}(U) = \mu_U \text{ and }  \mathrm{Var}(U) = \sigma_U^2$$
+with $\mu_U$ systematic error (bias/validity), $\mathrm{Var}(U)$ (reliability)
+
+\noindent In Regression Settings:
+
+\begin{itemize}
+\item \textbf{error in $\mathbf{Y}$}: $Y_m = \beta_0 + \beta_1X +\epsilon+U$ and $\mathrm{E}(Y_m|X) = \beta_0 + \mu_U + \beta_1X$ leads to  biased $\hat{\beta}_0$
+\item \textbf{ error in $\mathbf{X}$}: $Y=\beta_0 + \beta_1X +\epsilon$ and $X_m = X + U$ leads to biased $\hat{\beta}_0$ and $\hat{\beta}_1$, the latter is attenuated by the inverse of reliability ratio $rr = \frac{\sigma^2_X}{\sigma^2_X +\sigma^2_U} = \frac{\sigma^2_{X_m} {-}\sigma^2_U}{\sigma^2_{X_m}}$ \\
+Getting information about $\sigma_U^2$:
+\begin{itemize}
+\item \textbf{Validation Data} with both $X$ and $X_m$ observed 
+\item \textbf{Replication Data} repeated measures of $X_m$
+\item \textbf{Assumptions} e.\,g.\ $\sigma_U^2=0$ (naive estimator)
+\end{itemize}
+\end{itemize}
 
 
 
