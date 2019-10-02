@@ -511,7 +511,7 @@ $$P(A)=\frac{|A|}{|\Omega|}$$
 
 \addvbuffer[12pt 8pt]{\begin{tabular}{c l}
 
-(1) & $0 \le P(A) \le 1 \hspace{0.5 cm} \forall A \in \mathcal{A}$ \\
+(1) & $0 \le P(A) \le 1 \hspace{0.5 cm} \forall A \in \mathcal{A} = \sigma\text{-algebra}(\Omega)$ \\
 
 (2) & $P(\Omega) = 1$ \\
 
@@ -523,33 +523,33 @@ $$P(A)=\frac{|A|}{|\Omega|}$$
 
 \begin{Mathfolg}
 
-Implications:
+\noindent Implications:
 \begin{itemize}
+\setlength\itemsep{0em}
 \item $P(\bar{A})=1-P(A)$
 \item $P(\emptyset)=0$
 \item $P(A\cup B)=P(A)+P(B)-P(A\cap B)$
 \item $A \subseteq B \Rightarrow P(A) \le P(B)$
-\item $P(B)=\sum\limits_{i=1}^n P(B\cap A_i), \textnormal{ for } A_i,...,A_n$  complete decomposition of $\Omega$  into pairwise disjoint events
 \end{itemize}
 
 \end{Mathfolg}
 
 \paragraph{Probability (Mises)} frequentist definition of probability
 
-$$P(A) = \lim\limits_{n \to \infty}\frac{n_A(n))}{n}$$
+$$P(A) = \lim\limits_{n \to \infty}\frac{n_A(n)}{n}$$
 
 \noindent with $n$ repetitions of a random experiment and $n_A(n)$ events $A$
 
 \paragraph{Conditional Probability}
 
-$$P(A|B)=\frac{P(A \cap B)}{P(B)} \hspace{0.5cm} \text{für } P(B) > 0$$
+$$P(A|B)=\frac{P(A \cap B)}{P(B)} \hspace{0.5cm} \text{for } P(B) > 0$$
 
 
 $ \Rightarrow P(A \cap B)=P(B|A)P(A)=P(A|B)P(B)$
 
 \paragraph{Law of Total Probability}
 
-$$P(B)=\sum\limits_{i=1}^nP(B|A_i)P(A_i)$$
+$$P(B)=\sum\limits_{i=1}^nP(B|A_i)P(A_i) \hspace{0.5cm}\text{for } \Omega=\bigcup_{i=1}^{\infty}{A_i} \text{ and } A_i {\cap} A_j = \emptyset$$
 
 \paragraph{Bayes' Theorem}
 
@@ -558,7 +558,7 @@ $$P(A|B)=\frac{P(B|A)P(A)}{P(B)} \hspace{0.5cm} \text{for } P(A), P(B) > 0$$
 \paragraph{Stochastic Independence}
 
 \begin{alignat*}{2}
- \text{A, B independent}  \Leftrightarrow  && P(A\cap B) &= P(A)+P(B) \\
+ \text{A, B independent}  \Leftrightarrow  && P(A\cap B) &= P(A)\cdot P(B) \\
  \text{X, Y independent}  \Leftrightarrow && f_{XY}(x,y) &= f_X(x)\cdot f_Y(y) \hspace{0.5cm} \forall x,y
 \end{alignat*}
 
@@ -573,7 +573,7 @@ $$P(A|B)=\frac{P(B|A)P(A)}{P(B)} \hspace{0.5cm} \text{for } P(A), P(B) > 0$$
 
 $$Y: \Omega \to \mathbb{R}$$
 
-\noindent The Subset of possible values for $\mathbb{R}$ is called support.
+\noindent The subset of possible values for $\mathbb{R}$ is called support.
 
 \noindent Notation: Realisations of $Y$ are depicted with lower case letters. $Y=y$ means, that $y$ is the realisation of $Y$.
 
@@ -582,7 +582,7 @@ $$Y: \Omega \to \mathbb{R}$$
 \noindent If the support is uncountably infinite, the random variable is called \textit{continuous}, otherwise it is called \textit{discrete}.
 
 \begin{itemize}
-\item \textbf{Density \boldmath$f(\cdot)$:} 
+\item \textbf{Density \boldmath$f(\cdot)$} (positive, integrates out to 1): 
 
 For continuous variables:
 $P(Y \in \left[a, b\right]) = \int_{a}^{b} f_Y(y) dy$
@@ -591,7 +591,9 @@ For discrete variables the density (and other functions) can be depicted like th
 $\int_{-\infty}^{y} f_Y(\tilde{y})d\tilde{y} := \sum_{k:k \leq y} P(Y=k)$. This notation is used.
 
 \item \textbf{Cumulative Distribution Function \boldmath$F(\cdot)$:} 
-$F_Y(y) =P(Y\leq y)$
+$$F_Y(y) =P(Y\leq y)$$
+
+with $\lim_{y\rightarrow-\infty}F_Y(y)=0$ and $\lim_{y\rightarrow\infty}F_Y(y)=1$
 \end{itemize}
 
 Relationship:
@@ -609,7 +611,7 @@ Note: $E(\{Y-\mu\}^2) = E(Y^2) - \mu^2$
 \begin{Proof}
 $E(\{Y-\mu\}^2) = E(Y^2 - 2Y\mu + \mu^2) = E(Y^2) - 2\mu^2 + \mu^2 = E(Y^2) - \mu^2$
 \end{Proof}
-\item \textbf{$k$th Moment}: $E(Y^k) = \int y^k f_Y(y) dy$,\\ \textbf{k.\ centralized Moment}: $E(\{Y-E(Y)\}^k)$
+\item \textbf{$k$th Moment}: $E(Y^k) = \int y^k f_Y(y) dy$,\\ \textbf{$k$th centralized Moment}: $E(\{Y-E(Y)\}^k)$
 \end{itemize}
 
 \paragraph{Moment Generating Function }
@@ -624,21 +626,30 @@ Cumulant Generating Function $K_Y(t) = \log M_Y(t)$
   
 \subsubsection*{\textit{Random Vectors $\in \mathbb{R}^q$}}
 
+\paragraph{Definition}
+
+$$(Y_1,Y_2,...,Y_q)$$ 
+
+with random variables $Y_i$ 
+
 \paragraph{Density and Cumulative Distribution Function}
 
 $$F(y_1, ..., y_q) = P(Y_1 \leq y_1, ..., Y_q \leq y_q)$$
-\begin{align*}
-& P(a_1 \leq Y_1 \leq b_1, ..., a_q \leq Y_q \leq b_q) \\
-& = \int_{a_1}^{b_1} ...\int_{a_q}^{b_q} f(y_1, .., y_q)dy_1...dy_q
-\end{align*}
+$$P(a_1 {\leq} Y_1 {\leq} b_1, ..., a_q {\leq} Y_q {\leq} b_q) = \int\limits_{a_1}^{b_1} ...\int\limits_{a_q}^{b_q} f(y_1, .., y_q)dy_1...dy_q$$
 
 \paragraph{Marginal Density}
 
 $$f_{Y_1}(y_1) = \int_{-\infty}^{\infty}...\int_{-\infty}^{\infty} f(y_1,...,y_k)dy_2...dy_k$$
 
-\paragraph{Conditional Density}
+\paragraph{Conditional Density} two-dimensional case
 
-$$f_{Y_1|Y_2}(y_1|y_2) = \frac{f(y_1, ..., y_2)}{f(y_2)} \text{ for } f(y_2) > 0$$
+$$f_{Y_1|Y_2}(y_1|y_2) = \frac{f(y_1, y_2)}{f(y_2)} \text{ for } f(y_2) > 0$$
+
+\paragraph{Covariance and Correlation}
+
+$$Cov(Y_j,Y_k) = E(Y_jY_k) - E(Y_j)E(Y_k)$$
+
+$$Cor(Y_j,Y_k) = \frac{Cov(Y_j,Y_k)}{\sqrt{Var(Y_j)Var(Y_k)}}$$
 
 \paragraph{Iterated Expectation}
 
@@ -747,7 +758,7 @@ $$\mathrm{Var}(Y) = \mathrm{E}_X(\mathrm{Var}(Y|X)) + \mathrm{Var}_X(\mathrm{E}(
   
 \noindent Relationship: $\log (Y) \sim \mathrm{N}(\mu, \sigma^2) \Rightarrow Y \sim \mathrm{LogN}(\mu, \sigma^2)$
   
-    \paragraph{non-standardized Student's t} statistical Tests for $\mu$ with unknown (estimated) variance and $\nu$ degrees of freedom
+    \paragraph{non-standardized Student's t} statistical tests for $\mu$ with unknown (estimated) variance and $\nu$ degrees of freedom
   
     \begin{align*}
     & Y \sim \mathrm{t}_\nu(\mu, \sigma^2) \text{ with } \mu \in \mathbb{R}, \sigma^2, \nu > 0,\: y \in \mathbb{R}\\
@@ -819,9 +830,9 @@ $$\mathrm{Var}(Y) = \mathrm{E}_X(\mathrm{Var}(Y|X)) + \mathrm{Var}_X(\mathrm{E}(
   \paragraph{Definition} \ \\
   \noindent The exponential family comprises all distributions, whose density can be written as follows:
   
-  $$f_Y(y,\theta) = \exp^{t^T(y)\theta - \kappa (\theta)}h(y)$$
+  $$f_Y(y,\theta) = e^{t^T(y)\theta - \kappa (\theta)}h(y)$$
   
-  with $h(y) \geq 0$, $t(y)$ vector of the canonical statistic, $\theta$ as parameter and $\kappa (\theta)$ the normalising constant.
+  \noindent with $h(y) \geq 0$, $t(y)$ vector of the canonical statistic, parameter vector $\theta$ and $\kappa (\theta)$ as the normalising constant.
   
   \paragraph{Normalising Constant}
   
@@ -830,7 +841,8 @@ $$\mathrm{Var}(Y) = \mathrm{E}_X(\mathrm{Var}(Y|X)) + \mathrm{Var}_X(\mathrm{E}(
   \Leftrightarrow \kappa (\theta) &= \log \int \exp^{t^T(y)\theta}h(y)dy
   \end{align*}
   
-  \noindent $\kappa (\theta)$ is the cumulant generating function, therefore $\frac{\partial\kappa(\theta)}{\partial\theta} = \mathrm{E}(t(Y))$ and $\frac{\partial^2\kappa(\theta)}{\partial\theta^2} = \mathrm{Var}(t(Y))$
+  \noindent $\kappa (\theta)$ is the cumulant generating function, therefore e.\,g.\ $\frac{\partial\kappa(\theta)}{\partial\theta_1} = \mathrm{E}(t_1(Y))$ 
+  %and $\frac{\partial^2\kappa(\theta)}{\partial\theta^2} = \mathrm{Var}(t(Y))$
   
   
   
@@ -848,6 +860,7 @@ $$\mathrm{Var}(Y) = \mathrm{E}_X(\mathrm{Var}(Y|X)) + \mathrm{Var}_X(\mathrm{E}(
   \item \textbf{Gamma}
   \item \textbf{Chi-Squared}
   \item \textbf{Beta}
+  \item \textbf{Binomial}
   \end{itemize}
   
 
@@ -1017,9 +1030,9 @@ $$\mathcal{L}: \mathcal{T} \times \Theta \rightarrow \mathbb{R}^+$$
 \item \textbf{quadratic loss (L2)}: $\mathcal{L}(t, \theta) = (t-\theta)^2$
 \end{itemize}
 
-\noindent As $\theta$ is unknown, the loss is a theoretical measure. Additionally, it is the realisation of a random variable as it is dependent on a concrete sample.
+\noindent As $\theta$ is unknown, the loss is a theoretical quantity. It is also the realisation of a random variable as it depends on a sample.
 
-\paragraph{Risiko}
+\paragraph{Risk}
 
 \begin{align*}
 R(t(.), \theta) &= \mathrm{E}_\theta \left(\mathcal{L}(t(Y_1,...,Y_n),\theta)\right) \\
@@ -1027,8 +1040,9 @@ R(t(.), \theta) &= \mathrm{E}_\theta \left(\mathcal{L}(t(Y_1,...,Y_n),\theta)\ri
 \end{align*}
 
 \paragraph{Minimax Approach} \ \\
-\noindent The risk still depends ton the true parameter $\theta$.
-Tentative estimation: Choose $\theta$, so that the risk is maximal and then $t(.)$, so that the risk is minimized (minimizing the worst case):
+\noindent The risk still depends on the true parameter $\theta$.
+
+\noindent Tentative estimation: Choose $\theta$, s.\,t.\ the risk is maximal and then $t(.)$, so that the risk is minimized (minimizing the worst case):
 
 $$\hat{\theta}_{minimax} = \underset{t(.)}{\text{arg min }} \left(\underset{\theta \in \Theta}{\text{max }} R(t(.);\theta)\right)$$
 
@@ -1090,7 +1104,7 @@ Follows from $\log (x) \leq x-1 \forall x \geq 0$, with equality for $x=1$.
 \begin{align*}
 & R_{KL} (t(.), \theta) = \\ =&\: \int_{-\infty}^\infty \mathcal{L}_{KL}(t(Y_1,...,Y_n),\theta) \prod_{i=1}^n f(y_i;\theta)dy_i \\
 =&\: \int\int \log\frac{f(\tilde{y};\theta)}{f(\tilde{y};t)} f(\tilde{y};\theta) d\tilde{y} \prod_{i=1}^n f(y_i;\theta)dy_i \\
-=&\: \int\int \left(\log f(\tilde{y};\theta) - \log f(\tilde{y};t) \right) f(\tilde{y};\theta) d\tilde{y} - \prod_{i=1}^n f(y_i;\theta)dy_i \\
+=&\: \int\int \left(\log f(\tilde{y};\theta) - \log f(\tilde{y};t) \right) f(\tilde{y};\theta) d\tilde{y}  \prod_{i=1}^n f(y_i;\theta)dy_i \\
 \approx & \: - \int \underbrace{\left( \int \frac{\partial \log f(\tilde{y};\theta)}{\partial \theta} f(\tilde{y};\theta)d\tilde{y}\right)}_{0}\left(t-\theta\right) \prod_{i=1}^n f(y_i;\theta)dy_i  \\
 + &  \frac{1}{2} \int \underbrace{\left( - \int \frac{\partial^2 \log f(\tilde{y};\theta)}{\partial \theta^2} f(\tilde{y};\theta)d\tilde{y}\right)}_{I(\theta)}\left(t-\theta\right)^2 \prod_{i=1}^n f(y_i;\theta)dy_i 
 \end{align*}
@@ -1256,6 +1270,10 @@ To minimize that, the second component needs to be maximized. Its derivative is 
 
 \begin{multicols}{2}[\subsection{Consistency and Sufficiency}][4cm]
 
+\paragraph{Statistic} \ \\
+$$t: \mathbb{R}^n \rightarrow \mathbb{R}$$
+$t(Y_1, ..., Y_n)$ depends on sample size n and is a random variable
+
 \paragraph{(Weak) Consistency}
 $$MSE(\hat{\theta},\theta) \overset{n\rightarrow\infty}{\longrightarrow} 0 \Rightarrow \hat{\theta} \text{ consistent}$$
 
@@ -1264,15 +1282,11 @@ $P(|\hat{\theta} - \mathrm{E}_{\hat{\theta}}| \geq \delta) \leq \frac{Var_\theta
 and $MSE(t(.), \theta) = \mathrm{Var}_\theta\left(t(Y_1,...,Y_n)\right) + Bias^2((t(.); \theta)$
 \end{Proof}
 
-\paragraph{Statistic} \ \\
-$$t: \mathbb{R}^n \rightarrow \mathbb{R}$$
-$t(Y_1, ..., Y_n)$ depends on sample size n and is a random variable
-
-\paragraph{Suffizienz} \ \\
+\paragraph{Suffiziency} \ \\
 \noindent A statistic $t(y_1,...,y_n)$ is sufficient for $\theta$, if the conditional distribution $f(y_1,...,y_n|t_0 = t(y_1,...,y_n);\theta)$ is independent of $\theta$. \vspace{0.5em}
 
 \textbf{Neyman criterion:}
-$$t(Y_1,...,Y_n) \text{ suffizient } \Leftrightarrow f(y;\theta) = h(y)g\left(t(y);\theta\right)$$
+$$t(Y_1,...,Y_n) \text{ sufficient } \Leftrightarrow f(y;\theta) = h(y)g\left(t(y);\theta\right)$$
 \begin{Proof}
 ``$\Rightarrow$'':
 $$f(y;\theta) = \underbrace{f(y|t = t(y);\theta)}_{h(y)} \underbrace{f_t(t|y;\theta)}_{g(t(y);\theta)}$$
@@ -1944,7 +1958,7 @@ or more general:
 
 \begin{align*}
   f_{post}(\theta | X) &= \frac{f(X | \theta ) \cdot f_\theta(\theta)}{\int f(X|\tilde{\theta}) f_\theta(\tilde{\theta})  d \tilde{\theta}}\\
-  &= C \cdot f(X | \theta ) \cdot f_\theta(\theta) \hspace{1 em} \text{choose C so that $\int f(\theta | X)=1$} \\
+  &= C \cdot f(X | \theta ) \cdot f_\theta(\theta) \hspace{1 em} \text{choose C s.\,t.\  $\int f_{post}(\theta | X)=1$} \\
   &\propto f(X | \theta ) \cdot f_\theta(\theta)
 \end{align*}
 
@@ -1956,10 +1970,14 @@ or more general:
 \hat{\theta}_{Bayesrisk} &= \mathrm{arg} \underset{t(.)}{\min} R_{Bayes}(t(.))\\
 \intertext{with Bayes risk: $ R_{Bayes}(t(.)) = \int_{\Theta} R(t(.),\vartheta)f_\theta(\vartheta)d\vartheta$}
 \hat{\theta}_{postBayesrisk} &= \mathrm{arg} \underset{t(.)}{\min} R_{postBayes}(t(.)|y)\\
-\intertext{with posterior Bayes risk: $ R_{postBayes}(t(.)|y) = \int L(t(y),\vartheta) f_\theta(\vartheta|y) = \mathrm{E}_{\theta|y}(L(t(y),\theta)|y$}
+\intertext{with posterior Bayes risk: $ R_{postBayes}(t(.)|y) = \int \mathcal{L}(t(y),\vartheta) f_\theta(\vartheta|y) = \mathrm{E}_{\theta|y}(\mathcal{L}(t(y),\theta)|y)$}
 \end{align*}
 
-\vspace{-2em}
+\vspace{-1.5em}
+
+\noindent For squared loss: $\hat{\theta}_{postBayesrisk} = \hat{\theta}_{postmean}$
+
+
 \paragraph{Credibility Interval}
 
 $$P_\theta(\theta\in \left[t_l(y),t_r(y)\right]|y) = \int_{t_l(y)}^{t_r(y)} f_\theta(\vartheta|y)d\vartheta = 1- \alpha$$
