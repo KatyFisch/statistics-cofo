@@ -1067,7 +1067,7 @@ R(t(.), \theta) = &\: \mathrm{E}_\theta (\{t(Y) -\theta\}^2) \\
 \end{align*}
 \end{Proof}
 
-\textbf{Cramér-Rao Inequality}
+\textbf{Cramér-Rao Bound}
 
 $$MSE(\hat{\theta}, \theta) \geq Bias^2(\hat{\theta},\theta) + 
 \frac{\left(1+
@@ -1136,7 +1136,7 @@ $\log f(\tilde{y}, t) \approx \log f(\tilde{y},\theta) {+} \frac{\partial\log f(
 $\log L(\theta;y_1,...,y_n) = \sum_{i=1}^n \log f(y_i;\theta)$
   \item \textbf{Score} $s(\theta;y_1,...,y_n)$: $\frac{\partial l(\theta;y_1,..y_n)}{\partial \theta}$
   \item \textbf{Fisher-Information} $I(\theta)$: $-\mathrm{E}_\theta\left(\frac{\partial s(\theta;Y)}{\partial\theta}\right)$
-  \item \textbf{observed Fisher-Information} $I_{obs}(\theta)$: $-\mathrm{E}_\theta\left(\frac{\partial s(\theta;y)}{\partial\theta}\right)$
+  \item \textbf{observed Fisher-Information} $J(\theta)$: $-\mathrm{E}_\theta\left(\frac{\partial s(\theta;y)}{\partial\theta}\right)$
   \end{itemize}
   
   
@@ -1278,23 +1278,23 @@ $t(Y_1, ..., Y_n)$ depends on sample size n and is a random variable
 $$MSE(\hat{\theta},\theta) \overset{n\rightarrow\infty}{\longrightarrow} 0 \Rightarrow \hat{\theta} \text{ consistent}$$
 
 \begin{Proof}
-$P(|\hat{\theta} - \mathrm{E}_{\hat{\theta}}| \geq \delta) \leq \frac{Var_\theta(\hat{\theta})}{\delta^2}$ using the inequality of Chebyshev
-and $MSE(t(.), \theta) = \mathrm{Var}_\theta\left(t(Y_1,...,Y_n)\right) + Bias^2((t(.); \theta)$
+$P(|\hat{\theta} - \mathrm{E}_{\theta}(\hat{\theta})| \geq \delta) \leq \frac{Var_\theta(\hat{\theta})}{\delta^2}$ using the inequality of Chebyshev
+and $MSE(t(.), \theta) = \mathrm{Var}_\theta(t(Y_1,...,Y_n)) + Bias^2((t(.); \theta)$
 \end{Proof}
 
-\paragraph{Suffiziency} \ \\
+\paragraph{Sufficiency} \ \\
 \noindent A statistic $t(y_1,...,y_n)$ is sufficient for $\theta$, if the conditional distribution $f(y_1,...,y_n|t_0 = t(y_1,...,y_n);\theta)$ is independent of $\theta$. \vspace{0.5em}
 
 \textbf{Neyman criterion:}
-$$t(Y_1,...,Y_n) \text{ sufficient } \Leftrightarrow f(y;\theta) = h(y)g\left(t(y);\theta\right)$$
+$$t(Y_1,...,Y_n) \text{ sufficient } \Leftrightarrow f(y;\theta) = h(y)\:g(t(y);\theta)$$
 \begin{Proof}
 ``$\Rightarrow$'':
-$$f(y;\theta) = \underbrace{f(y|t = t(y);\theta)}_{h(y)} \underbrace{f_t(t|y;\theta)}_{g(t(y);\theta)}$$
+$$f(y;\theta) = \underbrace{f(y|t {=} t(y);\theta)}_{h(y)} \underbrace{f_t(t|y;\theta)}_{g(t(y);\theta)}$$
 
 \noindent ``$\Leftarrow$'':
 $$f_t(t;\theta) = \int_{t=t(y)} f(y;\theta)dy = \int_{t=t(y)} h(y) g(t;\theta)dy$$
 \indent Therefore:
-$$f\left(y|t=t(y);\theta\right) = \frac{f(y,t=t(y);\theta)}{f_t(t,\theta)}
+$$f\left(y|t{=}t(y);\theta\right) = \frac{f(y,t{=}t(y);\theta)}{f_t(t,\theta)}
 = \begin{cases}
 \frac{h(y)g(t;\theta)}{g(t;\theta)} & t=t(y) \\
 0 & \, \text{otherwise}
@@ -1351,9 +1351,9 @@ $$p-value \leq \alpha \Leftrightarrow ``H_0"$$
 
 \paragraph{Confidence Interval}
 $$\begin{gathered}
-\left[t_l(Y),t_r(Y)\right] \text{ Confidence Interval } \\
+\left[t_l(Y_{1:n}),t_r(Y_{1:n})\right] \text{ Confidence Interval } \\
 \Leftrightarrow \\
-P_\theta\left((t_l(Y) {\leq} \theta {\leq} t_r(Y)\right) \geq 1{-}\alpha
+P_\theta\left(t_l(Y_{1:n}) {\leq} \theta {\leq} t_r(Y_{1:n})\right) \geq 1{-}\alpha
 \end{gathered}$$
 
 
@@ -1362,7 +1362,7 @@ P_\theta\left((t_l(Y) {\leq} \theta {\leq} t_r(Y)\right) \geq 1{-}\alpha
 
 \textbf{Corresponding Test}
 
-$$\theta \notin \left[t_l(y), t_r(y)\right] \Leftrightarrow ``H_1"$$
+$$\theta \notin \left[t_l(y_{1:n}), t_r(y_{1:n})\right] \Leftrightarrow ``H_1"$$
 
 
 %\paragraph{Exakte binomiale Konfidenzintervalle}
@@ -1503,15 +1503,15 @@ $$^*F_n(F^{{-}1}(y;\theta)) = \frac{1}{n}\sum_{i=1}^n\mathbbm{1}_{\{X_i\leq F^{{
 $$\begin{gathered}
 g(Y;\theta) \text{ pivotal}\\
 \Leftrightarrow \\
-\text{Distribution of } g(Y;\theta) \text{ independent of } \theta
+\text{distribution of } g(Y;\theta) \text{ independent of } \theta
 \end{gathered}$$
 
 \textbf{Approximative Pivotal Statistic}
-\indent $H_0\!:\; X_i \sim F \text{ pivotal} \;\;\; vs. \;\;\; H_1\!:\; X_i \sim F \text{not pivotal }$
+\indent $H_0\!:\; X_i \sim F \text{ pivotal} \;\;\; vs. \;\;\; H_1\!:\; X_i \sim F \text{ not pivotal }$
 
 $$g(\hat{\theta};\theta) = \frac{\hat{\theta} - \theta}{\sqrt{\textrm{Var}(\hat{\theta})}} \overset{\alpha}{\sim} \mathrm{N}(0,1)$$
 
-with $\hat{\theta} = t(Y) \overset{\alpha}{\sim} \mathrm{N}(\theta,\mathrm{Var}(\hat{\theta})$
+with $\hat{\theta} = t(Y) \overset{\alpha}{\sim} \mathrm{N}(\theta,\mathrm{Var}(\hat{\theta}))$
 
 $$KI = \left[ \hat{\theta} - z_{1-\frac{\alpha}{2}}\sqrt{\mathrm{Var}(\hat{\theta})}, \hat{\theta} + z_{1-\frac{\alpha}{2}}\sqrt{\mathrm{Var}(\hat{\theta})} \right]$$
 
@@ -1980,7 +1980,7 @@ or more general:
 
 \paragraph{Credibility Interval}
 
-$$P_\theta(\theta\in \left[t_l(y),t_r(y)\right]|y) = \int_{t_l(y)}^{t_r(y)} f_\theta(\vartheta|y)d\vartheta = 1- \alpha$$
+$$P_\theta(\theta\in \left[t_l(y),t_r(y)\right]|y) = \int_{t_l(y)}^{t_r(y)} f_{post}(\vartheta|y)d\vartheta = 1- \alpha$$
 
 \begin{itemize}
 \item symmetric: $\int_{-\infty}^{t_l(y)} f_\theta(\vartheta|y)d\vartheta = \int_{t_r(y)}^{\infty} f_\theta(\vartheta|y)d\vartheta = \frac{\alpha}{2}$
