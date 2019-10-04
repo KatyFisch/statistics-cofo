@@ -590,6 +590,8 @@ $P(Y \in \left[a, b\right]) = \int_{a}^{b} f_Y(y) dy$
 For discrete variables the density (and other functions) can be depicted like the corresponding function for continuous variables, if the notation is extended as follows: 
 $\int_{-\infty}^{y} f_Y(\tilde{y})d\tilde{y} := \sum_{k:k \leq y} P(Y=k)$. This notation is used.
 
+If $Y = g(X)$, then $f_Y(y) = \left|\frac{d g^{-1}(y)}{d y}\right|f_X(g^{-1}(y))$.
+
 \item \textbf{Cumulative Distribution Function \boldmath$F(\cdot)$:} 
 $$F_Y(y) =P(Y\leq y)$$
 
@@ -616,7 +618,7 @@ $E(\{Y-\mu\}^2) = E(Y^2 - 2Y\mu + \mu^2) = E(Y^2) - 2\mu^2 + \mu^2 = E(Y^2) - \m
 
 \paragraph{Moment Generating Function }
 
-$$M_Y(t) = \mathrm{E}(e^{tY})$$
+$$M_Y(t) = \mathrm{E}_Y(e^{tY})$$
 
 with $\frac{\partial^kM_Y(t)}{\partial t^k} \bigg|_{t = 0} = \mathrm{E}(Y^k)$ 
 
@@ -1090,7 +1092,7 @@ For unbiased estimates: $ \theta = \mathrm{E}_\theta(\hat{\theta}) = \int t(y)f(
 
 \paragraph{Kullback-Leibler Divergence} Comparing distributions
 
-$$KL(t,\theta) = \int_{-\infty}^\infty \log\frac{f(\tilde{y};\theta)}{f(\tilde{y};t)} f(\tilde{y};\theta) d\tilde{y}$$
+$$KL(\theta,t) = \int_{-\infty}^\infty \log\frac{f(\tilde{y};\theta)}{f(\tilde{y};t)} f(\tilde{y};\theta) d\tilde{y}$$
 
 \noindent The KL divergence is not a distance as it is not symmetric.
 \noindent It is $0$ for $t=\theta$ and $\geq 0$ otherwise.
@@ -1098,11 +1100,11 @@ $$KL(t,\theta) = \int_{-\infty}^\infty \log\frac{f(\tilde{y};\theta)}{f(\tilde{y
 Follows from $\log (x) \leq x-1 \forall x \geq 0$, with equality for $x=1$.
 \end{Proof}
 
-\noindent $R_{KL} (t(.), \theta)$ is approximated by the MSE.
+\noindent $R_{KL} (\theta, t(.) )$ is approximated by the MSE.
 \begin{Proof}
 \vspace{-1.5em}
 \begin{align*}
-& R_{KL} (t(.), \theta) = \\ =&\: \int_{-\infty}^\infty \mathcal{L}_{KL}(t(Y_1,...,Y_n),\theta) \prod_{i=1}^n f(y_i;\theta)dy_i \\
+& R_{KL} (\theta,t(.)) = \\ =&\: \int_{-\infty}^\infty \mathcal{L}_{KL}(t(Y_1,...,Y_n),\theta) \prod_{i=1}^n f(y_i;\theta)dy_i \\
 =&\: \int\int \log\frac{f(\tilde{y};\theta)}{f(\tilde{y};t)} f(\tilde{y};\theta) d\tilde{y} \prod_{i=1}^n f(y_i;\theta)dy_i \\
 =&\: \int\int \left(\log f(\tilde{y};\theta) - \log f(\tilde{y};t) \right) f(\tilde{y};\theta) d\tilde{y}  \prod_{i=1}^n f(y_i;\theta)dy_i \\
 \approx & \: - \int \underbrace{\left( \int \frac{\partial \log f(\tilde{y};\theta)}{\partial \theta} f(\tilde{y};\theta)d\tilde{y}\right)}_{0}\left(t-\theta\right) \prod_{i=1}^n f(y_i;\theta)dy_i  \\
@@ -1150,7 +1152,7 @@ $\log L(\theta;y_1,...,y_n) = \sum_{i=1}^n \log f(y_i;\theta)$
 \vspace{-1.5em}
 \begin{align*}
 1 &= \int f(y;\theta) dy \\
-0 = \frac{\partial 1}{\partial\theta} &= \int \frac{\partial f(y;\theta)}{\partial \theta}dy = \int \frac{\partial f(y;\theta) / \partial\theta}{f(y;\theta)} f(y;\theta) dy \\ &= \int \frac{\partial}{\partial\theta} \log f(y;\theta) f(y;\theta) dy = \int s(\theta;y) f(y;\theta) dy
+0 = \frac{\partial 1}{\partial\theta} &= \int \frac{\partial f(y;\theta)}{\partial \theta}dy = \int \frac{\partial f(y;\theta) / \partial\theta}{f(y;\theta)} f(y;\theta) dy \\ &= \int \frac{\partial \log f(y;\theta)}{\partial\theta}  f(y;\theta) dy = \int s(\theta;y) f(y;\theta) dy
 \end{align*}
 \end{Proof}
   
@@ -1161,14 +1163,14 @@ $\log L(\theta;y_1,...,y_n) = \sum_{i=1}^n \log f(y_i;\theta)$
 \begin{Proof}
 \vspace{-1.5em}
 \begin{align*}
-0 = \frac{\partial 0}{\partial \theta} =& \frac{\partial}{\partial\theta}\int \frac{\partial}{\partial\theta} \log f(y;\theta) f(y;\theta) dy \hspace{2em}\text{      see above}\\
-=& \int \left( \frac{\partial^2}{\partial \theta^2} \log f(y;\theta)\right) f(y;\theta) dy  \\
+0 = \frac{\partial 0}{\partial \theta} =& \frac{\partial}{\partial\theta}\int \frac{\partial \log f(y;\theta)}{\partial\theta}  f(y;\theta) dy \hspace{2em}\text{      see above}\\
+=& \int  \frac{\partial^2 \log f(y;\theta)}{\partial \theta^2}  f(y;\theta) dy  \\
 &+ \int\frac{\partial \log f(y;\theta)}{\partial \theta}\frac{\partial f(y;\theta)}{\partial \theta}dy \\
-=& \: \mathrm{E}_\theta \left( \frac{\partial^2}{\partial \theta^2} \log f(Y;\theta)\right)  \\
+=& \: \mathrm{E}_\theta \left( \frac{\partial^2 \log f(Y;\theta}{\partial \theta^2} )\right)  \\
 &+ \int\frac{\partial \log f(y;\theta)}{\partial \theta}\frac{\partial \log f(y;\theta)}{\partial \theta} f(y;\theta) dy 
 \end{align*}
 
-$$\Leftrightarrow \mathrm{E}_\theta \left(s(\theta;Y) s(\theta;Y)\right) = \mathrm{E}_\theta \left(- \frac{\partial^2}{\partial \theta^2} \log f(Y;\theta)\right)$$
+$$\Leftrightarrow \mathrm{E}_\theta \left(s(\theta;Y) s(\theta;Y)\right) = \mathrm{E}_\theta \left(- \frac{\partial^2 \log f(Y;\theta)}{\partial \theta^2} \right)$$
 \noindent Bartlett's second equation holds then as $\mathrm{E}\left(s(\theta;Y)\right) = 0$
 \end{Proof}
   
@@ -1200,7 +1202,7 @@ $$\frac{\partial l(g^{-1}(\hat{\gamma}))}{\partial \gamma} = \frac{\partial g^{-
 I_{\gamma}(\gamma) &= 
 -\mathrm{E}\left(\frac{\partial^2 l(g^{-1}(\hat{\gamma}))}{\partial \gamma^2} \right)= 
 -\mathrm{E}\left(\frac{\partial}{\partial\gamma} \left( \frac{\partial g^{-1}(\gamma)}{\partial\gamma} \frac{\partial l(\theta)}{\partial\theta} \right)\right) \\
-&= -\mathrm{E}\left(\underbrace{\frac{\partial^2 g^{-1}(\gamma)}{\partial\gamma}\frac{\partial l(\theta)}{\partial\theta}}_{\text{Erwartungswert 0}} + \frac{\partial g^{-1}(\gamma)}{\partial\gamma}\frac{\partial^2l(\theta)}{\partial\theta^2}\frac{\partial g^{-1}(\gamma)}{\partial\gamma}\right) \\
+&= -\mathrm{E}\left(\underbrace{\frac{\partial^2 g^{-1}(\gamma)}{\partial\gamma}\frac{\partial l(\theta)}{\partial\theta}}_{\text{Expectation 0}} + \frac{\partial g^{-1}(\gamma)}{\partial\gamma}\frac{\partial^2l(\theta)}{\partial\theta^2}\frac{\partial g^{-1}(\gamma)}{\partial\gamma}\right) \\
 &= \frac{\partial g^{-1}(\gamma)}{\partial\gamma} I(\theta) \frac{\partial g^{-1}(\gamma)}{\partial\gamma} = \frac{\partial \theta}{\partial\gamma} I(\theta) \frac{\partial \theta}{\partial\gamma}
 \end{align*}
 \end{Proof}
@@ -1230,7 +1232,7 @@ As $\frac{\partial s(\theta;y)}{\partial \theta}$ is often complicated, its expe
 
 \noindent The second part in \ref{repeat} can be weighted with a step size $\delta$ or $\delta(t)$ $\in (0,1)$, e.\,g.\ to ensure convergence.
 
-\noindent If $I(\theta)$ can't be analytically derived, simulation from $f(y;\theta_{(t)})$ can be used. For the exponential family, step \ref{repeat} then changes to $\theta_{(t+1)} := \theta_{(t)} + \hat{\mathrm{Var}}_{\theta_{(t)}}(t(Y))^{-1} \mathrm{E}_{\theta_{(t)}}(t(Y))$ as the ML estimate is the expectation.
+\noindent If $I(\theta)$ can't be analytically derived, simulation from $f(y;\theta_{(t)})$ can be used. For the exponential family, step \ref{repeat} then changes to $\theta_{(t+1)} := \theta_{(t)} + \widehat{\mathrm{Var}}_{\theta_{(t)}}(t(Y))^{-1} \widehat{\mathrm{E}}_{\theta_{(t)}}(t(Y))$ as the ML estimate is the expectation.
 
 \paragraph{Log Likelihood Ratio}
 
@@ -1241,7 +1243,7 @@ with $2\cdot lr(\theta,\hat{\theta}) \overset{a}{\sim} \chi^2_1$
 \begin{Proof}
 \vspace{-1.5em}
 \begin{align*}
-l(\theta) & \overset{Taylor}{\underset{Series}{\approx}} l(\hat{\theta}) + \underbrace{\frac{\partial l(\hat{\theta})}{\partial \theta}}_{=0} (\theta - \hat{\theta}) + \frac{1}{2}\underbrace{\frac{\partial^2 l(\hat{\theta})}{\partial \theta^2}}_{\approx I^{-1}(\theta)s(\theta;Y)}(\underbrace{\theta - \hat{\theta}}_{\approx -I(\theta)})^2\\
+l(\theta) & \overset{Taylor}{\underset{Series}{\approx}} l(\hat{\theta}) + \underbrace{\frac{\partial l(\hat{\theta})}{\partial \theta}}_{=0} (\theta - \hat{\theta}) + \frac{1}{2}\underbrace{\frac{\partial^2 l(\hat{\theta})}{\partial \theta^2}}_{\approx -I(\theta)}(\underbrace{\theta - \hat{\theta}}_{\substack{\approx I^{{-}1}(\theta)\cdot\\s(\theta;Y)}})^2\\
 &\approx l(\hat{\theta}) - \frac{1}{2} \frac{s^2(\theta, Y)}{I(\theta)}
 \end{align*}
 $s(\theta,Y)$ is asymptotically normal.
@@ -1317,7 +1319,7 @@ $t(.)$ is sufficient and $\forall\: \tilde{t}(.)\: \exists\: h(.) \text{ s.t. } 
 % SECTION: HYPOTHESIS TESTS
 
 %-------------------------------------------------------------------------------
-
+ 
 \section{Statistical Hypothesis Testing}
 
 \begin{multicols}{2}[\subsection{Significance and Confidence Intervals}][4cm]
@@ -1325,14 +1327,14 @@ $t(.)$ is sufficient and $\forall\: \tilde{t}(.)\: \exists\: h(.) \text{ s.t. } 
 \paragraph{Significance Test}  \ \\
 \noindent Assuming two states $H_0$ and $H_1$ and two corresponding decisions ``$H_0$'' and ``$H_1$'', a decision rule (a threshold $c \in \mathbb{R}$ for the test statistic $T(X)$) is constructed s.\,t.:
 
-$$P(``H_1"|H_0) \leq \alpha$$
+$$p = P(``H_1"|H_0) \leq \alpha$$
 
 \begin{center}
 \begin{tabular}{c |c c}
 %\hline\hline
 & ``$H_0$'' & ``$H_1$'' \\
 \hline
-$H_0$ & $1-\alpha$ (correct) & $\alpha$ (type I error)\\
+$H_0$ & $1-p$ (correct) & $p$ (type I error)\\
 $H_1$ & $\beta$ (type II error) & $1-\beta$ (correct) \\
 %\hline\hline
 \end{tabular}
@@ -1344,7 +1346,9 @@ $$power = P(``H_1"|H_1) = 1-\beta$$
 
 \paragraph{p-Value} measures the amount of evidence against $H_0$
 
-$$p-value \leq \alpha \Leftrightarrow ``H_0"$$
+$$p\leq \alpha \Leftrightarrow ``H_0"$$
+
+\noindent The $p$-value is uniformly distributed on $[0,1]$ under $H_0$.
 
 
 
@@ -1362,7 +1366,7 @@ P_\theta\left(t_l(Y_{1:n}) {\leq} \theta {\leq} t_r(Y_{1:n})\right) \geq 1{-}\al
 
 \textbf{Corresponding Test}
 
-$$\theta \notin \left[t_l(y_{1:n}), t_r(y_{1:n})\right] \Leftrightarrow ``H_1"$$
+$$\theta_0 \notin \left[t_l(y_{1:n}), t_r(y_{1:n})\right] \Leftrightarrow ``H_1"$$
 
 
 %\paragraph{Exakte binomiale Konfidenzintervalle}
@@ -1395,7 +1399,7 @@ $$TPR = \frac{\#TP}{\#P} = \frac{\#TP}{\#TP + \#FN}$$
   
   $$T(X) = \frac{\bar{X} -\mu_0}{\hat{\sigma}/\sqrt{n}} \;\overset{H_0}{\sim}\; t_{n-1}$$
   
-  \noindent with $\hat{\sigma} = \sqrt{\frac{1}{n-1} \sum_{i=1}^n(Y_i - \bar{Y})^2}$
+  \noindent with $\hat{\sigma} = \sqrt{\frac{1}{n-1} \sum_{i=1}^n(X_i - \bar{X})^2}$
   
 \subsubsection*{\textit{ML Estimate $\hat{\theta} \overset{a}{\sim} \mathrm{N}(\theta, I^{-1}(\theta))$}}
   
@@ -1405,7 +1409,7 @@ $$TPR = \frac{\#TP}{\#P} = \frac{\#TP}{\#TP + \#FN}$$
   
   $$T(X) = |\hat{\theta} - \theta_0|\; \overset{H_0}{\sim}\; \mathrm{N}(0, I^{-1}(\theta_0))$$
   
-  \noindent As $\hat{\theta}$ converges to $\theta_0$ under $H_0$, it can also be used to calculate the variance: $I^{-1}(\hat{\theta}$.
+  \noindent As $\hat{\theta}$ converges to $\theta_0$ under $H_0$, it can also be used to calculate the variance: $I^{-1}(\hat{\theta})$.
   
     \paragraph{Score Test} \ \\
   
@@ -1419,7 +1423,7 @@ $$TPR = \frac{\#TP}{\#P} = \frac{\#TP}{\#TP + \#FN}$$
   
   \noindent $H_0\!:\; \theta = \theta_0 \;\;\; vs. \;\;\; H_1\!:\; \theta \neq \theta_0$
   
-  $$T(X) = 2(l(\hat{\theta}) - l(\theta)) \; \overset{H_0}{\sim}\; \chi^2_1$$
+  $$T(X) = 2(l(\hat{\theta}) - l(\theta_0)) \; \overset{H_0}{\sim}\; \chi^2_1$$
   
       \paragraph{Neyman-Pearson Test} \ \\
   
@@ -1430,7 +1434,7 @@ $$TPR = \frac{\#TP}{\#P} = \frac{\#TP}{\#TP + \#FN}$$
   \noindent For a given significance level $\alpha$, the Neyman Pearson Test is the most powerful test for comparing two estimates for $\theta$.
   
 \begin{Proof}
-Decision rule of the NP-Test: $\varphi^* {=} \begin{cases} 1 & if \frac{f(y;\theta_0)}{f(y;\theta_1)} \leq \mathrm{e}^c\\ 0 & \text{otherwise} \end{cases}$
+Decision rule of the NP-Test: $\varphi^* {=} \begin{cases} 1 & \text{if } \frac{f(y;\theta_0)}{f(y;\theta_1)} \leq \mathrm{e}^c\\ 0 & \text{otherwise} \end{cases}$
 
 \noindent Need to show: $P(\varphi(Y) {=} 1|\theta_1) \leq P(\varphi^*(Y) {=} 1|\theta_1)\; \forall \varphi$ 
 
@@ -1524,8 +1528,8 @@ $1-\alpha \approx P \left( z_{\frac{\alpha}{2}} \leq \frac{\hat{\theta} - \theta
 
 \begin{multicols}{2}[\subsection{Multiple Tests}][4cm]
 
-\paragraph{Family-Wise Error Rate (FWER)}
-as $p\text{-}value \sim U(0,1)$
+\paragraph{Family-Wise Error Rate (FWER)} 
+as $p \sim U(0,1)$
 
 For m tests:
 
@@ -1685,7 +1689,7 @@ For the normal linear model:
 \paragraph{Estimates (ML)} $Y|x_{1:p} \sim \mathrm{N}(X\beta, \sigma^2)$
 
 \begin{align*}
-\hat{\beta} &= \left(X^TX)^{-1}\right)X^Ty\\
+\hat{\beta} &= \left((X^TX)^{-1}\right)X^Ty\\
 Var(\hat{\beta}) &= \sigma^2(X^TX)^{-1}) = I^{-1}(\beta)
 \end{align*}
 
@@ -1815,7 +1819,7 @@ Differentiating w.r.t. $q$ gives $(\tau{-}1)\!\!\int\displaylimits_{-\infty}^q f
 
 \paragraph{Penalized Regression Splines}
 
-$$|| y {-} X\beta||^2 + \lambda \int_{x_1}^{x_n} \left[ f''(x)\right]^2dx= || y {-} X\beta||^2 \lambda \beta^TD \beta$$
+$$|| y {-} X\beta||^2 + \lambda \int_{x_1}^{x_n} \left[ f''(x)\right]^2dx= || y {-} X\beta||^2 + \lambda \beta^TD \beta$$
 
 $l_p(\beta,\sigma^2,\lambda) =  l(\beta,\sigma^2) - \frac{\lambda}{2\sigma_\epsilon^2} \beta^T D\beta$
 
@@ -1887,7 +1891,7 @@ $Var(Y_i|x_i) = \mathrm{E}(Y_i|x_i) = e^{\eta}$
 
 \paragraph{Different Precision} variance heterogeneity: $e_i \sim \mathrm{N}(0,\sigma_i^2)$
 
-$$l(\beta,\sigma^2) = -\frac{n}{2} \log \sigma^2 - \frac{1}{2\sigma^2(y-X\beta)^T(y-X\beta)}$$
+$$l(\beta,\sigma^2) = -\frac{n}{2} \log \sigma^2 - \frac{1}{2\sigma^2}(y-X\beta)^TW(y-X\beta)$$
 
 with $W=diag(\frac{1}{a_1},...,\frac{1}{a_n})$ and $a_i = \frac{\sigma_i^2}{\sigma^2}$
 
@@ -1984,7 +1988,7 @@ $$P_\theta(\theta\in \left[t_l(y),t_r(y)\right]|y) = \int_{t_l(y)}^{t_r(y)} f_{p
 
 \begin{itemize}
 \item symmetric: $\int_{-\infty}^{t_l(y)} f_\theta(\vartheta|y)d\vartheta = \int_{t_r(y)}^{\infty} f_\theta(\vartheta|y)d\vartheta = \frac{\alpha}{2}$
-\item highest density: $HDI = {\theta|f_\theta(\theta|y)\geq c}$, choose $c$ s.\,t.\  $\int_{\vartheta \in HDI(y)} f_\theta(\vartheta|y)d\vartheta = 1-\alpha$
+\item highest density: $HDI = \{\theta : f_\theta(\theta|y)\geq c\}$, choose $c$ s.\,t.\  $\int_{\vartheta \in HDI(y)} f_\theta(\vartheta|y)d\vartheta = 1-\alpha$
 \end{itemize}
 
 %\paragraph{Sensitivity Analysis}
@@ -2022,9 +2026,7 @@ For $\gamma = g(\theta)$: $f_\gamma(\gamma)=f_\theta(g^{-1}(\gamma))\left|\frac{
  \noindent No prior is truly uninformative.
 
 
-\paragraph{Jeffrey's Prior} \ \\
-
-\noindent Remains unchanged for transformations of the parameter.
+\paragraph{Jeffrey's Prior} transformation-invariant  \\
 
 \noindent For Fisher-regular distributions: $f(\theta) \propto \sqrt{I_\theta(\theta)}$
 
@@ -2090,7 +2092,7 @@ $$\int_\Theta f(y|\vartheta)f_\theta(\vartheta)d\vartheta\approx$$ $$  \sum_{k=1
 
 $$\int_\Theta f(y|\vartheta)f_\theta(\vartheta)d\vartheta \approx f(y;\hat{\theta}_P) f_\theta(\hat{\theta}_P)(2\pi)^{p/2}\left|J_{P}(\hat{\theta}_P)\right|^{\frac{1}{2}}$$
 
-\noindent with the one-dimenional $J_{P} := {-}\frac{\partial^2 l_{(n)}(\theta,y)}{\partial \theta^2} {-} \frac{\partial^2 \log f\theta(\theta)}{\partial\theta^2}$ Fisher information considering the prior, $\hat{\theta}_P$ posterior mode estimate s.\,t.\ $s_{P,\theta}(\hat{\theta}_P)=0$
+\noindent with the one-dimensional $J_{P} := {-}\frac{\partial^2 l_{(n)}(\theta,y)}{\partial \theta^2} {-} \frac{\partial^2 \log f\theta(\theta)}{\partial\theta^2}$ Fisher information considering the prior, $\hat{\theta}_P$ posterior mode estimate s.\,t.\ $s_{P,\theta}(\hat{\theta}_P)=0$
 
 \begin{Proof}
 For $n$ independent samples:\vspace{0.2em}
@@ -2184,7 +2186,7 @@ This sequence has a stationary distribution for $n\rightarrow \infty$.
 \textbf{Gibbs Sampling}: For high dimensions $\alpha$ is close to zero.
 
 Sample from the marginal distributions seperately:
- $$\theta_i^* \sim f_{\theta_i | y, \theta \setminus \theta_i}\left(\theta_i^*|y, \theta_{t^*,i}\right)$$ 
+ $$\theta_{t{+}1,i}^* \sim f_{\theta_i | y, \theta \setminus \theta_i}\left(\theta_i^*|y, \theta_{t^*,i}\right)$$ 
  
  with $\theta_{t^*, i}$ most recent estimates without $\theta_i$
  
@@ -2235,7 +2237,7 @@ $$P(Y_i\in Y^*) = 1-(1-\frac{1}{n})^n\overset{n\rightarrow\infty}{\rightarrow} 1
 \item Calculate $t(x,y)$, e.\,g.\ differences in mean, correlation...
 \item Draw samples $x^*$, $y^*$ of size $n$ from $x$ and $y$ without replacement (``shuffel'')\label{draw}
 \item Calculate $t(x^*, y^*)$ 
-\item $p-value = \frac{1}{B}\sum_{b=1}^B \mathbbm{1}_{\{t(x_b^*,y_b^*)\geq t(x,y)\}}$
+\item $p\text{-value} = \frac{1}{B}\sum_{b=1}^B \mathbbm{1}_{\{t(x_b^*,y_b^*)\geq t(x,y)\}}$
 \end{enumerate}
 
 For a \textbf{Boostrap Test} do step \ref{draw} with replacement.
@@ -2261,7 +2263,7 @@ $$ \underset{n\rightarrow\infty}{\lim} P_n\left\{\underset{t}{\sup}\left|G_n(t,F
 
 $$\rho_p(F,G) = \underset{\mathcal{T}_{XY}}{\inf}\{E(|X-Y|)^p\}^\frac{1}{p} $$
 
-\noindent for $F,G$ in the set of distributions where $\inf_{-\infty}^\infty |t|^pdF(t) <\infty$; $(X,Y) \sim T \in\mathcal{T}_{XY}$ with $X\sim F$ and $Y\sim G$
+\noindent for $F,G$ in the set of distributions where $\int_{-\infty}^\infty |t|^pdF(t) <\infty$; $(X,Y) \sim T \in\mathcal{T}_{XY}$ with $X\sim F$ and $Y\sim G$
 
 \paragraph{Theorem of Beran and Ducharme} \ \\
 
@@ -2308,7 +2310,7 @@ and selects less complex models as the AIC
 
 $$DIC = D(y,\hat{\theta}_{postmean}) + 2p_D = \int D(y,\vartheta)f_{post}(\vartheta|y)d\vartheta + p_D$$
 
-\noindent with deviance $D(y;\theta) := -2l(\theta)$ the difference in likelihood compared to the full mode and $\Delta D(y;\theta,\hat{\theta}) = 2\left\{l(\hat{\theta}) {-} l(\theta)\right\} \overset{a}{\sim}\chi_p^2$ the difference in deviance
+\noindent with deviance $D(y;\theta) := -2l(\theta)$ the difference in likelihood compared to the full model and $\Delta D(y;\theta,\hat{\theta}) = 2\left\{l(\hat{\theta}) {-} l(\theta)\right\} \overset{a}{\sim}\chi_p^2$ the difference in deviance
 
 $$p_D := \mathrm{E}(\Delta D(y;\theta, \hat{\theta}_{\substack{post \\ mean}}|y) = \int\!\! D(y,\vartheta)f_{post}(\vartheta|y)d\vartheta {-} D(y,\hat{\theta}_{\substack{post \\ mean}})$$
 
