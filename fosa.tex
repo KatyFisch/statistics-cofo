@@ -2290,7 +2290,7 @@ For regressions: $AIC= 2n\log(\hat{\sigma}^2) + 2(p+2)$
 
 \paragraph{The AIC as theoretical cross validation} \ \\
 
-\noindent The AIC minimizes $\mathrm{E}_Y\left\{\mathrm{E}_Y\left[Y-\hat{\mu}\right]^2\right\}$ if we use the MSE instead of the Kullback-Leibler divergence. This can be estimated via cross validation.
+\noindent The AIC minimizes $\mathrm{E}_{Y_{1:n}}\left\{\mathrm{E}_Y\left[Y-\hat{\mu}\right]^2\right\}$ if we use the MSE instead of the Kullback-Leibler divergence. This can be estimated via cross validation.
 
 \paragraph{Bias Corrected AIC}
 
@@ -2321,7 +2321,7 @@ $$P(M_k|y) := \frac{\exp(-\frac{1}{2}\Delta IC_k)}{\sum_{k' =1}^K\exp(-\frac{1}{
 
 with $\Delta IC_k = IC_k - min(IC)$
 
-\noindent For regression covariates: $P(x_i|y) = \sum_{k=1}^K \mathbbm{1}_{\{x_i \:\text{in}\: M_k\}}P(M_k|y)$
+\noindent For regressions: $P(\text{covariate } x|y) = \sum_{k=1}^K \mathbbm{1}_{\{x_i \:\text{in}\: M_k\}}P(M_k|y)$
 
 \paragraph{Inference After Model Selection} neglect is a quiet scandal
 
@@ -2374,6 +2374,9 @@ f(y_{.j}, y_{.k}|y_{.\overline{j,k}}) &= \frac{f(y)}{f_{.\overline{j,k}}} \propt
 \overset{\mathrm{N}(\mu,\Sigma)}{\propto} \exp\left\{-\frac{1}{2}y^T\Sigma^{-1}y\right\}
 \end{align*}
 \end{Proof}
+
+\paragraph{Graphical Models} \ \\ 
+\noindent visualize conditional dependences in a graph
 
 \paragraph{Principal Component Analysis (PCA)} \ \\
 \begin{enumerate}
@@ -2428,7 +2431,7 @@ $$P(R_i|Y_i) \neq P(R_i|Y_{iO_i})$$
 
 \noindent Can not be corrected to be unbiased.
 
-\paragraph{EM Algorithm} \ \\
+\paragraph{EM Algorithm} replace $y_{iM}$ by $E(Y_{iM}|y_{iO})$ \\
 
 \noindent Expectation Step:
 
@@ -2452,14 +2455,14 @@ $$\frac{\partial Q(\theta,\theta_{(t)})}{\partial \theta} = s(\theta,\theta_{(t)
 $$J_O(\theta) = \sum_{i=1}^n \{\mathrm{E}(J_i(\theta)|y_{iO}) - \mathrm{E}(s_i(\theta)s_i(\theta)|y_{iO}) + s_{iO}(\theta)s_{iO}(\theta)\}$$
 
 
- \paragraph{Multiple Imputation}
+ \paragraph{Multiple Imputation} EM but considers estimation variability
  
  \begin{enumerate}
  \item Create $K$ complete datasets by simulating missing data $\sim f_{post}(y_{iM}|y_{iO})$
  \item Fit $K$ models $Y_i \sim f(y|\theta)$
  \item Rubin's Rule: $\hat{\theta}_{MI} = \frac{1}{K}\sum_{k=1}^K \hat{\theta}^*_{(k)}$;
   $\widehat{\text{Var}}(\hat{\theta}_{MI}) = \hat{V} {+} (1{+}\frac{1}{K})\bar{B}$ 
- with $\hat{V} = \frac{1}{K} \sum_{k=1}^K I^{-1}(\hat{\theta}_{(k)}^*$ 
+ with $\hat{V} = \frac{1}{K} \sum_{k=1}^K I^{-1}(\hat{\theta}_{(k)}^*)$ 
  and $\bar{B} = \frac{1}{K-1} \sum_{k=1}^K (\hat{\theta}_{(k)}^* - \hat{\theta}_{MI}) (\hat{\theta}_{(k)}^* - \hat{\theta}_{MI})^T$
  \end{enumerate}
  
@@ -2563,7 +2566,7 @@ i.\,e. fit two regressions $Y|Z$ and $X|Z$ and set $\hat{\beta}_X = \frac{\hat{\
 
 $$\tau = \mathrm{E}(Y(1)|D{=}1) - \mathrm{E}(Y(0)|D{=}1)$$
 
-\noindent with $\tau$ average treatment effect on the treated, $Y(1)$ response if treated with $D$, and $Y(0)$ analogous
+\noindent with $\tau$ average treatment effect on the treated, $Y(1)$ response if treated, $Y(0)$ analogous; $D_i$ indicator if $i$ is influenced by the treatment 
 
 $$\mathrm{E}(Y(1)|D{=}1) - \mathrm{E}(Y(0)|D{=}0) = \tau + \underbrace{\mathrm{E}(Y(0)|D{=}1) - \mathrm{E}(Y(0)|D{=}0)}_{\text{selection bias}}$$
 
