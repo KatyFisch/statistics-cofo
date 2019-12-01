@@ -608,7 +608,7 @@ $$F_Y(y) = \int_{-\infty}^{y} f_Y(\tilde{y})d\tilde{y}$$
 
 \begin{itemize}
 \item \textbf{Expectation (1.\ Moment)}: $\mu = E(Y) = \int y f_Y(y)dy$
-\item \textbf{Variance (2.\ centralized Moment)}: $\sigma^2 = Var(Y) = E(\{Y-E(Y)\}^2) = \int (y - E(Y))^2 f(y) dy$ \\
+\item \textbf{Variance (2.\ centralized Moment)}: $\sigma^2 = Var(Y) = E(\{Y-E(Y)\}^2) = \int (y - E(Y))^2 f_Y(y) dy$ \\
 Note: $E(\{Y-\mu\}^2) = E(Y^2) - \mu^2$
 \begin{Proof}
 $E(\{Y-\mu\}^2) = E(Y^2 - 2Y\mu + \mu^2) = E(Y^2) - 2\mu^2 + \mu^2 = E(Y^2) - \mu^2$
@@ -816,7 +816,7 @@ $$\mathrm{Var}(Y) = \mathrm{E}_X(\mathrm{Var}(Y|X)) + \mathrm{Var}_X(\mathrm{E}(
   \end{align*}
   
   
-  	\paragraph{Chi-Squared} squared standard normal random variables with $\nu$ degrees of freedom
+  	\paragraph{Chi-Squared} sum of squares for standard normal random variables with $\nu$ degrees of freedom
   
     \begin{align*}
     & Y \sim \chi^2(\nu) \text{ with } \nu > 0,,\: y \in \mathbb{R}\\
@@ -934,7 +934,7 @@ with the parametric generator function $\psi(u,\theta)$ continuous, strictly dec
     \noindent For $\{a_n\}^\infty_{n=1}$, $\{b_n\}^\infty_{n=1}$ fixed sequences, the standardized maximum $\frac{M_n - a_n}{b_n}$ converges to a GEV as $n\rightarrow\infty$.
     
     $$G(x) = \begin{cases}
-      \exp(-(1+\gamma z)^{-1/\gamma}, & \text{for}\ \gamma \neq 0 \\
+      \exp(-(1+\gamma z)^{-1/\gamma}), & \text{for}\ \gamma \neq 0 \\
       \exp(-\exp(-z)), & \text{for}\ \gamma = 0 
     \end{cases}$$
     
@@ -991,7 +991,7 @@ Analoguously: $K_{Z_n}(t) = nK_Y(t/\sqrt{n})$.
  \frac{\partial K_{Z_n}(t)}{\partial t} \bigg|_{t = 0} &= \frac{n}{\sqrt{n}} \frac{\partial K_Y(t)}{\partial t} \bigg|_{t = 0} = \sqrt{n}\mu \\
  \frac{\partial^2K_{Z_n}(t)}{\partial t^2} \bigg|_{t = 0} &= \frac{n}{n} \frac{\partial^2 K_Y(t)}{\partial t^2} \bigg|_{t = 0} = \sigma^2
 \end{align*}
-Using the Taylor Expansion, we can write$K_{Z_n}(t) = 0 + \sqrt{n}\mu t + \frac{1}{2}\sigma^2t^2 + ...$, where the terms in $...$ are tending towards 0 as $n \rightarrow \infty$.
+Using the Taylor Expansion, we can write $K_{Z_n}(t) = 0 + \sqrt{n}\mu t + \frac{1}{2}\sigma^2t^2 + ...$, where the terms in $...$ are tending towards 0 as $n \rightarrow \infty$.
 
 \noindent Therefore: $K_{Z_n}(t) \overset{n\rightarrow\infty}{\longrightarrow} K_{Z}(t)$ with $Z \sim \mathrm{N}(\sqrt{n}\mu,\sigma^2)$.
 \end{Proof}
@@ -1124,7 +1124,7 @@ $\log f(\tilde{y}, t) \approx \log f(\tilde{y},\theta) {+} \frac{\partial\log f(
   \item $\theta \in \mathbb{R}^p$
   \item $f(.;\theta)$ Fisher-regular:
   \begin{itemize}
-  \item $\{ y: f (y; \theta > 0) \}$ independent of $\theta$
+  \item $\{ y: f (y; \theta)> 0 \}$ independent of $\theta$
   \item Parameter space $\Theta$ is open
   \item $f(y;\theta)$ twice differentiable
   \item $\int \frac{\partial}{\partial \theta} f(y;\theta)dy = \frac{\partial}{\partial \theta} \int f(y;\theta)dy$
@@ -1177,7 +1177,7 @@ $$\Leftrightarrow \mathrm{E}_\theta \left(s(\theta;Y) s(\theta;Y)\right) = \math
   \paragraph{ML-Estimate}
    $$\hat{\theta}_{ML} = \text{arg max } l(\theta; y_1,...y_n)$$
    
-\noindent for Fisher-regular distributions: $\hat{\theta}_{ML}$ has aysmptotically the smallest variance, given by the Cramér-Rao inequality, 
+\noindent for Fisher-regular distributions: $\hat{\theta}_{ML}$ has asymptotically the smallest variance, given by the Cramér-Rao inequality, 
    $s\left(\hat{\theta}_{ML};y_1,...,y_n\right) = 0$
    
 $\hat{\theta} \overset{a}{\sim} \mathrm{N}\left(\theta, I^{-1}(\theta)\right)$
@@ -1389,7 +1389,7 @@ $$TPR = \frac{\#TP}{\#P} = \frac{\#TP}{\#TP + \#FN}$$
   
   \noindent $H_0\!:\; \mu = \mu_0 \;\;\; vs. \;\;\; H_1\!:\; \mu \neq \mu_0$
   
-  $$T(X) = \frac{\bar{X} -\mu_0}{\sigma} \;\overset{H_0}{\sim} \;\mathrm{N}(0,1)$$
+  $$T(X) = \frac{\bar{X} -\mu_0}{\sigma/\sqrt{n}} \;\overset{H_0}{\sim} \;\mathrm{N}(0,1)$$
   
   
   
@@ -1485,7 +1485,7 @@ Decision rule of the NP-Test: $\varphi^* {=} \begin{cases} 1 & \text{if } \frac{
   
   \noindent $H_0\!:\; X_i \sim F_0 \;\;\; vs. \;\;\; H_1\!:\; X_i \sim F \neq F_0$
   
-  $$T(X) = \sup_x |F_n(x) - F(x;\theta)| \; \overset{H_0}{\sim}\; KS$$
+  $$T(X) = \sup_x |F_n(x) - F_0(x;\theta)| \; \overset{H_0}{\sim}\; KS$$
 
 \noindent with the distribution function $F(x;\theta)$ and the empirical counterpart $F_n(x) = \frac{1}{n}\sum_{i=1}^n \mathbbm{1}_{\{X_i\leq x\}}$
 
@@ -1558,7 +1558,7 @@ $$\alpha_{S} = 1- (1-\alpha)^{1/m}$$
 
 \noindent Order the p-values: $p_{(1)} \leq...\leq p_{(m)} $
 
-\noindent Step $x \in \mathbb{N}^+$: if $p(x) > \frac{\alpha}{m + 1 - x}$ reject $H_{01}$ to $H_{0x}$ and stop, else move on to step $x+1$. 
+\noindent Step $x \in \{1,...,m\}$: if $p(x) > \frac{\alpha}{m + 1 - x}$ reject $H_{01}$ to $H_{0x}$ and stop, else move on to step $x+1$. 
 
 \paragraph{False Discovery Rate (FDR)} balances type I and II errors, especially for $n<<m$ problems
 
@@ -1644,7 +1644,7 @@ The estimates are the same as for the ML procedure.
 
 \begin{align*}
 \hat{\beta}_0 &= \frac{1}{n}\sum_{i=1}^n y_i - \frac{1}{n}\sum_{i=1}^n x_i \hat{\beta}_1\\
-\hat{\beta}_1 &=  \sum_{i=1}^n x_i(y_i - \hat{\beta}_0  /\sum_{i=1}^n  x_i^2\\
+\hat{\beta}_1 &=  \sum_{i=1}^n x_i(y_i - \hat{\beta}_0)  /\sum_{i=1}^n  x_i^2\\
 \hat{\sigma}^2 &= \frac{1}{n}\sum_{i=1}^n (y_i -\hat{\beta}_0 - x_i\hat{\beta}_1)^2
 \end{align*}
 
@@ -1690,7 +1690,7 @@ For the normal linear model:
 
 \begin{align*}
 \hat{\beta} &= \left((X^TX)^{-1}\right)X^Ty\\
-Var(\hat{\beta}) &= \sigma^2(X^TX)^{-1}) = I^{-1}(\beta)
+Var(\hat{\beta}) &= \sigma^2(X^TX)^{-1} = I^{-1}(\beta)
 \end{align*}
 
 \begin{Proof}
@@ -1974,7 +1974,7 @@ or more general:
 \hat{\theta}_{Bayesrisk} &= \mathrm{arg} \underset{t(.)}{\min} R_{Bayes}(t(.))\\
 \intertext{with Bayes risk: $ R_{Bayes}(t(.)) = \int_{\Theta} R(t(.),\vartheta)f_\theta(\vartheta)d\vartheta$}
 \hat{\theta}_{postBayesrisk} &= \mathrm{arg} \underset{t(.)}{\min} R_{postBayes}(t(.)|y)\\
-\intertext{with posterior Bayes risk: $ R_{postBayes}(t(.)|y) = \int \mathcal{L}(t(y),\vartheta) f_\theta(\vartheta|y) = \mathrm{E}_{\theta|y}(\mathcal{L}(t(y),\theta)|y)$}
+\intertext{with posterior Bayes risk: $ R_{postBayes}(t(.)|y) = \int \mathcal{L}(t(y),\vartheta) f_\theta(\vartheta|y) d\vartheta = \mathrm{E}_{\theta|y}(\mathcal{L}(t(y),\theta)|y)$}
 \end{align*}
 
 \vspace{-1.5em}
@@ -1984,11 +1984,11 @@ or more general:
 
 \paragraph{Credibility Interval}
 
-$$P_\theta(\theta\in \left[t_l(y),t_r(y)\right]|y) = \int_{t_l(y)}^{t_r(y)} f_{post}(\vartheta|y)d\vartheta = 1- \alpha$$
+$$P_\theta(\theta\in \left[t_l(y),t_r(y)\right]|y) = \int_{t_l(y)}^{t_r(y)} f_{post}(\vartheta|y)d\vartheta \overset{!}{=} 1- \alpha$$
 
 \begin{itemize}
-\item symmetric: $\int_{-\infty}^{t_l(y)} f_\theta(\vartheta|y)d\vartheta = \int_{t_r(y)}^{\infty} f_\theta(\vartheta|y)d\vartheta = \frac{\alpha}{2}$
-\item highest density: $HDI = \{\theta : f_\theta(\theta|y)\geq c\}$, choose $c$ s.\,t.\  $\int_{\vartheta \in HDI(y)} f_\theta(\vartheta|y)d\vartheta = 1-\alpha$
+\item symmetric: $\int_{-\infty}^{t_l(y)} f_{post}(\vartheta|y)d\vartheta = \int_{t_r(y)}^{\infty} f_{post}(\vartheta|y)d\vartheta = \frac{\alpha}{2}$
+\item highest density: $HDI = \{\theta : f_{post}(\theta|y)\geq c\}$, choose $c$ s.\,t.\  $\int_{\vartheta \in HDI(y)} f_{post}(\vartheta|y)d\vartheta = 1-\alpha$
 \end{itemize}
 
 %\paragraph{Sensitivity Analysis}
@@ -2321,7 +2321,7 @@ $$P(M_k|y) := \frac{\exp(-\frac{1}{2}\Delta IC_k)}{\sum_{k' =1}^K\exp(-\frac{1}{
 
 with $\Delta IC_k = IC_k - min(IC)$
 
-\noindent For regressions: $P(\text{covariate } x|y) = \sum_{k=1}^K \mathbbm{1}_{\{x_i \:\text{in}\: M_k\}}P(M_k|y)$
+\noindent For regressions: $P(\text{covariate } x|y) = \sum_{k=1}^K \mathbbm{1}_{\{x \:\text{in}\: M_k\}}P(M_k|y)$
 
 \paragraph{Inference After Model Selection} neglect is a quiet scandal
 
