@@ -1533,9 +1533,9 @@ as $p \sim U(0,1)$
 
 For m tests:
 
-$$\alpha \leq P\left(\cup_{k=1}^m (p_k \leq \alpha)| H_{0k},k=1,...,m\right) \leq m\alpha$$
+$$\alpha \leq P\left(\bigcup_{k=1}^m (p_k \leq \alpha)| H_{0k},k=1,...,m\right) \leq m\alpha$$
 
-$$FWER := P(\exists k: ``H_1k"|\forall k:\: H_0k)$$
+$$FWER := P(\exists k: ``H_{1k}"|\forall k:\: H_{0k})$$
 
 
 \paragraph{Bonferoni Adjustment} 
@@ -1556,9 +1556,9 @@ $$\alpha_{S} = 1- (1-\alpha)^{1/m}$$
 
 \paragraph{Holm's Procedure} also takes power into account
 
-\noindent Order the p-values: $p_{(1)} \leq...\leq p_{(m)} $
+\noindent Order the p-values: $p_{(0)} \leq...\leq p_{(m)} $
 
-\noindent Step $x \in \{1,...,m\}$: if $p(x) > \frac{\alpha}{m + 1 - x}$ reject $H_{01}$ to $H_{0x}$ and stop, else move on to step $x+1$. 
+\noindent Step $x \in \{0,...,m\}$: if $p_{(x)} > \frac{\alpha}{m - x}$ reject $H_{01}$ to $H_{0x}$ and stop, else move on to step $x+1$. 
 
 \paragraph{False Discovery Rate (FDR)} balances type I and II errors, especially for $n<<m$ problems
 
@@ -1566,7 +1566,7 @@ $$FDR = \mathrm{E}\left(\frac{\#``H1"|H_0}{\#``H1"}\right)$$
 
 \noindent Order the p-values: $p_{(1)} \leq...\leq p_{(m)} $, choose $\alpha\in(0,1)$
 
-\noindent j is largest index s.\,t.\ $p(j) \leq \alpha j/m$, reject all $H_0i$ for $i\leq j$
+\noindent j is largest index s.\,t.\ $p_{(j)} \leq \alpha j/m$, reject all $H_{0i}$ for $i\leq j$
 
 \vspace{1em}
 It can be shown that $FDR \leq m_0\alpha/m$, with $m_0 = \# H_0$
@@ -1689,7 +1689,7 @@ For the normal linear model:
 \paragraph{Estimates (ML)} $Y|x_{1:p} \sim \mathrm{N}(X\beta, \sigma^2)$
 
 \begin{align*}
-\hat{\beta} &= \left((X^TX)^{-1}\right)X^Ty\\
+\hat{\beta} &= (X^TX)^{-1}X^Ty\\
 Var(\hat{\beta}) &= \sigma^2(X^TX)^{-1} = I^{-1}(\beta)
 \end{align*}
 
@@ -1867,7 +1867,7 @@ $$\mu = g^{-1}(\eta)$$
 
 If $\lambda = 0$, \textit{canonical link}:
 
-$$g(\theta) = \eta$$
+$$\theta = \eta$$
 
 \begin{itemize}
 \item score function: $s(\beta) = X^T\left(t(y) - \mathrm{E}(t(Y);\eta)\right)$
