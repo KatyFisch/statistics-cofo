@@ -608,7 +608,9 @@ $$F_Y(y) = \int_{-\infty}^{y} f_Y(\tilde{y})d\tilde{y}$$
 
 \begin{itemize}
 \item \textbf{Expectation (1.\ Moment)}: $\mu = E(Y) = \int y f_Y(y)dy$
+with $E(a{+}bX) = a+b E(X)$ and $E(X{\pm}Y) = E(X) \pm E(Y)$
 \item \textbf{Variance (2.\ centralized Moment)}: $\sigma^2 = Var(Y) = E(\{Y-E(Y)\}^2) = \int (y - E(Y))^2 f_Y(y) dy$ \\
+with $Var(a+bX) = b^2Var(X)$ and $Var(X{\pm}Y)= Var(X)+Var(Y)\pm 2 Cov(X,Y)$ \\
 Note: $E(\{Y-\mu\}^2) = E(Y^2) - \mu^2$
 \begin{Proof}
 $E(\{Y-\mu\}^2) = E(Y^2 - 2Y\mu + \mu^2) = E(Y^2) - 2\mu^2 + \mu^2 = E(Y^2) - \mu^2$
@@ -625,6 +627,11 @@ with $\frac{\partial^kM_Y(t)}{\partial t^k} \bigg|_{t = 0} = \mathrm{E}(Y^k)$
 Cumulant Generating Function $K_Y(t) = \log M_Y(t)$
 
 \noindent A random variable is uniquely defined by its moment generating function and vice versa (as long as moments and cumulants are finite).
+
+\paragraph{Chebyshev's Inequality}
+with $E(X) =\mu$ and $Var(X) = \sigma^2$
+
+$$P(|X-\mu| \geq c) \leq \frac{\sigma^2}{c^2}$$
   
 \subsubsection*{\textit{Random Vectors $\in \mathbb{R}^q$}}
 
@@ -687,8 +694,9 @@ $$\mathrm{Var}(Y) = \mathrm{E}_X(\mathrm{Var}(Y|X)) + \mathrm{Var}_X(\mathrm{E}(
     & \mathrm{E}(Y) = \frac{k+1}{2} ,\: \mathrm{Var}(Y) = \frac{k^2 - 1}{12}
   \end{align*}
   
+  
     \paragraph{Binomial}
-  Successes in independent trials 
+  successes in independent trials \\ \noindent with special case Bernoulli: $Y \sim \mathrm{Bin}(1, \pi)$
 
   \begin{align*}
     & Y \sim \mathrm{Bin}(n, \pi) \text{ with } n \in \mathbb{N}, \pi \in \left[0,1\right] ,\: y \in \{0, ..., n\} \\
@@ -709,7 +717,7 @@ $$\mathrm{Var}(Y) = \mathrm{E}_X(\mathrm{Var}(Y|X)) + \mathrm{Var}_X(\mathrm{E}(
 
 \noindent The model tends to overestimate the variance (Overdispersion).
   
-\noindent   \textit{Approximation} of the Binomial for small p
+\noindent   \textit{Approximation} of the Binomial for small $p$ and big $n$
 
   
     \paragraph{Geometric}
@@ -740,6 +748,15 @@ $$\mathrm{Var}(Y) = \mathrm{E}_X(\mathrm{Var}(Y|X)) + \mathrm{Var}_X(\mathrm{E}(
     & \mathrm{E}(Y|a,b) = \frac{a+b}{2} ,\: \mathrm{Var}(Y|a,b) = \frac{(b-a)^2}{12}
   \end{align*}
   
+    	\paragraph{Exponential} Time between Poisson events
+  
+    \begin{align*}
+    & Y \sim \mathrm{Exp}(\lambda) \text{ with } \lambda > 0,\: y \geq 0\\
+    & p(y|\lambda) = \lambda\exp (-\lambda y) \\
+    & \mathrm{E}(Y|\lambda) = \frac{1}{\lambda}, \:
+	\mathrm{Var}(Y|\lambda) = \frac{1}{\lambda^2}
+  \end{align*}
+  
     \paragraph{Univariate Normal} symmetric with $\mu$ and $\sigma^2$
   
     \begin{align*}
@@ -748,6 +765,8 @@ $$\mathrm{Var}(Y) = \mathrm{E}_X(\mathrm{Var}(Y|X)) + \mathrm{Var}_X(\mathrm{E}(
     & \mathrm{E}(Y|\mu, \sigma^2) = \mu ,\: \mathrm{Var}(Y|\mu, \sigma^2) = \sigma^2
   \end{align*}
   
+  \noindent   \textit{Approximation} of \\ Binomial for $np(1{-}p)\geq 9$ with $\mathrm{N}(np,np(1{-}p))$ \\
+  Poisson for $\lambda \geq 10$ with $\mathrm{N}(\lambda,\lambda)$
   
     \paragraph{Log-Normal}
   
@@ -806,14 +825,7 @@ $$\mathrm{Var}(Y) = \mathrm{E}_X(\mathrm{Var}(Y|X)) + \mathrm{Var}_X(\mathrm{E}(
 \noindent Relationship: $Y^{-1} \sim \mathrm{Ga}(a, b) \Leftrightarrow Y \sim \mathrm{IG}(a, b)$
   
   
-  	\paragraph{Exponential} Time between Poisson events
-  
-    \begin{align*}
-    & Y \sim \mathrm{Exp}(\lambda) \text{ with } \lambda > 0,\: y \geq 0\\
-    & p(y|\lambda) = \lambda\exp (-\lambda y) \\
-    & \mathrm{E}(Y|\lambda) = \frac{1}{\lambda}, \:
-	\mathrm{Var}(Y|\lambda) = \frac{1}{\lambda^2}
-  \end{align*}
+
   
   
   	\paragraph{Chi-Squared} sum of squares for standard normal random variables with $\nu$ degrees of freedom
@@ -969,7 +981,11 @@ with the parametric generator function $\psi(u,\theta)$ continuous, strictly dec
 
 \begin{multicols}{2}[\subsection{Limit Theorems}][4cm]
 
-  \paragraph{Law of Large Numbers} \newpage
+  \paragraph{Law of Large Numbers} \ \\
+  
+  $$\lim_{n\rightarrow \infty} P\left(\left|\bar{X}_n {-} \mu\right| < c\right)=1 \hspace{1cm} \forall c>0$$
+  
+  \noindent with $X_i$ i.i.d., $E(X_i)=\mu$, and $\bar{X}_n = \frac{1}{n} \sum_{i=1}^n X_i$
   
   \paragraph{Central Limit Theorem}
   
@@ -1400,6 +1416,16 @@ $$TPR = \frac{\#TP}{\#P} = \frac{\#TP}{\#TP + \#FN}$$
   $$T(X) = \frac{\bar{X} -\mu_0}{\hat{\sigma}/\sqrt{n}} \;\overset{H_0}{\sim}\; t_{n-1}$$
   
   \noindent with $\hat{\sigma} = \sqrt{\frac{1}{n-1} \sum_{i=1}^n(X_i - \bar{X})^2}$
+  
+  \subsubsection*{\textit{Binomial Distribution $X_i \overset{iid}{\sim} Bin(1,p)$}}
+  
+  \paragraph{Approximate test for $p$} \ \\
+  
+  \noindent $H_0\!:\; p = p_0 \;\;\; vs. \;\;\; H_1\!:\; p \neq p_0$
+  
+  $$T(X) = \frac{\frac{X}{n} -p_0}{\sqrt{p_0(1-p_0)}/\sqrt{n}} \;\overset{H_0, appr.}{\sim}\; \mathrm{N}(0,1)$$
+
+  
   
 \subsubsection*{\textit{ML Estimate $\hat{\theta} \overset{a}{\sim} \mathrm{N}(\theta, I^{-1}(\theta))$}}
   
@@ -1945,6 +1971,133 @@ Range: $0 \le R^2 \le 1$
 
 %-------------------------------------------------------------------------------
 
+% SECTION: SPATIAL STATISTICS
+
+%-------------------------------------------------------------------------------
+
+\section{Spatial Statistics}
+
+\begin{multicols}{2}[\subsection{Markov Random Field}][4cm] 
+\paragraph{Lattice Data} observations from a random process observed over spatial regions,  supplemented by a neighborhood structure
+
+\paragraph{Random Field} synonymous to stochastic process
+$$(X_1,...,X_n)$$
+realisations of random variable $X_i$ 
+for locations $D=\{1,...,n\}$
+
+\paragraph{Markov Properties} extend the temporal\,$X_{t{+}1}|X_t \perp X_{1,...,t-{}1}$
+\begin{itemize}
+\item \textbf{pairwise:} $X_i|X_{-ij}\perp X_j$ for $i\neq j$ and $i \not\sim j$
+\item \textbf{local:} $X_i|X_{-\{i,n\in \partial (i)\}}\perp X_{n\in \partial (i)}$ with $\partial (i) := \{j:j\sim i\}$
+\item \textbf{global:} $X_A|X_B\perp X_C$ for C separating $A$ and $B$
+\end{itemize}
+\noindent global implies local implies pairwise; equivalent in a GMRF
+
+\paragraph{Neighbourhood System} set of neighbourhoods
+$$\partial = \{\partial(s): s \in D\}$$
+\noindent if $s \not\in \partial(s)$ (antireflexive) and $v \in \partial(s) \Leftrightarrow s \in \partial(v)$ (symmetric)
+
+\paragraph{GMRF} Gauss Markov Random Field
+$$f(x) =  ( 2\pi)^{-\frac{n}{2}}|P|^{\frac{1}{2}} \exp\left(-\frac{1}{2}(x-\mu)^TP(x-\mu)\right)$$
+\noindent with precision matrix $P:=\Sigma^{-1}>0$ and $p_{ij} \neq 0 \Leftrightarrow i\sim j$
+
+\noindent $p_{ij}$ define neighbourhoods with $X_i|X_{-ij} \perp X_j \Leftrightarrow p_{ij}{=}0$ for $i\neq j$
+
+\noindent GMRFs fulfill the pairwise, local, and global Markov property
+
+\textbf{canonical representation:}
+$$X \sim N^k(m,P) :=N(P^{-1}m,P^{-1})$$ 
+$$ \Leftrightarrow f(x) \propto |P|^{\frac{1}{2}}\exp\left(-\frac{1}{2} x^TPx +m ^Tx\right)$$
+
+get $m$ via  completing the square
+
+\textbf{improper GMRFs:} $P$ s.\,p.\,d.\@ with $\mathrm{rk}(P)=r<n$
+$$f(x) =  ( 2\pi)^{-\frac{r}{2}}\det \!{}^{\ast}(P)^{\frac{1}{2}} \exp\left(-\frac{1}{2}(x-\mu)^TP(x-\mu)\right)$$
+
+with $\det \!{}^{\ast}(P) = \prod_{j=1}^r \lambda_j$ with $\lambda_1,...,\lambda_r$ non-zero eigenvalues
+
+\textbf{\textit{intrinsic}} GMRFs ($\sum_{j=1}^n p_{ij} = 0 \,\,\, \forall i=1,...,n$)  with
+
+irregular grids: rank decline is number of independent areas
+
+\textbf{models:}
+\begin{itemize}
+\item Conditional Autoregressive (\textbf{CAR}): $\mathrm{E}(X_i|X_{-i}) = \mu_i + \sum_{j:i\sim j} c_{ij}(X_j-\mu_j)$, resulting in  a GMRF with $p_{ij} =  \left\{
+\begin{array}{rl}
+{-}c_{ij}/(\sigma_i\sigma_j), & i\neq j \\
+1/\sigma_i, &  i=j \\
+\end{array}
+\right. $ \\
+Weights $c_{ij}$ are symmetric and often correspond to distance 
+
+\item Intrinsic Autoregressive (\textbf{ICAR})
+$p_{ij} =  \left\{
+\begin{array}{rl}
+{-}1/(\sigma_i\sigma_j), & i \sim j \\
+|\partial(i)|/\sigma_i, &  i=j \\
+0, &  \text{else}\\
+\end{array}
+\right. $ \\
+\item Simultaneous Autoregressive (\textbf{SAR})
+
+$\mathrm{E}(X_i|X_{-i}, Z)  =Z_i\beta + \sum_{j:i\sim j} b_{ij}X_j$ with covariates $Z$
+\end{itemize}
+
+
+
+\paragraph{GMRF Regression} Bayesian prior equals likelihood penalty 
+$$Y = X \beta + Z \eta + \epsilon$$
+
+with  $\epsilon_i \sim \mathrm{N}(0, \sigma^2)$; $\eta \sim \mathrm{N}(0, (\tau Q)^{-1})$; $\beta_k \sim N (0, \kappa_k )$
+
+\noindent get hyperparameters: cross validation, empirical Bayes, or Bayes 
+
+\noindent Gamma is non-informative, semi-conjugated prior on $\tau$, $\frac{1}{\sigma^2}$, \& $\frac{1}{\kappa_k}$ 
+
+
+
+
+\paragraph{Drawing from a GMRF} Rue algorithm
+\begin{enumerate}[itemsep=-0.5em]
+\item perform Cholesky decomposition: $P=LL'$ 
+\item calculate $w$ and $u$ with $Lw=m$ and $L'u=w$
+\item draw $z\sim\mathrm{N}(0,I_n)$ and calculate $v$ with $L'v=z$
+\item calculate result $y=u+v$
+\end{enumerate}
+
+\begin{Proof}
+$u=P^{-1}m$, as $m=Lw=LL'u=Pu  $ \\
+$E(v)=E(L'^{-1}z)=L'^{-1}E(z)=0$ \\
+$Var(v)=Var(L'^{-1}z){=}(L'^{-1})^2 Var(z){=}(L''L')^{-1}I=P^{-1}$ \\
+Therefore $y = u+v\sim \mathrm{N}(mP^{-1}, P^{-1})$.
+\end{Proof}
+
+\paragraph{Other MRF}
+\begin{itemize}
+\item \textbf{autologistic:} at most two-element-cliques %with 
+$f(x) \propto \exp\left(\sum_i \alpha_i x_i + \sum_{i\sim j}\beta_{ij}x_ix_j\right)$ and
+$\mathrm{logit}(X_i) = \alpha_i + \sum_{j\in \partial(i)} \beta_{ij} X_j$
+
+\item \textbf{Ising:} binary data, e.\,g.\@ black-and-white pictures
+$f(x) \propto \exp\left(\beta \sum_{i\sim j} \mathbbm{1}(x_i=x_j)\right)$ and autologistic
+\item \textbf{Potts:} categorical data, e.\,g.\@ shades of grey
+$f(x) \propto \exp\left(\beta \sum_{i\sim j} \mathbbm{1}(x_i=x_j)\right)$ and multinomial logit
+\end{itemize}
+
+
+
+
+\end{multicols}
+
+\begin{multicols}{2}[\subsection{Geostatistics}][4cm] 
+
+\end{multicols}
+
+\begin{multicols}{2}[\subsection{Point Processes}][4cm] 
+
+\end{multicols}
+%-------------------------------------------------------------------------------
+
 % SECTION: BAYESIAN STATISTICS
 
 %-------------------------------------------------------------------------------
@@ -2214,7 +2367,7 @@ Works well for big $p$.
 \item Calculate the statistic of interest $t(y_i^*)$
 \item Repeat this B times
 \item \noindent \textit{Plug-in Principle}:
-Whenever the distribution function is involved in estimating a statistic, use the empirical bootstrapped version instead.
+Whenever the distribution function is involved in estimating a statistic, use the empirical version $\hat{F}_n(y) = \frac{1}{n}\sum_{i=1}^n \mathbbm{1}_{(y_i\leq y)}$  instead.
 \end{enumerate}
 
 \noindent In a \textbf{Parametric Bootstrap} the parameter is first estimated from the data and then Bootstrap samples are drawn from the resulting distribution.
@@ -2245,7 +2398,7 @@ For a \textbf{Boostrap Test} do step \ref{draw} with replacement.
 \paragraph{Bootstrap in \textbf{Regression}}
 \begin{itemize}
 \item \textbf{Residual based}: 1.~Get Bootstrap sample $e_i^*$ from fitted residuals $\hat{e} = y- X\hat{\beta}$, 2.~Calculate new response $y_i^* = x_i\hat{\beta} + e_i^*$, 3.~Calculate $\hat{\beta}^*$
-\item \textbf{Model based} 1.~Draw a sample from $e_i \sim \mathrm{N}(0, \hat{\sigma}^2)$, 2.~Calculate new response $y_i^* = x_i\hat{\beta} + e_i^*$, 3.~Calculate $\hat{\beta}^*$
+\item \textbf{Model based} 1.~Draw a sample from $e_i \sim \mathrm{N}(0, \hat{\sigma}_{ML}^2)$, 2.~Calculate new response $y_i^* = x_i\hat{\beta} + e_i^*$, 3.~Calculate $\hat{\beta}^*$
 \item \textbf{Pairwise} 1.~Draw $(y_i^*, x_i^*)$ from the original sample for $i=1,..,n$, 2.~Calculate $\hat{\beta}^*$
 \item \textbf{Wild} Set $\hat{e}_i^* = V_i^*\hat{e}_i$, with $V_i^*$ from the 2-point distribution $P(V_i^* {=}\frac{\sqrt{5}{+}1}{2})=\frac{\sqrt{5}{-}1}{2\sqrt{5}}$ and $P(V_i^* {=}{-}\frac{\sqrt{5}{-}1}{2})=\frac{\sqrt{5}{+}1}{2\sqrt{5}}$, chosen as $\mathrm{E}(V_i^*)=0$, $Var(V_i^*)=1$, $\mathrm{E}(V_i^{*3})=1$
 \end{itemize}
@@ -2254,7 +2407,7 @@ For a \textbf{Boostrap Test} do step \ref{draw} with replacement.
 
 $$ \underset{n\rightarrow\infty}{\lim} P_n\left\{\underset{t}{\sup}\left|G_n(t,F_n)-G_\infty(t,F)\right|>\epsilon\right\} = 0  \;\; \forall \epsilon $$
 
-\noindent with $F_n(y) = \frac{1}{n}\sum_{i=1}^n \mathbbm{1}_{\{Y_i\leq y\}}$ empirical distribution function, $G_n(t, F) = P(T_n\leq t)$ exact finite sample distribution, and $P_n$ joint probability of the sample
+\noindent with $F_n(y) = \frac{1}{n}\sum_{i=1}^n \mathbbm{1}_{\{Y_i\leq y\}}$ empirical distribution function, $G_n(t, F) = P(T_n\leq t)$ exact finite sample distribution of $T_n = t(Y_1,...,Y_n)$, and $P_n$ joint probability of the sample
 
 \vspace{0.5em}
 \noindent The bootstrap estimate is inconsistent for the maximum of a sample or if the $\theta$ lies on the boundary of $\Theta$.
@@ -2449,6 +2602,8 @@ $$\frac{\partial Q(\theta,\theta_{(t)})}{\partial \theta} = s(\theta,\theta_{(t)
 %$$l_O(\theta_{(t+1)} \geq l_O(\theta_{(t)}$$
 %$$l_O(\theta) = \sum_{i=1}^n l_{iO}(\theta) = \sum_{i=1}^n \int f(y_i;\theta)dy_{iM}$$
 %\end{Proof}
+
+\noindent Iterate over E and M step until convergence
 
 \paragraph{Louis' Formula for Variance Estimates in EM Settings} \ \\
 
