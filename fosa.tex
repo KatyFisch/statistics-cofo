@@ -831,10 +831,18 @@ $$\mathrm{Var}(Y) = \mathrm{E}_X(\mathrm{Var}(Y|X)) + \mathrm{Var}_X(\mathrm{E}(
   	\paragraph{Chi-Squared} sum of squares for standard normal random variables with $\nu$ degrees of freedom
   
     \begin{align*}
-    & Y \sim \chi^2(\nu) \text{ with } \nu > 0,,\: y \in \mathbb{R}\\
+    & Y \sim \chi^2(\nu) \text{ with } \nu > 0,\: y \in \mathbb{R}\\
     & p(y|\nu) = \frac{y^{\frac{\nu}{2}-1}e^{-\frac{y}{2}}}{2^{\frac{\nu}{2}}\Gamma \left(\frac{\nu}{2}\right)} \\
     & \mathrm{E}(Y|\nu) = \nu, \:
 	\mathrm{Var}(Y|\nu) = 2\nu
+  \end{align*}
+  
+    \paragraph{Weibull} failure rate is proportional to a power of time
+  
+    \begin{align*}
+    & Y \sim \mathrm{WB}(\lambda, k) \text{ with } \lambda> 0\\
+    & p(y|\lambda,k) =
+\frac{k}{\lambda}\left(\frac{y}{\lambda}\right)^{k-1}\mathrm{e}^{-(y/\lambda)^{k}} \\
   \end{align*}
 
 \end{multicols}
@@ -1969,6 +1977,189 @@ Range: $0 \le R^2 \le 1$
 
 %\section{Cluster Analysis}
 
+%-------------------------------------------------------------------------------
+
+% SECTION: SURVIVAL ANALYSIS
+
+%-------------------------------------------------------------------------------
+
+\section{Survival Analysis}
+
+\begin{multicols}{2}[\subsection{Basics}][4cm] 
+
+\paragraph{Time-to-Event Data} outcome tuple $(t_i, \delta_i)$ is observed 
+ 
+\noindent with time $0<t<\infty$ and event/censoring indicator $\delta_i$ 
+
+\vspace{0.5em}
+\noindent typically: $\delta_i=  \left\{
+\begin{array}{rl}
+1, & i\text{ experienced event} \\
+0, & i\text{ is (right-)censored} \\
+\end{array}
+\right. $ 
+
+
+
+\paragraph{Censoring}
+
+$T_i \sim F$ times to event \& $C_i \sim G$  censoring times
+
+\begin{itemize}[itemsep=-0.3em]
+\item \textbf{right-censoring:} observe $t_i = \min(T_i, C_i)$
+\item \textbf{left-censoring:} observe $t_i = \max(T_i, C_i)$
+\item \textbf{interval-censoring:} only known $t_i \in \left[C_i^l, C_i^r\right]$
+\end{itemize}
+
+\noindent Censoring and event distributions need to be independent given  explanatory variables for models to be unbiased
+
+
+
+\paragraph{Truncation} a form of sampling bias
+
+\begin{itemize}[itemsep=-0.3em]
+\item \textbf{left-truncation:} observations with $t_i < a$ excluded
+\item \textbf{right-truncation:} observations with $t_i > a$ excluded
+\end{itemize}
+
+\paragraph{Description of the Distribution} 
+
+\begin{itemize}
+\item \textbf{survival function}  $$S(t) := P(T>t) = 1 - F(t) $$
+\item \textbf{hazard rate} $$h(t) := \lim_{\delta \rightarrow 0} \frac{P(T \in [t,t+\delta]|T\geq t)}{\delta} = \frac{f(t)}{S(t)}$$
+\item \textbf{cumulative hazard rate} $$H(t) := \int_0^t h(u)du = -\log(S(t))$$
+\end{itemize}
+
+%\paragraph{Log Rank Test} for comparing survival 
+%Ein Nachteil davon ist, dass dieser bei nicht-proportionalen Hazards eine geringe Trennschärfe hat.
+
+\end{multicols}
+
+
+\begin{multicols}{2}[\subsection{Modelling}][4cm] 
+
+\paragraph{Kaplan-Meier} non-parametric estimate for $S(t)$
+
+\noindent For ordered event times $t_{(1)}, ..., t_{(f)}$:
+$$\hat{S}\left(t_{(f)}\right) = \prod_{i=1}^f \hat{P}\left(T>t_{(i)}|T\geq t_{(i)}\right)$$
+$\hat{P}\left(T>t_{(i)}|T\geq t_{(i)}\right) = 1-\frac{d_i}{n_i}$, with $d_i$ number of events at $t_{(i)}$  and $n_i$ number of observations under risk at $t_{(i)}$
+\begin{itemize}[itemsep=-0.5em]
+\item also called product-limit estimator 
+\item formula closely related to path rule
+\item assumes piecewise constant survival (step function)
+\end{itemize}
+
+\textbf{Greenwoods' Formula} basis for confidence intervals
+$$\widehat{Var}\left(\hat{S}(t)\right) = \hat{S}(t)^2\sum_{t_{(k)} \leq t} \frac{d_k}{n_k(n_k-d_k)}$$
+\paragraph{Nelson-Aalen} non-parametric estimate for $H(t)$
+$$H(t) = \sum_{k:t_{(k)} \leq t} \hat{h}_k^d$$
+\noindent with $h_k^d$ discrete time hazard rate for $k$-th interval $\left[t_{(k-1)}, t_{(k)}\right]$
+\begin{itemize}[itemsep=-0.5em]
+\item results in piecewise constant estimate (step function)
+\item $\exp\left(-\hat{H}(t)\right)$ gives Breslow estimate for $S(t)$
+\end{itemize}
+
+\paragraph{Accelerated Failure Time} parametric modelling of $T$ 
+\begin{itemize}[itemsep=-0.5em]
+\item[] $T\sim \mathrm{WB}(\lambda, k)$: leads to proportional hazards
+\item[] $T\sim \mathrm{Exp}(\lambda) = \mathrm{WB}(\lambda, 1)$: results in constant hazard rate
+\end{itemize}
+Location-Scale-Model (with $\lambda=\exp(-\eta)$ and $k=\frac{1}{\sigma}$): 
+\begin{align*}
+\log(T) &= x^T\beta + \sigma\epsilon \hspace{1em} \Longleftrightarrow \\
+T &= \exp(\beta_0)\exp(\beta_1x_1)...\exp(\beta_px_p)\exp(\sigma\epsilon)
+\end{align*}
+
+\noindent incrementing $x_1$ means survival time stretches by $\exp(\beta_{1})$, c.\,p.
+
+\vspace{0.3em}
+\textbf{Diagnostics}\vspace{-0.3em}
+\begin{itemize}[itemsep=-0.5em]
+\item $\ln(-\ln S(t)) = \ln(\lambda) + \sigma\ln(t)$, use $\hat{S}_{KM}$ for graphical check (for single categorical $x$ only)
+\item Distribution assumption (for Weibull): $\epsilon \sim \mathrm{Gumbel}\left(\frac{y-\eta}{\sigma}\right)$
+\end{itemize} 
+
+\vspace{0.3em}
+\textbf{ML estimation} under right-censoring \vspace{-0.3em}
+$$L(\theta) = \prod_{i=1}^n \left(f(t_i|\theta,x_i)\right)^{\delta_i} \left(S(t_i|\theta,x_i)\right)^{1-\delta_i}$$
+
+standard likelihood theory applies
+
+\paragraph{Cox Proportional Hazards} semi-parametric
+$$h(t,x) = h_0(t) \cdot\exp (x^T\beta)$$
+
+\noindent with non-parametric baseline hazard rate $h_0(t)$ independent of $x$, but can depend on (part of) $x$ in stratified models
+
+\vspace{0.3em}
+
+\textbf{Proportional Hazards}
+incrementing $x_1$ means hazard rate 
+
+multiplies by $\exp(\beta_{1})$, ceteris paribus
+\begin{Proof}
+\vspace{-2.7em}
+$$\frac{h(t|x^{(a)})}{h(t|x^{(b)})} = \exp((x^{(a)}-x^{(b)})^T\beta)$$
+\end{Proof}
+
+\textbf{Diagnostics}
+\begin{itemize}[itemsep=-0.5em]
+\item \textbf{Proportional Hazard:} Schoenfeld residuals ($E(r_i)=0$) and corresponding  test ($H_0:$ proportional hazards)
+\item \textbf{Overall Fit:} Cox Snell residuals $\sim \mathrm{Exp}(1)$
+\item \textbf{Functional Form:} Martingale residuals ($E(r_i)=0$)
+\item \textbf{Outliers:} Deviance residuals ($E(r_i)=0$)
+\item \textbf{Leverage:} Jack-Knife residuals
+\end{itemize}
+
+\textbf{Partial Likelihood} consider risk sets $R_i = R(t_{(i)})$ for 
+
+ordered event times $t_{(1)}, ..., t_{(f)}$:
+\begin{align*}
+PL(\beta) &= \prod_{i=1}^m P(t_i=t_{(i)}|\exists j\in R_i:t_j=t_{(j)})\\
+&= \prod_{i=1}^m \frac{\exp\left(x^T_{(i)}\beta\right)}{\sum_{j\in R_i}\exp\left(x^T_{j}\beta\right)}
+\end{align*}
+
+
+
+\paragraph{Random Survival Forests} Machine Learning method
+\begin{enumerate}[itemsep=-0.5em]
+\item draw $B$ Bootstrap samples from the data
+\item grow binary decision tree for each sample finding splits with log rank tests out of $p$ randomly drawn splitting candidates
+\item stopping: minimum $d_0 > 0$ deaths per node
+\item calculate $\hat{H}(t)$ via Nelson-Aalen and average for samples 
+\item get prediction error using Out-Of-Bag samples
+\end{enumerate}
+
+
+\end{multicols}
+
+\begin{multicols}{2}[\subsection{Model Comparison}][4cm] 
+
+\paragraph{General} Some measures (e.\,g.\@ AIC) require equal likelihood estimation and are typically only valid within a model class. 
+
+\noindent Other methods (presented below) should be used on test data.
+
+\paragraph{C-Index} compare predictions if censor times allow it
+
+$$C=\frac{\text{\#concordant pairs}}{\text{\#comparable pairs}}$$
+
+with $0\leq C\leq 1$ and $C=0.5$ for random guessing
+
+\paragraph{Brier Score} equivalent to the MSE for predicted probabilities
+
+$$\widehat{BS}(t,\hat{S})=\frac{1}{n}\sum_{i=1}^n(\tilde{Y}_i(t)- \hat{S}(t|x_i))^2$$
+
+with $\tilde{Y}_i(t)= \mathbbm{1}(t_i > t)$ and $t_i =\min (T_i, C_i)$
+
+\noindent the arithmetic mean above is often weighted using Inverse Probability of Censoring Weights
+
+\paragraph{Integrated Brier Score} as the Brier Score depends on $t$
+
+$$IBS(\tau)=\frac{1}{\tau}\int_0^\tau \widehat{BS}(u,\hat{S}) du$$
+
+\noindent can also be shown graphically as the Brier Score over different time points in so-called prediction error curves (PEC)
+
+
+\end{multicols}
 %-------------------------------------------------------------------------------
 
 % SECTION: SPATIAL STATISTICS
