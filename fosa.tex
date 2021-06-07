@@ -419,7 +419,7 @@ Range: $-1 \le r \le 1$
 
 \end{multicols}
 
-\subsection{Tables}
+%\subsection{Tables}
 
 \subsection{Diagrams}
 
@@ -2263,28 +2263,187 @@ $Var(v)=Var(L'^{-1}z){=}(L'^{-1})^2 Var(z){=}(L''L')^{-1}I=P^{-1}$ \\
 Therefore $y = u+v\sim \mathrm{N}(mP^{-1}, P^{-1})$.
 \end{Proof}
 
-\paragraph{Other MRF}
-\begin{itemize}
-\item \textbf{autologistic:} at most two-element-cliques %with 
-$f(x) \propto \exp\left(\sum_i \alpha_i x_i + \sum_{i\sim j}\beta_{ij}x_ix_j\right)$ and
-$\mathrm{logit}(X_i) = \alpha_i + \sum_{j\in \partial(i)} \beta_{ij} X_j$
+\paragraph{latent GMRF} solution if target is not Gaussian
 
-\item \textbf{Ising:} binary data, e.\,g.\@ black-and-white pictures
-$f(x) \propto \exp\left(\beta \sum_{i\sim j} \mathbbm{1}(x_i=x_j)\right)$ and autologistic
-\item \textbf{Potts:} categorical data, e.\,g.\@ shades of grey
-$f(x) \propto \exp\left(\beta \sum_{i\sim j} \mathbbm{1}(x_i=x_j)\right)$ and multinomial logit
+hierarchical model with $\tau$ as smoothing parameter:
+\begin{align*}
+Y_i | \eta_i &\overset{iid}{\sim} F(\eta_i) \,\,\, \text{ e.\,g.\@ Poisson for count data}\\
+\eta &\sim GMRF(\tau Q)
+\end{align*}
+
+\textbf{Inference} with MCMC, with a penalized Likelihood, or \\
+with INLA (fully Bayesian using approximations)
+
+\paragraph{Ising Model}
+ $X_i \sim \mathrm{B}(1, \pi_i)$, $x_i  \in \{-1,1\}$, e.\,g.\@ black/white
+ 
+ Minimize:
+ $$H(f,x) = -c\sum_{i\in I}f_ix_i -\beta\sum_{i\sim j}f_if_i -h\sum_{i\in I}f_i$$
+\begin{itemize}[itemsep=-0.3em]
+\item $-\sum_{i\in I}f_ix_i$ $\propto$ Hamming distance
+\item $\sum_{i\sim j}f_if_i$ penalty for differing neighbors
+\item $\sum_{i\in I}f_i$ to achieve a balance between values (optional)
 \end{itemize}
 
+\textbf{Bayesian View}\vspace{-0.8em} 
+\begin{itemize}[itemsep=-0.4em]
+\item ${-}\sum_{i\in I}f_ix_i =-l(f|x)$ for multiplicative noise ($x_i=f_i\eta_i$, with $\eta_i$ flip indicator), the rest of the formula is the prior
+\item \textbf{Perfect Sampling:} Do MCMC from all possible start values. Combine paths with same status. Once all paths are combined, distribution is independent of starting value.
+\end{itemize}
 
-
+\textbf{Potts Model} as extension to categorical data
 
 \end{multicols}
 
 \begin{multicols}{2}[\subsection{Geostatistics}][4cm] 
 
+
+\paragraph{Spatially Continuous Random Field} random variables $Y_S$
+
+$$Y_S:(\mathbb{R}^d, \mathcal{B}^d,\mathbb{P}) \rightarrow (Z, \mathcal{F})$$
+
+i.\,e.\@ probability space $\rightarrow$ status space (including $\sigma$-Algebra)
+
+
+\paragraph{Variogram} typically plot over distance $|s-s'|$
+$$\gamma(s,s'):= \frac{1}{2}\mathrm{Var}(Y(s) -Y(s'))$$
+
+\textbf{Covariogram} $c(s,s'):= \mathrm{Cov}(Y(s),Y(s'))$ ($=$ covariance)
+
+It holds: $\gamma(s,s') =\frac{1}{2}\mathrm{Var}(Y(s)) +\frac{1}{2}\mathrm{Var}(Y(s')) -c(s,s')$
+
+
+\paragraph{Gauss Random Field} $Y=\{Y(s),s\in D \subseteq \mathbb{R}^d\}$
+$$\forall s_1,...,s_n: (Y(s_1),...,Y(s_n))^T \text{  multivariate normal}$$
+uniquely defined by $\mu(s)$ and $c(s,s')$
+
+\paragraph{Stationarity} strong $\Rightarrow$ weak $\Rightarrow$ intrinsic
+\begin{itemize}[leftmargin=6.1em,itemsep=-0.5em]
+\item[\textbf{intrinsic}] $\mathrm{E}(Y(s)) = \text{const.}$ and $\gamma(s,s')=\gamma(\Delta s)$
+\item[\textbf{weak}] $\mathrm{E}(Y(s)) =  \text{const.}$ and $c(s,s') = c(\Delta s) \,\forall s,s' \in S$
+\item[\textbf{strong}] all $n$-dimensional distributions translation invariant
+\end{itemize}
+For stationary processes: \textbf{Correlogram} $\rho(\Delta s):=\frac{c(\Delta s)}{\sigma^2}$,
+$c(0)=\sigma^2 = \mathrm{Var}(Y(s))$ nugget effect, and $\gamma$, $c$, $\rho$ symmetric;
+$\gamma(\Delta s) = c(0)-c(\Delta s) = \sigma^2(1-\rho(\Delta s))$
+
+\paragraph{Isotropy} compare directional variograms
+$$c(s,s') = c(\| s-s'\|) \Leftrightarrow Y \text{ isotrop}$$
+
+\begin{itemize}[itemsep=-0.5em]
+\item \textbf{geometric anisotropy} same sill, different range
+\item \textbf{zonal anisotropy} different sill
+\end{itemize}
+
+\paragraph{Empirical Variogram} estimated via kernel functions and nearest neighbours (similar to gliding histograms)
+
+\hspace{2em}
+\begin{tikzpicture}[scale=.6,cap=round,
+tangent/.style={%
+in angle={(180+#1)} ,
+Hobby finish ,
+designated Hobby path=next , out angle=#1,
+}]
+ \tikzset{axes/.style={}}
+ % The graphic
+\begin{scope}[style=axes]
+ \draw[->] (0,0) -- (6,0) node[below left] {\tiny $\|  s{-}s'\| $};
+ \draw[->] (0,0)-- (0,3.5) node[left] { \tiny  $\gamma(s,s')$};
+ %\draw [gray!50]  (-5,3) -- (-2.5,1) -- (2.5,4) -- (5,-1);
+ \draw (0,1) parabola[bend at end] (4,3) -- (6,3);
+ \draw[<->] (-0.3,0.1) -- (-0.3,0.9) node[left,pos=0.5] {Nugget};
+ \draw[<->] (-0.3,1.1) -- (-0.3,2.9) node[left,pos=0.5, align=right] {Partial\\Sill};
+ \draw[<->] (4,0.1) -- (4,2.9) node[right,pos=0.5] {Sill};
+ \draw[<->] (0.1,0.2) -- (3.8,0.2) node[above,pos=0.5] {Range};
+ \draw[fill=black] (0,0) circle (1.7pt);
+ \draw[fill=white] (0,1) circle (2pt);
+\end{scope}
+\end{tikzpicture}\vspace{-1em}
+
+
+\paragraph{Parametric Models for Correlograms}
+\begin{itemize}[itemsep=-0.3em]
+\item \textbf{Exponential} $\rho(h)=\exp(-(h/\phi))$
+\item \textbf{Gauss} $\rho(h)=\exp(-(h/\phi)^2)$
+\item \textbf{Spherical} $\rho(h)=  \left\{
+\begin{array}{rl}
+1-\frac{2}{3}(h/\phi)+\frac{1}{2}(h/\phi)^3, & 0\leq h\leq \phi \\
+0, &  h\geq\phi \\
+\end{array}
+\right. $ 
+\item \textbf{Mat\'{e}rn} $\frac{1}{2^{\kappa -1}\Gamma(\kappa)}(h/\phi)^\kappa K_\kappa(h/\phi)$ with $K_\kappa$ Bessel function
+\end{itemize}
+
+\paragraph{Simple Kriging} assumes known expectation and $c(s,s')$
+$$Y(s_i) = Z(s_i) + \epsilon(s_i)$$
+with random field $Z$ with $\mu(s)$ and $c(s,s')=\sigma^2 \rho(s,s')$ 
+
+\noindent and $\epsilon(s_i)$ i.i.d.\@ with expectation $0$ and variance $\sigma_\epsilon^2$
+
+minimizing MSPE $\min \sigma_Y^2(s_0) = c(s_0,s_0)-c(s_0)'C_Y^{-1}c(s_0)$:
+\begin{align*}
+\hat{Z} (s_0) &=\mu(s_0)+c(s_0)'C_Y^{-1}(Y-\mu_Y)
+\end{align*}
+\begin{itemize}[leftmargin=6.1em,itemsep=-0.5em]
+\item[\textbf{ordinary}] constant unknown mean $\mu(s)=\mu$
+\item[\textbf{universal}] known beta in $\mu(s)=x(s)'\beta$
+\end{itemize}
+
+\paragraph{Gauss Model Kriging} same estimates as for simple kriging \\
+
+\noindent Equivalent Approaches:\\
+\noindent additive: $Y(s)=\mu(s)+Z(s)+\epsilon(s)$, with $Z(s)$ as GRF($0,\tau^2$)
+hierarchical: $Y(s)|Z(s),\sigma^2 \sim \mathrm{N}(Z(s), \sigma^2)$, $Z(s)$ as GRF($\mu(s),\tau^2$)
+
+\vspace{0.5em}
+\textbf{Inference:}
+\vspace{-0.7em}
+\begin{itemize}[itemsep=-0.3em]
+\item ML: via profile-log-likelihood, but biased
+\item REML: via restricted (or marginal) likelihood, less biased
+\item fully Bayesian: MCMC but how to choose priors
+\end{itemize}
+
+
+\paragraph{Kriging Procedure} \ \\
+\vspace{-2em}
+\begin{multicols}{2}
+\begin{enumerate}[itemsep=-0.3em]
+\item variogram
+\item fit correlation function
+\item test stationarity/isotropy
+\item if so, transform for isotropy
+\item Kriging
+\item residual variogram
+\item geoadditive regression
+\item maybe generalized Kriging
+\end{enumerate}
+\end{multicols}
+
+\paragraph{Geoadditive Regression}
+$$Y_i=x_i\beta + \sum_{j=1}^pf_j(z_{ij})+f_{geo}(s_i)+\epsilon_i$$
+Modelling $f_{geo}(s)=z_{geo}\gamma_{geo}$ with $\gamma_{geo}\sim\mathrm{N}\left(0, (\tau_{geo}K_{geo})^{-1}\right)$:
+\vspace{-0.5em}
+\begin{itemize}[itemsep=-0.3em]
+\item \textbf{lattice data:} $f_{geo}=\phi_K$ for $s_i=K$ and GMRF pior
+\item \textbf{geostatistical data:} $f_{geo}=Z\gamma_{geo}$ using radial basis functions or 2D-splines
+\end{itemize}
+$$Y=X\beta + \sum_{j=1}^{p,geo}Z_j\gamma_j+\epsilon \:\:\:\: \text{  with  } \gamma_j \sim \mathrm{N}\left(0, (\tau_jK_j)^{-1}\right)$$
+
+%\noindent $K_j$ does not have full rank, can be viewed as a mixed model
+\noindent with inference via REML, cross validation or fully Bayesian
+
+\textbf{INLA} (Integrated Nested Laplace Approximation):
+
+2 Laplace approximations for fully Bayesian procedure
+
+\noindent AIC is impossible for spatial, but DIC works
+
 \end{multicols}
 
 \begin{multicols}{2}[\subsection{Point Processes}][4cm] 
+
+Hi
 
 \end{multicols}
 %-------------------------------------------------------------------------------
