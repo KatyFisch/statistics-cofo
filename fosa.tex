@@ -2443,7 +2443,96 @@ $$Y=X\beta + \sum_{j=1}^{p,geo}Z_j\gamma_j+\epsilon \:\:\:\: \text{  with  } \ga
 
 \begin{multicols}{2}[\subsection{Point Processes}][4cm] 
 
-Hi
+\paragraph{Spatial Point Process} countable set of locations of events
+
+$$N={s_1,...,s_n, ...} \subset S \subseteq \mathbb{R}^d$$
+
+\noindent equivalent to $P(s_1 \in B_1, ..., s_n \in B_n)$ for any Borel sets $B_i \subseteq S$ or as counting process $P(N(B_1)=n_1, ..., N(B_k)=n_k)$ with $N(B)<\infty$ and bounded $B$ for any $k$
+
+\noindent k-dimensional distributions are determined by void probabilities:
+$$P(N(B)=0)$$
+
+\paragraph{Intensity} first ($\lambda$) and second ($\lambda_2$) order
+
+$$\lambda(s):=\lim_{|ds|\rightarrow 0} \frac{\mathrm{E}(N(ds))}{|ds|}$$
+
+\noindent with $ds$ Borel set around $s$; similar to hazard rate
+
+$$\lambda_2(s,u):=\lim_{|ds|,|du|\rightarrow 0}\frac{\mathrm{E}(N(ds)\cdot N(du))}{|ds| \cdot |du|}$$
+
+\noindent $\lambda$ and $\lambda_2$ determine the first two moments of $N(B) \forall B\subseteq\mathbb{R}^d$
+
+\paragraph{Stationarity} 
+\vspace{-0.5em}
+\begin{itemize}[leftmargin=5em,itemsep=-0.5em]
+\item[\textbf{weak}] $\lambda(s)=\text{const.}$ and $\lambda_2(s,u)=\lambda_2(s+\Delta,u+\Delta) \forall \Delta$
+\item[\textbf{strong}] distributions are translation invariant
+\end{itemize}
+
+\paragraph{Isotropy}
+\vspace{-0.5em}
+\begin{itemize}[leftmargin=5em,itemsep=-0.5em]
+\item[\textbf{weak}] $\lambda_2(s,u)=\lambda_2(\|s-u\|)$ rotation invariant
+\item[\textbf{strong}] distributions are rotation invariant
+\end{itemize}
+
+
+\paragraph{Point Patterns}
+\vspace{-0.8em}
+\begin{itemize}[itemsep=-0.5em]
+\item complete spatial randomness (CSR)
+\item aggregated/clustering
+\item regular/grid
+\end{itemize}
+Can be tested via $\chi^2$-Goodness-of-fit for discretized $S$
+
+\paragraph{Binomial Process} overlay of $n$ Bernoulli Processes
+
+$$P(s_1\in B_1,...,s_n \in B_n)=\frac{|B_1|\cdot...\cdot |B_n|}{|S|^n}$$
+
+\noindent with Bernoulli Processes: $N=\{s\}$, with $P(s\in B)=\frac{|B|}{|S|}$
+
+\noindent As $\lambda(s)=\lambda$, the Binomial Process is homogeneous.
+
+\begin{Proof}
+\vspace{-1em}
+$$\lambda(s)=\lim_{|ds|\rightarrow 0} \frac{\mathrm{E}(N(ds))}{|ds|} = \lim_{|ds|\rightarrow 0} \frac{n|ds|/|S|}{|ds|} = \frac{n}{|S|}=\:\lambda$$
+\end{Proof}
+
+\noindent However, $N(B)$ and $N(S\setminus B)$ are dependent
+
+
+\paragraph{Poisson Process} \ \\
+
+\noindent \textit{homogeneous if:} $N(B) \sim \mathrm{Po}(\lambda\cdot |B|)$  with $0<\lambda<\infty$
+
+\noindent results in CSR and void probability $P(N(K)=0)=\exp(-\lambda|K|)$
+
+
+
+\noindent \textit{inhomogeneous if} $\lambda(s)$ varies:
+
+$N(B) \sim \mathrm{Po}(\mu(B))$  with $\mu(B)=\int_B\lambda(s)ds$ 
+
+
+\noindent Both have independent scattering: $N(B_1) {\perp} N(B_2)$ for $B_1 {\cap} B_2 {=} \emptyset$.
+
+\paragraph{Estimating Intensity $\boldsymbol{\lambda}$} \ \\
+
+\noindent \textit{parametric step function:} ML estimate $\hat{\lambda}_B=\frac{N(B)}{|B|}$
+
+\noindent \textit{parametric and likelihood based:} $\lambda(s|\theta):= \exp(z'\theta)$
+
+\noindent $l(\theta)$ can be approximated by a weighted Poisson-log-likelihood
+
+
+\noindent \textit{univariate kernel density estimation:}
+$$\hat{\lambda}(s)=\frac{1}{\nu(W)b_xb_y}\sum_{i=1}^nK\left(\frac{x_i-x}{b_x}\right)K\left(\frac{y_i-y}{b_y}\right)$$
+\noindent with $\nu(W)$ size of window $W$, $s=(x,y)$ and bandwidths $b_x,b_y$
+\noindent \textit{bivariate kernel density estimation with edge correction:}
+$$\hat{\lambda}(s)=\frac{1}{\int_W \frac{1}{b^2}K\left(\frac{s-u}{b}\right)du}\sum_{i=1}^n\frac{1}{b^2}K\left(\frac{s_i-s}{b}\right)$$
+
+\noindent The bandwidths can be estimated via cross validation.
 
 \end{multicols}
 %-------------------------------------------------------------------------------
