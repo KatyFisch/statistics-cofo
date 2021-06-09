@@ -2534,6 +2534,61 @@ $$\hat{\lambda}(s)=\frac{1}{\int_W \frac{1}{b^2}K\left(\frac{s-u}{b}\right)du}\s
 
 \noindent The bandwidths can be estimated via cross validation.
 
+\paragraph{K-Function} for stationary and isotrope processes %related to $\lambda_2$
+
+$$K(h):= \frac{\mathrm{E}\left[\sum_{i=1}^n\sum_{j=1,j\neq i}^n \frac{\mathbbm{1}(\| s_i-s_j\| \leq h)}{\nu(W_{s_i}\cap W_{s_j})}\right]}{n(n-1)/\nu(W)^2}$$
+
+\noindent with $W$ window of observation, $W_{s_i}$ window of shape $W$ with center $s_i$, and $\nu(W)$ volume of $W$
+
+\noindent $\lambda \cdot K(h) = \mathrm{E}(h)$: expected number of events around an event
+
+\noindent $K(h)$ determines $\lambda_2(h)$, e.g.\@ for $d=2$: $\lambda_2(h)=\frac{\lambda^2}{2\pi h} \frac{dK(h)}{dh}$
+
+\vspace{0.3em}
+\textbf{Ripley's $\boldsymbol{\hat{K}(h)}$} $=\frac{1}{\hat{\lambda}}\hat{\mathrm{E}}(h)$, with $\hat{\lambda}=\frac{N(B)}{|B|}$ and
+$$\hat{\mathrm{E}}(h) = \frac{1}{n}\sum_{i=1}^n\sum_{j=1,j\neq i}^n \frac{\mathbbm{1}(\| s_i-s_j\| \leq h)}{\nu(W_{s_i}\cap W_{s_j})}$$
+
+for $d=2$ and CSR: $K(h)=\pi h^2$ is quadratic
+
+\vspace{0.3em}
+\textbf{L-Function} scales $K(h)$ to linear
+$$L(h)=\sqrt{K(h)/\pi}$$
+
+\textbf{Pair Correlation Function}  first derivative of $K(h)$
+$$g(s,u)=\frac{\lambda_2(s,u)}{\lambda(s)\lambda(u)} =: g(\|s-u\|)$$
+
+\noindent For tests on CSR an envelope of $\hat{K}$, $\hat{L}$ or $\hat{g}$ can be calculated.
+
+\paragraph{Marked Point Processes}  discrete or continuous \\
+\vspace{0.3em}
+\noindent\textit{discrete} with 2 types ($A$, $B$) or more:
+\vspace{-0.7em}
+\begin{itemize}[itemsep=-0.3em]
+\item \textbf{Clark-Evans aggregation index:} $CE_{AB}=\bar{d}_{AB} \cdot 2\sqrt{\lambda_B}$ with $\bar{d}_{AB}$ average distance of $A$ points to nearest $B$ point; $CE_{AB}>1$ shows repulsion, $CE_{AB}<1$ attraction 
+\item \textbf{Segregation coefficient:} $S=1{-}\frac{p_{AB}+p_{BA}}{p_{A\cdot}p_{\cdot B} + p_{\cdot A}p_{B \cdot}}$ with $p_{xy}$ number of pairs where type $x$'s nearest neighbor is type $y$; $S<0$ is mixing, $S>0$ segregation, and $S=0$ independence
+\item \textbf{Mingling index:} $M_k = \frac{1}{k}\mathrm{E}\left[\sum_{i=1}^k\mathbbm{1}\left(m(o)\neq m(n_i(o))\right)\right]$ with point $o$, its $k$ nearest neighbors $n_i(o)$, and mark $m(o)$
+\item \textbf{Bivariate $\boldsymbol{K}$, $\boldsymbol{L}$, and $\boldsymbol{g}$:} expected $y$ points around $x$ point
+\item \textbf{Mark correlation function:} $K_t(r)=\frac{C_t(r)}{C_t(\infty)}$ with radius $r>0$,  $C_t(r)=\mathrm{E}_{or}\left[t(m(o),m(r))\right]$ and test function $t(\cdot)$; $K>1$ signals mutual stimulation, $K<1$ inhibition
+\end{itemize}
+\noindent\textit{continuous} leading to weighted measures:
+$$K_{mm}(r)=\frac{c_{mm}(r)}{\lim_{r\rightarrow \infty} c_{mm}(r)}$$
+with $c_{mm}(r)=\mathrm{E}(m(o)\cdot m(r))$
+
+\paragraph{Poisson Cluster Process}
+
+The parent is an inhomogeneous poisson process. Each parent event creates a random amount of $n(s)$ children according to a 2D density function.
+
+\vspace{-0.7em}
+\begin{itemize}[itemsep=-0.3em]
+\item \textbf{Neyman-Scott:} $\mathrm{P}(n(s)=k)=p_k$ and i.i.d. densities  
+\item \textbf{Mat\'{e}rn:} stationary parent and $f(s)\propto \text{const.}$ for $\| s\| <R$
+\end{itemize}
+
+\paragraph{Non-stationarity and Pairwise Interaction}
+
+$$f(s_1,...,s_n|\theta) = \overbrace{a(\theta)}^{\text{normalising}}\prod_{i=1}^n \overbrace{b(s_i|\theta)}^{\text{trend}}\prod_{i<j}\overbrace{h(s_i,s_j|\theta)}^{\text{interaction}}$$
+
+
 \end{multicols}
 %-------------------------------------------------------------------------------
 
