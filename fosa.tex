@@ -2580,14 +2580,62 @@ The parent is an inhomogeneous poisson process. Each parent event creates a rand
 
 \vspace{-0.7em}
 \begin{itemize}[itemsep=-0.3em]
-\item \textbf{Neyman-Scott:} $\mathrm{P}(n(s)=k)=p_k$ and i.i.d. densities  
+\item \textbf{Neyman-Scott:} $\mathrm{P}(n(s)=k)=p_k$ and i.i.d.\@ densities  
 \item \textbf{Mat\'{e}rn:} stationary parent and $f(s)\propto \text{const.}$ for $\| s\| <R$
 \end{itemize}
 
-\paragraph{Non-stationarity and Pairwise Interaction}
+\paragraph{Point Process with Pairwise Interaction}
 
-$$f(s_1,...,s_n|\theta) = \overbrace{a(\theta)}^{\text{normalising}}\prod_{i=1}^n \overbrace{b(s_i|\theta)}^{\text{trend}}\prod_{i<j}\overbrace{h(s_i,s_j|\theta)}^{\text{interaction}}$$
+$$f(s_1,...,s_n|\theta) = \overbrace{a(\theta)}^{\substack{\text{normalising} \\ \text{constant}}}\prod_{i=1}^n \overbrace{b(s_i|\theta)}^{\text{trend}}\prod_{i<j}\overbrace{h(s_i,s_j|\theta)}^{\text{interaction}}$$
 
+\textbf{Strauss Process:} creates disaggregation/inhibition
+$$h(s,u|\theta)=\begin{cases} \gamma & \text{for } \|s-u\| \leq r \\ 1 & \text{else}\end{cases}$$
+
+with $b(s|\theta)=\beta>0$, $0\leq\gamma\leq1$, and $r>0$
+
+$\gamma=1$ homogeneous Poisson and  $\gamma=0$ hard core process
+
+\vspace{0.5em}
+
+\textbf{Gibbs Process:} $\alpha$ self potential, $\phi$ pair potential 
+$$f(s_1,...,s_n)\propto\exp\left(-\alpha-\sum_{i\neq j} \phi (\|s_i-s_j\|)\right)$$
+
+$\phi(x)=0$ Binomial , $\phi(x)=\frac{1}{\tau x^2}$ Gaussian, and $\phi=h$ Strauss
+
+\vspace{0.5em}
+
+
+\noindent As $a( \theta)$ unknown, pseudo-likelihood and approximations are used.
+
+\paragraph{Cox Process} models aggregated patterns, $\lambda(s)$ is random field 
+$$X|\lambda(s) \text{ is inhomogeneous Poisson process}$$ 
+
+\textbf{Mixed Poisson Process} $\lambda(s)=\lambda_0$ (homogeneous)
+
+\noindent Cox processes have overdispersion: $\mathrm{Var}(N(B)) > \mathrm{E}(N(B))$
+
+\noindent $\lambda(s)$ stationary/isotrope $\Rightarrow$ Cox Process stationary/isotrope
+
+\noindent Neyman-Scott processes can be viewed as Cox processes
+
+
+\paragraph{Log Gauss Cox Process}
+
+$$\lambda(s)=\exp(z(s)'\beta + Y(s))$$
+
+\noindent with $\{Y(s)|s\in S\}$ stationary Gauss random field
+
+\textbf{Data Augmentation Approach} \ \\ 
+As $\{Y(s),s\in S\}$ infinite, approximate with finite GRF
+
+and approximate $\int_W \lambda(s)ds$ with Riemann sum
+
+\textbf{Intensity as Latent GMRF} discretize $S$ to small grid
+$$\lambda(s) \sim \mathrm{GRF} \Rightarrow \lambda(s_i) \sim \mathrm{GMRF}$$
+
+often with constructed spatial covariables, e.g.\@ distance to nn
+
+inference over INLA or other STAR algorithms
 
 \end{multicols}
 %-------------------------------------------------------------------------------
